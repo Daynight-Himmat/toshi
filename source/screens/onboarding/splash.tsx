@@ -53,7 +53,7 @@ const SplashSreen: FunctionComponent<Props> = ({navigation}) => {
     return (
       <View style={styles({}).flex_container}>
         <View style={styles({}).textContainer}>
-          <HighLightLabel hightLightLabel={item.title} />
+          <HighLightLabel hightLightLabel={item.title} style={undefined} labelStyle={undefined} />
         </View>
         <Image
           source={item?.image}

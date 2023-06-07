@@ -4,22 +4,25 @@ import ColorConstants from '../constants/color_constants';
 import {Appbar} from 'react-native-paper';
 import FontConstants from '../constants/font_constants';
 import {Icon} from '@rneui/base';
+import ColorsCondtion from './color_condition';
+import { Label } from './label';
+import AppSize from './size';
 
-const {width} = Dimensions.get('screen');
+const {height,width} = Dimensions.get('screen');
 
 type Props = {
-  text: string;
-  navigate: any;
-  action: any;
+  text?: string;
+  navigate?: any;
+  action?: any;
 };
 
 const AppHeader: FunctionComponent<Props> = ({text, navigate, action}) => {
   return (
     <Appbar.Header style={styles.headerStyles}>
-      <Appbar.BackAction onPress={navigate} style={styles.backButton} />
+      <Appbar.BackAction onPress={navigate} style={styles.backButton} color={ColorConstants.primaryWhite} />
       <Appbar.Content
         title={text}
-        color={ColorConstants.primaryBlack}
+        color={ColorConstants.primaryWhite}
         titleStyle={styles.headerText}
       />
       {action}
@@ -53,29 +56,37 @@ const CommanHeader: FunctionComponent<Props1> = ({
 };
 
 type Props3 = {
-  show: boolean;
-  navigation: any;
+  show?: boolean;
+  showtitle?: boolean;
+  showAction?: boolean;
+  showLabel?: boolean;
+  navigation?: any;
+  title?: string;
+  onPress?: any;
 };
 
-const AuthHeader: FunctionComponent<Props3> = ({navigation, show}) => {
+const AuthHeader: FunctionComponent<Props3> = ({navigation, show, showtitle, showAction, showLabel, title, onPress}) => {
   return (
     <View>
-      <View style={styles.authContainer}>
-        <View style={styles.icon}>
-          {show && (
-            <Icon
-              type="ionicon"
-              name={'chevron-back-outline'}
-              onPress={() => navigation.goBack()}
-              color={ColorConstants.primaryWhite}
-            />
+      <Appbar.Header style={{ backgroundColor: ColorConstants.primaryColor}}>
+      {show && (
+            <Appbar.BackAction onPress={()=> navigation.goBack()} style={styles.backButton} color={ColorConstants.primaryWhite}/>
           )}
-        </View>
+          {showtitle && (
+            <Appbar.Content title={title} titleStyle={{fontFamily: FontConstants.medium, }} color={ColorConstants.primaryWhite}/>
+          )}
+          {showAction && (
+            <Appbar.Action icon={'pencil'} color={ColorConstants.primaryWhite} onPress={onPress}/>
+          )}
+      </Appbar.Header> 
+      <View style={styles.authContainer}>
         <Image
           source={require('../assets/image/qual_icons.png')}
           style={styles.imageSize}
           resizeMode="contain"
         />
+        <AppSize height={10}/>
+        {showLabel && <Label name={'Name'} style={{color: ColorConstants.primaryWhite, padding: 10, marginBottom: 5}}/>}
       </View>
     </View>
   );
@@ -84,18 +95,19 @@ const AuthHeader: FunctionComponent<Props3> = ({navigation, show}) => {
 const styles = StyleSheet.create({
   headerStyles: {
     width: width,
-    backgroundColor: ColorConstants.primaryWhite,
+    backgroundColor: ColorConstants.primaryColor,
   },
   backButton: {
     marginLeft: 0,
+    color: ColorConstants.primaryWhite
   },
   headerText: {
     fontSize: 17,
     fontWeight: '600',
-    color: ColorConstants.primaryBlack,
+    color: ColorConstants.primaryWhite, 
     fontFamily: FontConstants.ragular,
   },
-  imageSize: {height: 80, width: 80, marginBottom: '10%'},
+  imageSize: {height: 80, width: 80, },
   icon: {
     height: 50,
     flexDirection: 'row',
@@ -106,10 +118,10 @@ const styles = StyleSheet.create({
   },
   authContainer: {
     width: '100%',
-    height: 200,
-    borderBottomLeftRadius: 30,
-    borderBottomEndRadius: 30,
-    justifyContent: 'space-between',
+    height: 120,
+    borderBottomLeftRadius: 40,
+    borderBottomEndRadius: 40,
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: ColorConstants.primaryColor,
   },

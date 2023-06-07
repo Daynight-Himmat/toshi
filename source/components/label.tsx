@@ -4,9 +4,9 @@ import ColorConstants from '../constants/color_constants';
 import FontConstants from '../constants/font_constants';
 
 type Props = {
-  name: string;
-  style: any;
-  margin: number;
+  name?: string;
+  style?: any;
+  margin?: number;
 };
 
 const Label: FunctionComponent<Props> = ({name, style, margin}) => {

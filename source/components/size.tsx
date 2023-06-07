@@ -2,8 +2,8 @@ import React, {FunctionComponent} from 'react';
 import {View, StyleSheet} from 'react-native';
 
 type Props = {
-  height: any;
-  width: any;
+  height?: any;
+  width?: any;
 };
 
 const AppSize: FunctionComponent<Props> = ({height, width}) => {

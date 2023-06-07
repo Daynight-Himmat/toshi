@@ -1,5 +1,5 @@
-import React, {FunctionComponent, useState, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {FunctionComponent, useState, useRef, useEffect} from 'react';
+import {StyleSheet, TextInput, Text, TouchableOpacity, View} from 'react-native';
 import {commonStyles} from '../../components/style';
 import {AuthHeader} from '../../components/app_header';
 import {HighLightLabel, Label} from '../../components/label';
@@ -10,7 +10,8 @@ import {TexTButton} from '../../components/text_button';
 import AppButton from '../../components/app_button';
 import {CheckBox} from '@rneui/base';
 import {TextField} from 'rn-material-ui-textfield';
-import {Input} from '@rneui/themed';
+import {Icon, Input} from '@rneui/themed';
+import { FloatingLabelInput } from 'react-native-floating-label-input';
 
 type Props = {
   navigation: any;
@@ -18,6 +19,19 @@ type Props = {
 
 const SignIn: FunctionComponent<Props> = ({navigation}) => {
   const [isChecked, setChecked] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShow(!show);
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, [show]);
+
   return (
     <View style={commonStyles.container}>
       <AuthHeader navigation={navigation} show={false} />
@@ -31,20 +45,28 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={5} width={undefined} />
         <Label name="Sign in to you account" style={undefined} margin={0} />
         <AppSize height={20} width={undefined} />
-        <Input
+        
+        <FloatingLabelInput/>
+        {/* <TextField
+          value={email}
           label={'Enter the Email-Address'}
-          labelStyle={{
-            textTransform: 'capitalize',
-          }}
-        />
-        <TextField
-          label={'Enter the Password'}
-          style={{
-            width: '100%',
-          }}
+          onChangeText={(text: string)=> setEmail(text)}
           tintColor={ColorConstants.primaryBlack}
           textColor={ColorConstants.primaryBlack}
         />
+        <TextField
+          value={password}
+          label={'Enter the Password'}
+          secureTextEntry={visible}
+          suffix={<Icon 
+            name={visible ? 'eye-outline' : 'eye-off-outline'}
+            type='ionicon'
+            onPress={()=> setVisible(!visible)}
+          />}
+          onChangeText={(text: string)=> setPassword(text)}
+          tintColor={ColorConstants.primaryBlack}
+          textColor={ColorConstants.primaryBlack}
+        /> */}
         <View style={styles.meContainer}>
           <TouchableOpacity onPress={() => setChecked(!isChecked)}>
             <CheckBox
@@ -71,7 +93,11 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
           text={'Login'}
           style={undefined}
           textStyle={undefined}
-          onPress={undefined}
+          onPress={()=> {
+            
+            navigation.navigate('DashBoard');
+            console.log({email: email, password: password});
+          }}
         />
         <AppSize height={20} width={undefined} />
         <TexTButton
