@@ -5,8 +5,10 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { AuthHeader } from '../../../components/app_header';
+import { AppHeader, AuthHeader } from '../../../components/app_header';
 import { commonStyles } from '../../../components/style';
+import AppButton from '../../../components/app_button';
+
 
 
 type Props = {
@@ -17,8 +19,9 @@ const UsagePreference: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <View style={commonStyles.container}>
-      <AuthHeader navigation={navigation} show={true}  showtitle={true} showAction={true} showLabel={true} title='My Profile'/>
-    </View>
+      <View style={{flex: 1, backgroundColor: 'green'}}></View>
+      <View style={{margin: 20}}><AppButton text='Apply'/></View>
+  </View>
   );
 };
 

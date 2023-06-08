@@ -6,6 +6,7 @@ import {
   ImageStyle,
   Text,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Image} from 'react-native';
@@ -15,6 +16,9 @@ import FontConstants from '../../constants/font_constants';
 import CommanFunctions from '../../components/comman_functions';
 import ColorsCondtion from '../../components/color_condition';
 import {commonStyles} from '../../components/style';
+import { Appbar } from 'react-native-paper';
+
+const {height, width} = Dimensions.get('window');
 
 type Props = {
   navigation: any;
@@ -82,7 +86,8 @@ const SplashSreen: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <View style={commonStyles.container}>
-      <View style={styles({}).header}>
+      <Appbar.Header  style={{backgroundColor: ColorConstants.primaryWhite,}} children={
+        <View style={styles({}).header}>
         <Image
           source={require('../../assets/image/qualtilepng.png')}
           style={styles({}).imgBg1}
@@ -92,7 +97,8 @@ const SplashSreen: FunctionComponent<Props> = ({navigation}) => {
           <Text style={styles({}).headerText}>Skip</Text>
         </TouchableOpacity>
       </View>
-      <AppIntroSlider
+      }/>
+     <AppIntroSlider
         data={slides}
         showPrevButton={false}
         showDoneButton={true}
@@ -135,10 +141,13 @@ type StylesFunctionProps = (props: StylesProps) => StyleSheetType;
 const styles: StylesFunctionProps = ({d}) =>
   StyleSheet.create<StyleSheetType>({
     flex_container: {
-      flex: 1,
+      backgroundColor: ColorConstants.primaryWhite,
+      justifyContent: 'center'
+      
     },
     header: {
       padding: 10,
+      flex: 1,
       flexDirection: 'row',
       alignContent: 'center',
       alignItems: 'center',
@@ -195,8 +204,9 @@ const styles: StylesFunctionProps = ({d}) =>
       marginTop: 20,
     },
     buttons: {
-      width: 200,
+      width: width / 2,
       height: 48,
+      marginHorizontal: 10,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 4,

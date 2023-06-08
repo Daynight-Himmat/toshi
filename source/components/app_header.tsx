@@ -21,7 +21,7 @@ const AppHeader: FunctionComponent<Props> = ({text, navigate, action}) => {
     <Appbar.Header style={styles.headerStyles}>
       <Appbar.BackAction onPress={navigate} style={styles.backButton} color={ColorConstants.primaryWhite} />
       <Appbar.Content
-        title={text}
+        title={text ?? ''}
         color={ColorConstants.primaryWhite}
         titleStyle={styles.headerText}
       />
@@ -73,7 +73,7 @@ const AuthHeader: FunctionComponent<Props3> = ({navigation, show, showtitle, sho
             <Appbar.BackAction onPress={()=> navigation.goBack()} style={styles.backButton} color={ColorConstants.primaryWhite}/>
           )}
           {showtitle && (
-            <Appbar.Content title={title} titleStyle={{fontFamily: FontConstants.medium, }} color={ColorConstants.primaryWhite}/>
+            <Appbar.Content title={title ?? ''} titleStyle={{fontFamily: FontConstants.medium, }} color={ColorConstants.primaryWhite}/>
           )}
           {showAction && (
             <Appbar.Action icon={'pencil'} color={ColorConstants.primaryWhite} onPress={onPress}/>

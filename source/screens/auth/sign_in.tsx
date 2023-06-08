@@ -1,5 +1,9 @@
-import React, {FunctionComponent, useState, useRef, useEffect} from 'react';
-import {StyleSheet, TextInput, Text, TouchableOpacity, View} from 'react-native';
+import React, {FunctionComponent, useState} from 'react';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {commonStyles} from '../../components/style';
 import {AuthHeader} from '../../components/app_header';
 import {HighLightLabel, Label} from '../../components/label';
@@ -9,9 +13,13 @@ import AppSize from '../../components/size';
 import {TexTButton} from '../../components/text_button';
 import AppButton from '../../components/app_button';
 import {CheckBox} from '@rneui/base';
-import {TextField} from 'rn-material-ui-textfield';
-import {Icon, Input} from '@rneui/themed';
-import { FloatingLabelInput } from 'react-native-floating-label-input';
+import TextField from '../../components/floading_label';
+import {useToast} from 'react-native-toast-notifications';
+import toastMessage from '../../components/toast_message';
+import CommanFunctions from '../../components/comman_functions';
+import Apis from '../../apis/api_functions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Loading } from '../../components/no_data_found';
 
 type Props = {
   navigation: any;
@@ -20,17 +28,40 @@ type Props = {
 const SignIn: FunctionComponent<Props> = ({navigation}) => {
   const [isChecked, setChecked] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [show, setShow] = useState(false);
+  const toast = useToast();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShow(!show);
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, [show]);
+  const getLogIn = async () => {
+    if (!email) {
+      toastMessage(toast, 'Please Enter the Email');
+    } else if (CommanFunctions.validateEmail(email) === false) {
+      toastMessage(toast, 'Please Enter Valid Email');
+    } else if (!password) {
+      toastMessage(toast, 'Please Enter the Password');
+    } else {
+    try {
+      setLoading(true);
+      await Apis.logInApi(email,password).then(response => {
+        if(response?.status === 200){
+          setLoading(false);
+          console.log(response.data.result.token);
+          AsyncStorage.setItem('token', response.data.result.token);
+          AsyncStorage.setItem('id', response.data.result.name?.id.toString());
+          toastMessage(toast, response.data?.message);
+          CommanFunctions.routing(navigation, 'DashBoard');
+        }
+      });
+  
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+    }
+  };
 
   return (
     <View style={commonStyles.container}>
@@ -45,28 +76,17 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={5} width={undefined} />
         <Label name="Sign in to you account" style={undefined} margin={0} />
         <AppSize height={20} width={undefined} />
-        
-        <FloatingLabelInput/>
-        {/* <TextField
+        <TextField
+          label="Enter the Email-Address"
           value={email}
-          label={'Enter the Email-Address'}
-          onChangeText={(text: string)=> setEmail(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
+          onChangeText={value => setEmail(value)}
         />
         <TextField
+          label="Enter the Password"
           value={password}
-          label={'Enter the Password'}
-          secureTextEntry={visible}
-          suffix={<Icon 
-            name={visible ? 'eye-outline' : 'eye-off-outline'}
-            type='ionicon'
-            onPress={()=> setVisible(!visible)}
-          />}
-          onChangeText={(text: string)=> setPassword(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        /> */}
+          isPassword
+          onChangeText={value => setPassword(value)}
+        />
         <View style={styles.meContainer}>
           <TouchableOpacity onPress={() => setChecked(!isChecked)}>
             <CheckBox
@@ -91,13 +111,7 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={20} width={undefined} />
         <AppButton
           text={'Login'}
-          style={undefined}
-          textStyle={undefined}
-          onPress={()=> {
-            
-            navigation.navigate('DashBoard');
-            console.log({email: email, password: password});
-          }}
+          onPress={() => getLogIn()}
         />
         <AppSize height={20} width={undefined} />
         <TexTButton
@@ -107,6 +121,7 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
           callBack={() => navigation.navigate('SignUp')}
         />
       </View>
+      {isLoading && <Loading />}
     </View>
   );
 };

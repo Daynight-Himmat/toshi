@@ -6,8 +6,8 @@ import {commonStyles} from '../../components/style';
 import {TexTButton} from '../../components/text_button';
 import {HighLightLabel} from '../../components/label';
 import ColorConstants from '../../constants/color_constants';
-import { TextField } from 'rn-material-ui-textfield';
-import { AppHeader } from '../../components/app_header';
+import {AppHeader} from '../../components/app_header';
+import TextField from '../../components/floading_label';
 
 type Props = {
   navigation: any;
@@ -21,54 +21,55 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
   const [country, setCountry] = useState('');
   const [message, setMessage] = useState('');
 
+  const signUpValue = [
+    {
+      value: firstName,
+      label: 'First Name',
+      onChange: (text: string) => setFirstName(text),
+    },
+    {
+      value: company,
+      label: 'Company Name',
+      onChange: (text: string) => setCompany(text),
+    },
+    {
+      value: email,
+      label: 'Email-Address',
+      onChange: (text: string) => setEmail(text),
+      keyType: 'email-address'
+    },
+    {
+      value: phoneNumber,
+      label: 'Phone Number',
+      onChange: (text: string) => setPhoneNumber(text),
+      keyType: 'numeric'
+    },
+    {
+      value: country,
+      label: 'Country',
+      onChange: (text: string) => setCountry(text),
+    },
+    {
+      value: message,
+      label: 'Message',
+      onChange: (text: string) => setMessage(text),
+    },
+  ];
+
   return (
     <View style={commonStyles.container}>
-      <AppHeader text='Create an Account' navigate={()=>navigation.goBack()} action={undefined}/>
       <ScrollView style={commonStyles.ph(10)}>
         <AppSize height={20} width={undefined} />
-        <TextField
-          value={firstName}
-          label={'First Name'}
-          onChangeText={(text: SetStateAction<string>)=> setFirstName(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <TextField
-          value={company}
-          label={'Company Name'}
-          onChangeText={(text: SetStateAction<string>)=> setCompany(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <TextField
-          value={email}
-          label={'Email-Address'}
-          onChangeText={(text: SetStateAction<string>)=> setEmail(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <TextField
-          value={phoneNumber}
-          label={'Phone Number'}
-          onChangeText={(text: SetStateAction<string>)=> setPhoneNumber(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <TextField
-          value={country}
-          label={'Country'}
-          onChangeText={(text: SetStateAction<string>)=> setCountry(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <TextField
-          value={message}
-          label={'Message'}
-          onChangeText={(text: SetStateAction<string>)=> setMessage(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
-        />
-        <AppSize height={20} width={undefined}/>
+        {signUpValue.map((data, index) => (
+          <TextField
+            value={data.value}
+            label={data.label}
+            keyboardType={data.keyType}
+            onChangeText={data.onChange}
+          />
+        ))}
+
+        <AppSize height={20} width={undefined} />
         <AppButton
           text={'Create an Account'}
           style={undefined}
@@ -88,12 +89,12 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  highLightLabel:{
+  highLightLabel: {
     height: 48,
     width: '100%',
     justifyContent: 'center',
     backgroundColor: ColorConstants.primaryColor,
-  }
+  },
 });
 
 export default SignUp;

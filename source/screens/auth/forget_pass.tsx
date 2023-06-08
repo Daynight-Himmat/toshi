@@ -5,8 +5,9 @@ import {commonStyles} from '../../components/style';
 import AppButton from '../../components/app_button';
 import AppSize from '../../components/size';
 import {HighLightLabel, Label} from '../../components/label';
-import { TextField } from 'rn-material-ui-textfield';
+
 import ColorConstants from '../../constants/color_constants';
+import TextField from '../../components/floading_label';
 
 type Props = {
   navigation: any;
@@ -30,19 +31,15 @@ const ForgetPass: FunctionComponent<Props> = ({navigation}) => {
           style={undefined}
           margin={0}
         />
-<TextField
+        <TextField
           value={email}
           label={'Enter the Email-Address'}
-          onChangeText={(text: SetStateAction<string>)=> setEmail(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
+          onChangeText={(text: SetStateAction<string>) => setEmail(text)}
         />
         <AppSize height={20} width={undefined} />
         <AppButton
           text={'Send'}
-          style={undefined}
-          textStyle={undefined}
-          onPress={()=> navigation.navigate('Create-Pass')}
+          onPress={() => navigation.navigate('Create-Pass')}
         />
         <AppSize height={20} width={undefined} />
       </View>

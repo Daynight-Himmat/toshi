@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import SplashScreen from 'react-native-splash-screen';
 import screens from './source/components/screen_page';
+import ColorConstants from './source/constants/color_constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +21,19 @@ const AppContext = () => {
             name={data.name}
             component={data.component}
             options={{
-              headerShown: false,
+              headerShown: data.headerShown,
+              headerTitle: data.title,
+              headerTintColor: ColorConstants.primaryWhite,
+              headerTitleStyle:{
+                color:ColorConstants.primaryWhite,
+              },
+              
+              headerBackTitleStyle:{
+                color: ColorConstants.primaryWhite,
+              }, 
+              headerStyle: {
+                backgroundColor: ColorConstants.primaryColor
+              }
             }}
           />
         ))}

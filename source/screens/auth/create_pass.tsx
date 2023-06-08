@@ -6,11 +6,9 @@ import {CheckBox} from '@rneui/base';
 import AppButton from '../../components/app_button';
 import {HighLightLabel, Label} from '../../components/label';
 import AppSize from '../../components/size';
-import {TexTButton} from '../../components/text_button';
 import ColorConstants from '../../constants/color_constants';
-import FontConstants from '../../constants/font_constants';
-import {TextField} from 'rn-material-ui-textfield';
 import { Icon } from '@rneui/themed';
+import TextField from '../../components/floading_label';
 
 type Props = {
   navigation: any;
@@ -35,35 +33,20 @@ const ResetPass: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={5} width={undefined} />
         <TextField
           value={password}
+          isPassword
           label={'Enter the Password'}
-          secureTextEntry={passVisible}
-          suffix={<Icon 
-            name={passVisible ? 'eye-outline' : 'eye-off-outline'}
-            type='ionicon'
-            onPress={()=> setPasswordVisible(!passVisible)}
-          />}
           onChangeText={(text)=> setPassword(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
+          
         />
           <TextField
           value={conPassword}
+          isPassword
           label={'Enter the Password'}
-          secureTextEntry={conPassVisible}
-          suffix={<Icon 
-            name={conPassVisible ? 'eye-outline' : 'eye-off-outline'}
-            type='ionicon'
-            onPress={()=> setConPasswordVisible(!conPassVisible)}
-          />}
           onChangeText={(text)=> setConPassword(text)}
-          tintColor={ColorConstants.primaryBlack}
-          textColor={ColorConstants.primaryBlack}
         />
         <AppSize height={20} width={undefined} />
         <AppButton
           text={'Update'}
-          style={undefined}
-          textStyle={undefined}
           onPress={undefined}
         />
         <AppSize height={20} width={undefined} />

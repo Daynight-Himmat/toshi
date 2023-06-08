@@ -15,6 +15,7 @@ import AppSize from '../../components/size';
 import DSContainer from '../../components/dashboard_container';
 import MyProfileList from '../../components/MyProfileList';
 import { AuthHeader } from '../../components/app_header';
+import CommanFunctions from '../../components/comman_functions';
 
 type Props = {
   navigation: any;
@@ -38,13 +39,13 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'Saved Product',
       icon: 'bookmark-outline',
       iconType: 'ionicon',
-      onPress: ()=> {},
+      onPress: ()=> navigation.navigate('Save Product'),
     },
     {
       name: 'Saved News Feeds',
       icon: 'bookmark-outline',
       iconType: 'ionicon',
-      onPress: ()=> {},
+      onPress: ()=> navigation.navigate('Save News Feeds'),
     },
     {
       name: 'Help & Support',
@@ -56,7 +57,7 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'About',
       icon: 'ios-information-circle-outline',
       iconType: 'ionicon',
-      onPress: ()=> {},
+      onPress: ()=> navigation.navigate('About Us'),
     },
     {
       name: 'Account Deletion',
@@ -68,7 +69,7 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'Logout',
       icon: 'logout',
       iconType: 'antdesign',
-      onPress: ()=> {},
+      onPress: ()=> CommanFunctions.routing(navigation, 'SignIn'),
     },
   ];
 

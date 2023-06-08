@@ -5,10 +5,10 @@ import FontConstants from '../constants/font_constants';
 
 
 type Props = {
-  text: string;
-  style: any;
-  textStyle: any;
-  onPress: any;
+  text?: string;
+  style?: any;
+  textStyle?: any;
+  onPress?: any;
 };
 
 const AppButton: FunctionComponent<Props> = ({

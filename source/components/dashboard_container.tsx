@@ -46,13 +46,13 @@ const DSContainer: FunctionComponent<Props> = ({navigation, data, index}) => {
   const getRoute = () => {
     switch (index) {
       case 0:
-        return navigation.navigate('Create-Pass');
+        return navigation.navigate('Inquiry & Order Status');
       case 1:
-        return navigation.navigate('Create-Pass');
+        return navigation.navigate('List Of Product');
       case 2:
         return navigation.navigate('InquiryMessage');
       case 3:
-        return navigation.navigate('Create-Pass');
+        return navigation.navigate('Feeds');
       case 4:
         return navigation.navigate('Create-Pass');
       default:

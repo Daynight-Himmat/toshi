@@ -18,9 +18,9 @@ const Label: FunctionComponent<Props> = ({name, style, margin}) => {
 };
 
 type Props1 = {
-  hightLightLabel: string;
-  style: any;
-  labelStyle: any;
+  hightLightLabel?: string;
+  style?: any;
+  labelStyle?: any;
 };
 
 const HighLightLabel: FunctionComponent<Props1> = ({
@@ -58,6 +58,20 @@ const LightText1: FunctionComponent<Props3> = ({lightText1}) => {
     </View>
   );
 };
+
+
+type Props4 = {
+  label?: string;
+  start?: string;
+}
+
+
+const TwoText : FunctionComponent<Props4> = ({label, start}) => {
+  return <View style={styles.two}>
+    <View style={{flex:1 }}><Label name={label} style={styles.twoLabel}/></View>
+    <View style={{flex:2 }}><Label name={': ' + start} /></View>
+  </View>;
+}
 
 const styles = StyleSheet.create({
   label: {
@@ -103,6 +117,16 @@ const styles = StyleSheet.create({
     color: ColorConstants.primaryBlack,
     fontFamily: FontConstants.ragular,
   },
+  two: {
+    flexDirection:'row',
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  twoLabel: {
+    fontFamily: FontConstants.bold,
+    fontWeight: '700', 
+    color: ColorConstants.primaryColor}
 });
 
-export {Label, LightText, LightText1, HighLightLabel};
+export {Label, LightText, LightText1, HighLightLabel, TwoText};

@@ -1,3 +1,6 @@
+const BaseUrl = (end: string) => `http://35.154.180.193/toshiba-api/api${end}`;
+                                  
+
 abstract class ApiConstants {
   static live = 'http://app.toshibbaimpex.com/toshiba-api/';
   static urlTest1 = 'http://app.toshibbaimpex.com/toshiba-api-test';
@@ -23,7 +26,7 @@ abstract class ApiConstants {
   // static const baseBusinessImageUrl = "http://app.toshibbaimpex.com/demo/public/UserBusinessCards/";
   // static const baseDocumentUrl = "http://app.toshibbaimpex.com/demo/uploads/leads/";
 
-  static baseUrl = `${this.urlTest2}toshiba-api/api/`;
+  static baseUrl = (endPoint: string) => `${this.urlTest2}toshiba-api/api/${endPoint}`;
   static baseAuthUrl = 'http://3.15.216.243/api';
   static baseProductImageUrl = `${this.urlTest2}uploads/PRO_Upload/`;
   static baseNewsMainImageUrl = `${this.urlTest2}uploads/News_Feeds_Main/`;
@@ -78,4 +81,4 @@ abstract class ApiConstants {
   static sendEmailRe = '/send-email-ri';
 }
 
-export default ApiConstants;
+export {ApiConstants, BaseUrl};
