@@ -1,13 +1,10 @@
 import React, {FunctionComponent,useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import {AuthHeader} from '../../components/app_header';
-import {commonStyles} from '../../components/style';
-import {CheckBox} from '@rneui/base';
+import {alignSelf, commonStyles, paddingHorizontal} from '../../components/style';
 import AppButton from '../../components/app_button';
-import {HighLightLabel, Label} from '../../components/label';
+import {HighLightLabel} from '../../components/label';
 import AppSize from '../../components/size';
-import ColorConstants from '../../constants/color_constants';
-import { Icon } from '@rneui/themed';
 import TextField from '../../components/floading_label';
 
 type Props = {
@@ -23,12 +20,12 @@ const ResetPass: FunctionComponent<Props> = ({navigation}) => {
   return (
     <View style={commonStyles.container}>
       <AuthHeader navigation={navigation} show={true} />
-      <View style={commonStyles.ph(10)}>
+      <View style={paddingHorizontal(10)}>
         <AppSize height={20} width={undefined} />
         <HighLightLabel
           hightLightLabel="Change Password?"
           labelStyle={undefined}
-          style={commonStyles.as('flex-start')}
+          style={alignSelf('flex-start')}
         />
         <AppSize height={5} width={undefined} />
         <TextField

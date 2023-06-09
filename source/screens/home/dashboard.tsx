@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {commonStyles} from '../../components/style';
+import {alignSelf, commonStyles} from '../../components/style';
 import {Appbar} from 'react-native-paper';
 import ColorConstants from '../../constants/color_constants';
 import Menu from '../../assets/image/menu.svg';
@@ -64,10 +64,10 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
         <HighLightLabel
           hightLightLabel="Hello, Live!"
           labelStyle={undefined}
-          style={commonStyles.as('flex-start')}
+          style={alignSelf('flex-start')}
         />
-        <Label name="Welcome back." style={undefined} margin={0} />
-        <AppSize height={20} width={undefined} />
+        <Label name="Welcome back."  margin={0} />
+        <AppSize height={20} />
         <ScrollView>
           {dashValue.map((data, index) => (
             <DSContainer

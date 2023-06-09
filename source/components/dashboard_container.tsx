@@ -1,15 +1,12 @@
-import React, {FunctionComponent, useState, useRef} from 'react';
+import React, {FunctionComponent} from 'react';
 import {
-  Image,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {commonStyles} from './style';
+import {color} from './style';
 import ColorConstants from '../constants/color_constants';
 import {HighLightLabel} from './label';
-import {Avatar} from '@rneui/base';
 import AppSize from './size';
 import Product from '../assets/qtile_image/active_order.svg';
 import List from '../assets/qtile_image/grid_menu.svg';
@@ -71,7 +68,7 @@ const DSContainer: FunctionComponent<Props> = ({navigation, data, index}) => {
       <HighLightLabel
         hightLightLabel={data.name}
         style={undefined}
-        labelStyle={commonStyles.color(ColorConstants.primaryWhite)}
+        labelStyle={color(ColorConstants.primaryWhite)}
       />
     </TouchableOpacity>
   );

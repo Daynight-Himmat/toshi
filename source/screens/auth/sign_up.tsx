@@ -2,7 +2,7 @@ import React, {FunctionComponent, SetStateAction, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import AppButton from '../../components/app_button';
 import AppSize from '../../components/size';
-import {commonStyles} from '../../components/style';
+import {commonStyles, paddingHorizontal} from '../../components/style';
 import {TexTButton} from '../../components/text_button';
 import {HighLightLabel} from '../../components/label';
 import ColorConstants from '../../constants/color_constants';
@@ -56,10 +56,10 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
     },
   ];
 
+
   return (
     <View style={commonStyles.container}>
-      <ScrollView style={commonStyles.ph(10)}>
-        <AppSize height={20} width={undefined} />
+      <ScrollView style={paddingHorizontal(10)}>
         {signUpValue.map((data, index) => (
           <TextField
             value={data.value}
@@ -69,14 +69,14 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
           />
         ))}
 
-        <AppSize height={20} width={undefined} />
+        <AppSize height={20} />
         <AppButton
           text={'Create an Account'}
           style={undefined}
           textStyle={undefined}
           onPress={undefined}
         />
-        <AppSize height={20} width={undefined} />
+        <AppSize height={20}  />
         <TexTButton
           onPressText="SignIn"
           infoText="Already have an Account ?"

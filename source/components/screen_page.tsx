@@ -9,21 +9,28 @@ import InquiryMessage from '../screens/home/inquiry_message';
 import ProductPreference from '../screens/home/menu/product_preference';
 import UsagePreference from '../screens/home/menu/usage_preference';
 import MyProfile from '../screens/home/my_profile';
+import InquiryOrder from '../screens/home/order/inquiry';
+import OutDateOrder from '../screens/home/order/outdate';
+import CompleteOrder from '../screens/home/order/complete';
+import LostOrder from '../screens/home/order/lost';
 import InquiryOrderStatus from '../screens/home/order/order';
 import ListOfProduct from '../screens/home/product/product_list';
 import SaveNewsFeeds from '../screens/home/save_news_feeds';
 import SaveProduct from '../screens/home/save_product';
 import SplashSreen from '../screens/onboarding/splash';
 import WelCome from '../screens/onboarding/welcome';
+import ProductPage from '../screens/home/product/product_page';
 
 const screens = [
   {
     name: 'WelCome',
     component: WelCome,
+    headerShown: false,
   },
   {
     name: 'Splash',
-    component: SplashSreen
+    component: SplashSreen,
+    headerShown: false,
   },
   {
     name: 'SignIn',
@@ -95,7 +102,28 @@ const screens = [
   {
     name: 'Feeds',
     component: Feeds
-  }
+  },
+  {
+    name: 'Inquiry Order',
+    component: InquiryOrder
+
+  },
+  {
+    name: 'OutDate Order',
+    component: OutDateOrder,
+    
+  },
+  {
+    name: 'Complete Order',
+    component: CompleteOrder
+    
+  },
+  {
+    name: 'Lost Order',
+    component: LostOrder,
+    
+  }, 
+  
 ];
 
 export default screens;

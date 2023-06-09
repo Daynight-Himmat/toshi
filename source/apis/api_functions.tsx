@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosInstance from './interceptor';
 
 abstract class Apis {
+
   static logInApi = async (username: string, password: string) => {
     try {
       console.log(username, password);
@@ -47,16 +48,109 @@ abstract class Apis {
     }
   };
 
-  static inquiryMessage = async () => {
+  static completeOrder = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await axios.post(
-        BaseUrl(ApiConstants.messageList),
-        {
-          token: token,
-          userId: 2,
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.completeOrderList+`?contact_name_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
         },
-      );
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static lostOrder = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.lostOrderList+`?contact_name_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static inquiryOrder = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.inquiry+`?contact_name_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static outDateOrder = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.orderList+`?contact_name_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getProductBYPrefernce = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.productListing+`?user_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getProductWithUserPrefernce = async (praference: any) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.getUserPreference+`?user_id=${id}&preference_id=${praference}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
     } catch (error) {
       console.log(error);
     }

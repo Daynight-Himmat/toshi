@@ -6,6 +6,7 @@ import {TwoText} from '../../components/label';
 import {AppHeader} from '../../components/app_header';
 import Apis from '../../apis/api_functions';
 import { Loading } from '../../components/no_data_found';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
   navigation: any;

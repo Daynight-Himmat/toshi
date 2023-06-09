@@ -3,16 +3,31 @@ import {View, Image, StyleSheet} from 'react-native';
 import ColorConstants from '../../constants/color_constants';
 import {Label} from '../../components/label';
 import FontConstants from '../../constants/font_constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CommanFunctions from '../../components/comman_functions';
 
 type Props = {
   navigation: any;
 };
 
 const WelCome: FunctionComponent<Props> = ({navigation}) => {
+
+  const getRoute = async () => {
+    const userId = await AsyncStorage.getItem('id');
+    if(userId){
+      CommanFunctions.routing(navigation,'DashBoard');
+      
+    }
+    else{
+      CommanFunctions.routing(navigation,'Splash');
+    }
+  }
+
+
   useEffect(() => {
-    console.log('Your app is up to date');
+    
     setTimeout(() => {
-      navigation.navigate('Splash');
+      getRoute()
     }, 1000);
   }, []);
 

@@ -73,6 +73,21 @@ const TwoText : FunctionComponent<Props4> = ({label, start}) => {
   </View>;
 }
 
+
+type Props5 = {
+  label?: string;
+  start?: string;
+  startStyle?: any;
+}
+
+
+const CommonTwoText : FunctionComponent<Props5> = ({label, start, startStyle}) => {
+  return  <View style={{flexDirection: 'row',paddingVertical: 2}}>
+  <Label name={label} />
+  <Label name={start} style={startStyle}/>
+</View>;
+}
+
 const styles = StyleSheet.create({
   label: {
     width: '100%',
@@ -129,4 +144,4 @@ const styles = StyleSheet.create({
     color: ColorConstants.primaryColor}
 });
 
-export {Label, LightText, LightText1, HighLightLabel, TwoText};
+export {Label, LightText, LightText1, HighLightLabel, TwoText, CommonTwoText};

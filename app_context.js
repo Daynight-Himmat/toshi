@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import SplashScreen from 'react-native-splash-screen';
 import screens from './source/components/screen_page';
 import ColorConstants from './source/constants/color_constants';
+import ListOfProduct from './source/screens/home/product/product_list';
 
 const Stack = createNativeStackNavigator();
 

@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {commonStyles} from '../../components/style';
+import {alignSelf, commonStyles, paddingHorizontal} from '../../components/style';
 import {AuthHeader} from '../../components/app_header';
 import {HighLightLabel, Label} from '../../components/label';
 import ColorConstants from '../../constants/color_constants';
@@ -48,7 +48,6 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
       await Apis.logInApi(email,password).then(response => {
         if(response?.status === 200){
           setLoading(false);
-          console.log(response.data.result.token);
           AsyncStorage.setItem('token', response.data.result.token);
           AsyncStorage.setItem('id', response.data.result.name?.id.toString());
           toastMessage(toast, response.data?.message);
@@ -66,12 +65,12 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
   return (
     <View style={commonStyles.container}>
       <AuthHeader navigation={navigation} show={false} />
-      <View style={commonStyles.ph(10)}>
+      <View style={paddingHorizontal(10)}>
         <AppSize height={20} width={undefined} />
         <HighLightLabel
           hightLightLabel="Welcome"
           labelStyle={undefined}
-          style={commonStyles.as('flex-start')}
+          style={alignSelf('flex-start')}
         />
         <AppSize height={5} width={undefined} />
         <Label name="Sign in to you account" style={undefined} margin={0} />

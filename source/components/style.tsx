@@ -1,8 +1,78 @@
-import {StyleSheet} from 'react-native';
+import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import FontConstants from '../constants/font_constants';
 import ColorConstants from '../constants/color_constants';
 
-export const commonStyles = StyleSheet.create({
+type Style = {
+  container: ViewStyle;
+  flexWithMidCenter: ViewStyle;
+  titleStyle: ViewStyle;
+  fill: ViewStyle;
+  header: ViewStyle;
+  fontFamily: ViewStyle;
+  ph20: ViewStyle;
+  rowWithCenter: ViewStyle;
+  rowWithCenterAndSB: ViewStyle;
+  rowWithSB: ViewStyle;
+  row: ViewStyle;
+  rowWithWrap: ViewStyle;
+  rowWithWrapCenter: ViewStyle;
+  textCenter: ViewStyle;
+  selfCenter: ViewStyle;
+  selfStart: ViewStyle;
+  selfEnd: ViewStyle;
+  shadow: ViewStyle;
+  column: ViewStyle;
+  midCenter: ViewStyle;
+};
+
+export const padding = (padding: any): ViewStyle => {return {padding}}
+
+export const paddingHorizontal = (paddingHorizontal: any): ViewStyle => {return {paddingHorizontal}}
+
+export const paddingVertical = (paddingVertical: any): ViewStyle => {return {paddingVertical}}
+
+export const paddingRight = (paddingRight: any): ViewStyle => {return {paddingRight}}
+
+export const paddingLeft = (paddingLeft: any): ViewStyle => {return {paddingLeft}}
+
+export const paddingTop = (paddingTop: any): ViewStyle => {return {paddingTop}}
+
+export const paddingBottom = (paddingBottom: any): ViewStyle => {return {paddingBottom}}
+
+export const margin = (margin: any): ViewStyle => {return {margin}}
+
+export const marginHorizontal = (marginHorizontal: any): ViewStyle => {return {marginHorizontal}}
+
+export const marginVertical = (marginVertical: any): ViewStyle => {return {marginVertical}}
+
+export const marginRight = (marginRight: any): ViewStyle => {return {marginRight}}
+
+export const marginLeft = (marginLeft: any): ViewStyle => {return {marginLeft}}
+
+export const marginTop = (marginTop: any): ViewStyle => {return {marginTop}}
+
+export const marginBottom = (marginBottom: any): ViewStyle => {return {marginBottom}}
+
+export const backgroundColor = (backgroundColor: any): ViewStyle => {return {backgroundColor}}
+
+export const color = (color: any): TextStyle => {return {color}}
+
+export const fontSize = (fontSize: any): TextStyle => {return {fontSize}}
+
+export const height = (height: any): ViewStyle => {return {height}}
+
+export const width = (width: any): ViewStyle => {return {width}}
+
+export const justifyContent = (justifyContent: any): ViewStyle => {return {justifyContent}}
+
+export const alignItems = (alignItems: any): ViewStyle => {return {alignItems}}
+
+export const alignSelf = (alignSelf: any): ViewStyle => {return {alignSelf}}
+
+export const alignContent = (alignContent: any): ViewStyle => {return {alignContent}}
+
+
+export const commonStyles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     backgroundColor: ColorConstants.primaryWhite,
@@ -25,15 +95,6 @@ export const commonStyles = StyleSheet.create({
   fontFamily: {
     // fontFamily: 'Roboto',
   },
-  ph: (paddingHorizontal: any) => ({
-    paddingHorizontal,
-  }),
-  bg: (backgroundColor: any) => ({
-    backgroundColor,
-  }),
-  color: (color: any) => ({
-    color,
-  }),
   ph20: {
     paddingHorizontal: 20,
   },
@@ -50,82 +111,8 @@ export const commonStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  fontSize: (fontSize: any) => ({
-    fontSize,
-  }),
-  height: (height: any) => ({
-    height,
-  }),
-  borderColor: (borderColor: any) => ({
-    borderColor,
-  }),
-  width: (width: any) => ({
-    width,
-  }),
-  pr: (paddingRight: any) => ({
-    paddingRight,
-  }),
-  pb: (paddingBottom: any) => ({
-    paddingBottom,
-  }),
-
-  pt: (paddingTop: any) => ({
-    paddingTop,
-  }),
-  pv: (paddingVertical: any) => ({
-    paddingVertical,
-  }),
-
-  pl: (paddingLeft: any) => ({
-    paddingLeft,
-  }),
-  mb: (marginBottom: any) => ({
-    marginBottom,
-  }),
-  mt: (marginTop: any) => ({
-    marginTop,
-  }),
-  ml: (marginLeft: any) => ({
-    marginLeft,
-  }),
-  mr: (marginRight: any) => ({
-    marginRight,
-  }),
-  mh: (marginHorizontal: any) => ({
-    marginHorizontal,
-  }),
-  mv: (marginVertical: any) => ({
-    marginVertical,
-  }),
-  m: (margin: any) => ({
-    margin,
-  }),
-  jc: (justifyContent: any) => ({
-    justifyContent,
-  }),
-  ai: (alignItems: any) => ({
-    alignItems,
-  }),
-  as: (alignSelf: any) => ({
-    alignSelf,
-  }),
-  padding: (padding: any) => ({
-    padding,
-  }),
   row: {
     flexDirection: 'row',
-  },
-  Textbold: (fontWeight: any) => ({
-    fontWeight,
-  }),
-  darkTilet: (height: any, width: any) => ({
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    height,
-    width,
-    position: 'absolute',
-  }),
-  upperCase: {
-    textTransform: 'uppercase',
   },
   rowWithWrap: {
     flexDirection: 'row',
@@ -137,11 +124,6 @@ export const commonStyles = StyleSheet.create({
     width: '100%',
     flexWrap: 'wrap',
     alignItems: 'center',
-  },
-  offerText: {
-    fontSize: 10,
-    textAlign: 'center',
-    textTransform: 'uppercase',
   },
   textCenter: {
     textAlign: 'center',
@@ -155,20 +137,6 @@ export const commonStyles = StyleSheet.create({
   selfEnd: {
     alignSelf: 'flex-end',
   },
-  zIndex: (zIndex: any) => ({
-    zIndex,
-  }),
-  tintColor: (tintColor: any) => ({
-    tintColor,
-  }),
-  borderWidth: (borderWidth: any) => ({
-    borderWidth,
-  }),
-  textDecorationLine: {
-    paddingBottom: 4,
-    borderBottomWidth: 1,
-    borderColor: '#333',
-  },
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
@@ -178,75 +146,7 @@ export const commonStyles = StyleSheet.create({
     shadowOpacity: 0.14,
     shadowRadius: 5,
     elevation: 5,
-    // backgroundColor: '#fff',
   },
-  headerIcon: (backgroundColor: any) => ({
-    backgroundColor,
-    padding: 10,
-    borderRadius: 100,
-  }),
-  iconBg: (backgroundColor: any) => ({
-    padding: 10,
-    backgroundColor,
-    borderRadius: 50,
-  }),
-  bbw: (borderBottomWidth: any) => ({
-    borderBottomWidth,
-  }),
-  borderRadius: (borderRadius: any) => ({
-    borderRadius,
-  }),
-  positionRelative: {
-    position: 'relative',
-  },
-  badgeStyle: {
-    position: 'absolute',
-    top: -3,
-    right: -3,
-  },
-  rowText: {
-    // color: BASIC_COLORS.REGENT_GRAY,
-    fontSize: 12,
-  },
-  headingRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingRight: 14,
-    paddingBottom: 10,
-    paddingLeft: 6,
-  },
-  headerPadding: {
-    marginTop: 5,
-    paddingHorizontal: 16,
-  },
-  modalHeaderPadding: {
-    marginTop: 10,
-    paddingHorizontal: 16,
-  },
-  flexEnd: {
-    alignItems: 'flex-end',
-  },
-  flexWrap: {
-    flex: 1,
-    flexWrap: 'wrap',
-  },
-  top: (top: any) => ({top}),
-  fr: {
-    flexDirection: 'row-reverse',
-  },
-  left: (left: any) => ({
-    left,
-  }),
-  bottom: (bottom: any) => ({
-    bottom,
-  }),
-  FD: (flexDirection: any) => ({
-    flexDirection,
-  }),
-  right: (right: any) => ({
-    right,
-  }),
   column: {
     flexDirection: 'column',
   },
@@ -254,19 +154,8 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title400: {
-    fontFamily: FontConstants.ragular,
-    fontSize: 16,
-    color: ColorConstants.primaryBlack,
-  },
-  title500: {
-    fontFamily: FontConstants.ragular,
-    fontSize: 16,
-    color: ColorConstants.primaryBlack,
-  },
-  title600: {
-    fontFamily: FontConstants.ragular,
-    fontSize: 16,
-    color: ColorConstants.primaryBlack,
-  },
 });
+function getStyle(arg0: number): any {
+  throw new Error('Function not implemented.');
+}
+
