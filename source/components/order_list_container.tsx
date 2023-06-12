@@ -1,11 +1,19 @@
 import React, {FunctionComponent} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ColorConstants from '../constants/color_constants';
-import {CommonTwoText, Label} from './label';
+import {CommonTwoText, HighLightLabel, Label} from './label';
 import RowButton from './row_button';
 import AppSize from './size';
-import {color} from './style';
-import {Avatar} from '@rneui/themed';
+import {alignItems, alignSelf, color, commonStyles, padding} from './style';
+import {Avatar, Icon} from '@rneui/themed';
+import AppButton from './app_button';
+import { Loading } from './no_data_found';
 
 type Props = {
   uri?: string;
@@ -17,7 +25,7 @@ type Props = {
   start2?: string;
   start3?: string;
   start4?: string;
-  inquiry_stage?:string;
+  inquiry_stage?: string;
   isComplete?: boolean;
   isSpecific?: boolean;
   onPress?: () => void;
@@ -84,12 +92,94 @@ const OrderList: FunctionComponent<Props> = ({
   );
 };
 
-export default OrderList;
+type Props1 = {
+  label?: string;
+  description?: string;
+  sendInquiry?: ()=> void;
+  iconPress?: ()=> void;
+  whatsAppPress?: ()=> void;
+  containerPress?: ()=> void;
+};
+
+const ProductContainer: FunctionComponent<Props1> = ({label, description, whatsAppPress, iconPress, sendInquiry, containerPress}) => {
+  return (
+    <TouchableOpacity style={styles.inquiryColumContainer} onPress={containerPress}>
+      <Avatar
+        containerStyle={{
+          width: '100%',
+          height: 150,
+          borderRadius: 5,
+        }}
+        renderPlaceholderContent={<Loading />}
+        imageProps={{
+          borderRadius: 5 ,
+        }}
+
+        source={require('../assets/image/feeds.png')}
+      />
+      <View style={padding(10)}>
+        <HighLightLabel
+          hightLightLabel={label}
+          style={{  
+            alignSelf:"flex-start"
+          }}
+        />
+        <AppSize height={4} />
+        {description && <Label
+          name={description ?? ''}
+          style={styles.discription}
+          numberOfLines={2}
+        />}
+        <AppSize height={15} />
+        <View style={commonStyles.row}>
+          <AppButton text="send Inquiry" style={{flex: 2}} onPress={sendInquiry} />
+          <View
+            style={{
+              flex: 2,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'flex-start',
+              paddingLeft: 20,
+            }}>
+            <Icon name="bookmark-outline" type="ionicon" onPress={iconPress}/>
+          </View>
+          <View
+            style={{
+              flex: 2,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'flex-end',
+              paddingRight: 20,
+            }}>
+            <Icon
+              name="logo-whatsapp"
+              type="ionicon"
+              color={ColorConstants.whatsAppGreen}
+              onPress={whatsAppPress}
+            />
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export {OrderList, ProductContainer};
 
 const styles = StyleSheet.create({
   inquiryContainer: {
     elevation: 100,
     flexDirection: 'row',
+    backgroundColor: ColorConstants.primaryWhite,
+    margin: 10,
+    shadowColor: ColorConstants.primaryBlack,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    borderRadius: 5,
+  },
+  inquiryColumContainer: {
+    elevation: 100,
     backgroundColor: ColorConstants.primaryWhite,
     margin: 10,
     shadowColor: ColorConstants.primaryBlack,
@@ -116,5 +206,8 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  discription: {
+    color: ColorConstants.textHintColor,
   },
 });

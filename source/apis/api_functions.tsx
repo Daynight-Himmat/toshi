@@ -120,13 +120,13 @@ abstract class Apis {
     }
   };
 
-  static getProductBYPrefernce = async () => {
+  static getProductBYPrefernce = async (preference_id: any) => {
     try {
       const token = await AsyncStorage.getItem('token');
       const id = await AsyncStorage.getItem('id');
       const response = await axiosInstance({
         method: 'get',
-        url: BaseUrl(ApiConstants.productListing+`?user_id=${id}`),
+        url: BaseUrl(ApiConstants.productListing+`?user_id=${id}&preference_id=${preference_id}`),
         headers: {
           Accept: 'application/json',
           Authorization: `Bearer ${token}`
@@ -145,6 +145,24 @@ abstract class Apis {
       const response = await axiosInstance({
         method: 'get',
         url: BaseUrl(ApiConstants.getUserPreference+`?user_id=${id}&preference_id=${praference}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getProductDetails = async (productId: any) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.getProductDetails+`?user_id=${id}&product_id=${productId}`),
         headers: {
           Accept: 'application/json',
           Authorization: `Bearer ${token}`

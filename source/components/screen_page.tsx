@@ -20,6 +20,7 @@ import SaveProduct from '../screens/home/save_product';
 import SplashSreen from '../screens/onboarding/splash';
 import WelCome from '../screens/onboarding/welcome';
 import ProductPage from '../screens/home/product/product_page';
+import ProductDetails from '../screens/home/product/product_details';
 
 const screens = [
   {
@@ -123,6 +124,11 @@ const screens = [
     component: LostOrder,
     
   }, 
+  {
+    name: 'Product Details',
+    component: ProductDetails,
+    
+  },
   
 ];
 

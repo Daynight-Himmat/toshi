@@ -19,6 +19,8 @@ abstract class ColorConstants {
   // static const tab_bar_selected_item_color =  '#0f97bf'
   static app_bar_text_color = '#05032a';
 
+  static whatsAppGreen = '#008000';
+
   //Other
 }
 

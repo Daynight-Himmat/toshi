@@ -5,7 +5,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import Apis from '../../../apis/api_functions';
 import ProductPage from './product_page';
 import {StyleSheet} from 'react-native';
-import { Product } from '../../../model/product';
+import {Product} from '../../../model/product';
+import {Loading} from '../../../components/no_data_found';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -24,7 +25,6 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
         if (response?.status === 200) {
           setLoading(false);
           setProductData(response?.data?.result?.product);
-          console.log(response?.data?.result?.product);
         }
       });
     } catch (error) {
@@ -37,7 +37,7 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
     getProducts();
   }, []);
 
-  return (
+  return !isLoading ? (
     <Tab.Navigator
       screenOptions={{
         tabBarScrollEnabled: true,
@@ -50,15 +50,26 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
           borderRadius: 100,
           height: 4,
         },
+        tabBarItemStyle: {
+          backgroundColor: 'white',
+          flexBasis: 1,
+          width: 'auto',
+        },
       }}>
-        <Tab.Screen name={'All'} component={ProductPage} />
-      {getProductData &&
-        getProductData.map((data, index) => {
-          return (
-            <Tab.Screen key={index} name={data?.code} component={ProductPage} initialParams={{id: data?.id}}/>
-          );
-        })}
+      <Tab.Screen name={'All'} component={ProductPage} />
+      {getProductData.map((data, index) => {
+        return (
+          <Tab.Screen
+            key={index}
+            name={data?.code}
+            component={ProductPage}
+            initialParams={{data: data}}
+          />
+        );
+      })}
     </Tab.Navigator>
+  ) : (
+    <Loading />
   );
 };
 

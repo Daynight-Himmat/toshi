@@ -2,17 +2,29 @@ import React, {FunctionComponent} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import ColorConstants from '../constants/color_constants';
 import FontConstants from '../constants/font_constants';
+import {Divider} from 'react-native-paper';
+import { commonStyles } from './style';
 
 type Props = {
   name?: string;
   style?: any;
   margin?: number;
+  numberOfLines?: number;
 };
 
-const Label: FunctionComponent<Props> = ({name, style, margin}) => {
+const Label: FunctionComponent<Props> = ({
+  name,
+  style,
+  margin,
+  numberOfLines,
+}) => {
   return (
     <View style={{marginVertical: margin ?? 0}}>
-      <Text style={[styles.label_text, {...style}]}>{name}</Text>
+      <Text
+        numberOfLines={numberOfLines}
+        style={[styles.label_text, {...style}]}>
+        {name}
+      </Text>
     </View>
   );
 };
@@ -29,8 +41,8 @@ const HighLightLabel: FunctionComponent<Props1> = ({
   labelStyle,
 }) => {
   return (
-    <View style={[styles.introText, {...style}]}>
-      <Text style={[styles.label, {...labelStyle}]}>{hightLightLabel}</Text>
+    <View  style={[styles.introText, {...style}]}>
+      <Text ellipsizeMode='head' style={[styles.label, {...labelStyle}]}>{hightLightLabel}</Text>
     </View>
   );
 };
@@ -59,34 +71,91 @@ const LightText1: FunctionComponent<Props3> = ({lightText1}) => {
   );
 };
 
-
 type Props4 = {
   label?: string;
   start?: string;
-}
+};
 
-
-const TwoText : FunctionComponent<Props4> = ({label, start}) => {
-  return <View style={styles.two}>
-    <View style={{flex:1 }}><Label name={label} style={styles.twoLabel}/></View>
-    <View style={{flex:2 }}><Label name={': ' + start} /></View>
-  </View>;
-}
-
+const TwoText: FunctionComponent<Props4> = ({label, start}) => {
+  return (
+    <View style={styles.two}>
+      <View style={{flex: 1}}>
+        <Label name={label} style={styles.twoLabel} />
+      </View>
+      <View style={{flex: 2}}>
+        <Label name={': ' + start} />
+      </View>
+    </View>
+  );
+};
 
 type Props5 = {
   label?: string;
   start?: string;
   startStyle?: any;
-}
+};
 
+const CommonTwoText: FunctionComponent<Props5> = ({
+  label,
+  start,
+  startStyle,
+  
+}) => {
+  return (
+    <View style={{flexDirection: 'row', paddingVertical: 2}}>
+      <Label name={label} />
+      <Label name={start} style={startStyle} />
+    </View>
+  );
+};
 
-const CommonTwoText : FunctionComponent<Props5> = ({label, start, startStyle}) => {
-  return  <View style={{flexDirection: 'row',paddingVertical: 2}}>
-  <Label name={label} />
-  <Label name={start} style={startStyle}/>
-</View>;
-}
+type Props6 = {
+  label?: string;
+  type?: string;
+  data?: any;
+  divider?: boolean;
+};
+
+const ProductDetailTable: FunctionComponent<Props6> = ({label, type, data, divider}) => {
+  return (
+    <View>
+      <View style={{
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+      }}>
+        {type === 'data' ? <View style={commonStyles.row}>
+        <Label name={label + ' : ' + data} style={{
+          fontFamily: FontConstants.bold,
+          fontSize: 16,
+          fontWeight: '600'
+        }}/>
+        
+          </View> : 
+          (
+            <View><Label name={label + ' : '} style={{
+              fontFamily: FontConstants.bold,
+              fontSize: 16,
+              fontWeight: '600'
+            }}/>
+          {data?.map((item: any, index: number) => (
+            <Label name={`${index + 1}. ` + `${item}`} style={{
+              fontFamily: FontConstants.bold,
+              fontSize: 16,
+              fontWeight: '600'
+            }} />
+          ))}
+          </View>
+        )}
+      </View>
+      {divider && <Divider
+        style={{
+          backgroundColor: ColorConstants.primaryBlack,
+          height: 2,
+        }}
+      />}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   label: {
@@ -125,6 +194,7 @@ const styles = StyleSheet.create({
     fontFamily: FontConstants.ragular,
     color: ColorConstants.primaryBlack,
     textAlign: 'center',
+    
   },
   lightText1: {
     fontSize: 12,
@@ -133,15 +203,24 @@ const styles = StyleSheet.create({
     fontFamily: FontConstants.ragular,
   },
   two: {
-    flexDirection:'row',
+    flexDirection: 'row',
     width: '100%',
     paddingHorizontal: 10,
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   twoLabel: {
     fontFamily: FontConstants.bold,
-    fontWeight: '700', 
-    color: ColorConstants.primaryColor}
+    fontWeight: '700',
+    color: ColorConstants.primaryColor,
+  },
 });
 
-export {Label, LightText, LightText1, HighLightLabel, TwoText, CommonTwoText};
+export {
+  Label,
+  LightText,
+  LightText1,
+  HighLightLabel,
+  TwoText,
+  CommonTwoText,
+  ProductDetailTable,
+};

@@ -1,44 +1,60 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
-
+import {Loading, NoData} from '../../../components/no_data_found';
+import {ProductContainer} from '../../../components/order_list_container';
+import {ResulPro} from '../../../model/product';
 
 type Props = {
   navigation: any;
+  route: any;
 };
 
-const ProductPage: FunctionComponent<Props> = ({navigation}) => {
+const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
 
-    const [isLoading, setLoading] = useState(false);
-    const [getProductData, setProductData] = useState([]);
+  const data = route?.params?.data;
 
-    const getProducts = async () => {
-        try {
-          setLoading(true);
-          await Apis.getProductBYPrefernce().then(response => {
-            if (response?.status === 200) {
-              setLoading(false);
-              setProductData(response?.data?.result?.product);
-              console.log(response?.data?.result?.product);
-            }
-          });
-        } catch (error) {
+  console.log(data?.preference_id);
+  const [isLoading, setLoading] = useState(false);
+  const [getProductData, setProductData] = useState<ResulPro[]>([]);
+
+  const getProducts = async () => {
+    try {
+      setLoading(true);
+      await Apis.getProductBYPrefernce(data?.preference_id ?? '').then(response => {
+        if (response?.status === 200) {
           setLoading(false);
-          console.log(error);
+          setProductData(response?.data?.result?.resulPro);
         }
-      };
-    
-      useEffect(() => {
-        getProducts();
-      }, []);
-  return (
-   <View style={styles.viewContainer}>
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
-   </View>
+  useEffect(() => {
+    getProducts();
+  }, []);
+  return (
+    <View style={styles.viewContainer}>
+      {getProductData ? <ScrollView>
+        {getProductData && getProductData.map((_data, _index) => (
+          <ProductContainer
+            key={_index}
+            label={_data?.product_name + ` (${_data?.product_code})`}
+            description={_data.description}
+            containerPress={function (): void {
+              return navigation.navigate('Product Details', {
+                data: _data
+              });
+            }}
+          />
+        ))}
+      </ScrollView> : <NoData />}
+      {isLoading && <Loading />}
+    </View>
   );
 };
 
@@ -46,16 +62,16 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite
+    backgroundColor: ColorConstants.primaryWhite,
   },
   textStyles: {
     textAlign: 'justify',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   highLight: {
     alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor
-  }
+    color: ColorConstants.primaryColor,
+  },
 });
 
 export default ProductPage;
