@@ -5,6 +5,9 @@ import Apis from '../../../apis/api_functions';
 import {Loading, NoData} from '../../../components/no_data_found';
 import {ProductContainer} from '../../../components/order_list_container';
 import {ResulPro} from '../../../model/product';
+import toast from 'react-native-toast-notifications/lib/typescript/toast';
+import toastMessage from '../../../components/toast_message';
+import { useToast } from 'react-native-toast-notifications';
 
 type Props = {
   navigation: any;
@@ -14,6 +17,7 @@ type Props = {
 const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
 
   const data = route?.params?.data;
+  const toast = useToast();
 
   console.log(data?.preference_id);
   const [isLoading, setLoading] = useState(false);
@@ -34,6 +38,22 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     }
   };
 
+  const getSave = async (id: any) => {
+    try {
+      setLoading(true);
+      Apis.getSaveProduct(id).then(response => {
+        if (response?.status === 200) {
+          setLoading(false);
+          toastMessage(toast,response.data.message);
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -43,11 +63,14 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
         {getProductData && getProductData.map((_data, _index) => (
           <ProductContainer
             key={_index}
+            uri={_data.upload_img}
+            iconCondition={_data.is_product_saved}
             label={_data?.product_name + ` (${_data?.product_code})`}
             description={_data.description}
+            iconPress={()=> getSave(_data.id)}
             containerPress={function (): void {
               return navigation.navigate('Product Details', {
-                data: _data
+                data: _data.id
               });
             }}
           />

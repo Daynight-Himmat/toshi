@@ -5,8 +5,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import Apis from '../../../apis/api_functions';
 import ProductPage from './product_page';
 import {StyleSheet} from 'react-native';
-import {Product} from '../../../model/product';
 import {Loading} from '../../../components/no_data_found';
+import { Product } from '../../../model/product_preference';
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -7,6 +7,7 @@ import {AppHeader} from '../../components/app_header';
 import Apis from '../../apis/api_functions';
 import { Loading } from '../../components/no_data_found';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Message } from '../../model/inquiry_message';
 
 type Props = {
   navigation: any;
@@ -14,7 +15,7 @@ type Props = {
 
 const InquiryMessage: FunctionComponent<Props> = ({navigation}) => {
   const [isLoading, setLoading] = useState(false);
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState<Message[]>([]);
 
   const messageList = async () => {
     try{
@@ -46,7 +47,10 @@ const InquiryMessage: FunctionComponent<Props> = ({navigation}) => {
       {message.map((data, index)=> 
       <TouchableOpacity
       key={index}
-      onPress={()=> {}}
+      onPress={()=> navigation.navigate('Inquiry Preview', {
+        data: data.productDetails,
+        inquiry_message: data.inquiry_msg,
+      })}
        style={styles.messageContainer}>
          <TwoText label='Date' start={data?.inquiry_date}/>
          <TwoText label='Product' start={data?.inquiry_for +' '+ data?.productDetails?.product_code}/>

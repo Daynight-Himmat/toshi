@@ -1,7 +1,7 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
-import OrderList from '../../../components/order_list_container';
+import {OrderList} from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
 import Apis from '../../../apis/api_functions';
 import {orderResult} from '../../../model/order_result';
@@ -36,7 +36,7 @@ const InquiryOrder: FunctionComponent<Props> = ({navigation}) => {
     <View style={styles.viewContainer}>
       {getInquiry ? (
         <ScrollView>
-          {getInquiry.map((_data: any, index: React.Key | null | undefined) => (
+          {getInquiry.map((_data: orderResult, index: React.Key | null | undefined) => (
             <OrderList
               key={index}
               label1="Inquiry No: "
@@ -47,7 +47,7 @@ const InquiryOrder: FunctionComponent<Props> = ({navigation}) => {
               start2={_data.inquiry_date}
               start3={_data.SalesInvoices ?? 'Not Found'}
               start4={_data.SalesInvoices ?? 'Not Found'}
-              uri={''}
+              uri={_data.product_img}
             />
           ))}
         </ScrollView>

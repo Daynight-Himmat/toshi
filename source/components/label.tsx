@@ -3,7 +3,8 @@ import {View, Text, StyleSheet} from 'react-native';
 import ColorConstants from '../constants/color_constants';
 import FontConstants from '../constants/font_constants';
 import {Divider} from 'react-native-paper';
-import { commonStyles } from './style';
+import { color, commonStyles } from './style';
+import AppSize from './size';
 
 type Props = {
   name?: string;
@@ -157,6 +158,22 @@ const ProductDetailTable: FunctionComponent<Props6> = ({label, type, data, divid
   );
 };
 
+
+type Props7 = {
+  label?: string;
+  title?: string;
+}
+const LabelAndTitle: FunctionComponent<Props7> = ({label, title}) => {
+  return (
+    <View>
+     <Label name={label} style={color(ColorConstants.textGrey)}/>
+     <Label name={title} margin={10}/>
+     <AppSize height={10}/>
+    </View>
+  );
+};
+
+
 const styles = StyleSheet.create({
   label: {
     width: '100%',
@@ -223,4 +240,5 @@ export {
   TwoText,
   CommonTwoText,
   ProductDetailTable,
+  LabelAndTitle,
 };

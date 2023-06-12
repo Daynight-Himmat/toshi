@@ -138,7 +138,7 @@ abstract class Apis {
     }
   };
 
-  static getProductWithUserPrefernce = async (praference: any) => {
+  static getProductWithUserPrefernce = async (praference?: any) => {
     try {
       const token = await AsyncStorage.getItem('token');
       const id = await AsyncStorage.getItem('id');
@@ -163,6 +163,60 @@ abstract class Apis {
       const response = await axiosInstance({
         method: 'get',
         url: BaseUrl(ApiConstants.getProductDetails+`?user_id=${id}&product_id=${productId}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getFeeds = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.newsListing+ `?user_id=${id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getSaveFeeds = async (news_feed_id: any) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.saveNews+ `?user_id=${id}&news_feed_id=${news_feed_id}`),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getSaveProduct = async (product_id: any) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axiosInstance({
+        method: 'get',
+        url: BaseUrl(ApiConstants.saveProduct+ `?user_id=${id}&product_id=${product_id}`),
         headers: {
           Accept: 'application/json',
           Authorization: `Bearer ${token}`

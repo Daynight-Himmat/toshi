@@ -2,7 +2,7 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
-import OrderList from '../../../components/order_list_container';
+import {OrderList} from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
 import { orderResult } from '../../../model/order_result';
 
@@ -38,7 +38,7 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
       {getLostResult ? (
         <ScrollView>
           {getLostResult.map(
-            (_data: any, index: React.Key | null | undefined) => (
+            (_data: orderResult, index: React.Key | null | undefined) => (
               <OrderList
                 key={index}
                 label1="Inquiry No: "
@@ -49,7 +49,10 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
                 start2={_data.inquiry_date}
                 start3={_data.SalesInvoices ?? 'Not Found'}
                 start4={_data.SalesInvoices ?? 'Not Found'}
-                uri={''}
+                uri={_data.product_img}
+                onPress={()=> navigation.navigate('Order Status Details', {
+                  data: _data
+                })}
                 isSpecific
                 inquiry_stage={_data.inquiry_stage}
               />

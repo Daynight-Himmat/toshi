@@ -24,7 +24,7 @@ const MyProfileList: FunctionComponent<Props> = ({title, icon, iconType, onPress
   return (
     <TouchableOpacity style={styles.viewContainer} onPress={onPress}>
       <View style={styles.iconContainer}>
-      <Icon name={icon} type={iconType} color={ColorConstants.primaryWhite} size={15}/>
+      <Icon name={icon ?? ''} type={iconType} color={ColorConstants.primaryWhite} size={15}/>
       </View>
       <AppSize width={10} />
       <View style={{ flexDirection: 'row', flex:1, justifyContent: 'space-between'}}>

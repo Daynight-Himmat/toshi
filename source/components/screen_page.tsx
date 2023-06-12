@@ -21,6 +21,9 @@ import SplashSreen from '../screens/onboarding/splash';
 import WelCome from '../screens/onboarding/welcome';
 import ProductPage from '../screens/home/product/product_page';
 import ProductDetails from '../screens/home/product/product_details';
+import OrderStatusDetails from '../screens/home/order/order_status_details';
+import InquiryPreView from '../screens/home/product/inquiry_preview';
+import FeedsPreview from '../screens/home/feeds_preview';
 
 const screens = [
   {
@@ -127,7 +130,21 @@ const screens = [
   {
     name: 'Product Details',
     component: ProductDetails,
-    
+  },
+  {
+    name: 'Order Status Details',
+    component: OrderStatusDetails,
+    headerShown: false,
+  },
+  {
+    name: 'Inquiry Preview',
+    component: InquiryPreView,
+    headerShown: true,
+  },
+  {
+    name: 'Feed Preview',
+    component: FeedsPreview,
+    headerShown: true,
   },
   
 ];

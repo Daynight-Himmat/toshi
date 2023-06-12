@@ -11,6 +11,7 @@ abstract class ColorConstants {
   static yellow = '#fdec20';
   static red = '#ff4e54';
   static textFieldLine = '#dbdbdb';
+  static textGrey = '#878787';
   static textHintColor = '#383838';
   static iq_submit = '#383838';
 

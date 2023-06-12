@@ -13,7 +13,8 @@ import AppSize from './size';
 import {alignItems, alignSelf, color, commonStyles, padding} from './style';
 import {Avatar, Icon} from '@rneui/themed';
 import AppButton from './app_button';
-import { Loading } from './no_data_found';
+import {Loading} from './no_data_found';
+import {ApiConstants} from '../constants/api_constants';
 
 type Props = {
   uri?: string;
@@ -52,8 +53,18 @@ const OrderList: FunctionComponent<Props> = ({
         containerStyle={{
           width: 150,
           height: 150,
+          borderRadius: 5,
         }}
-        source={require('../assets/image/feeds.png')}
+        imageProps={{
+          borderRadius: 5,
+        }}
+        source={
+          uri
+            ? {
+                uri: ApiConstants.baseProductImageUrl + uri?.split(',')[0],
+              }
+            : require('../assets/image/nofound.jpg')
+        }
       />
       <View
         style={{
@@ -94,16 +105,29 @@ const OrderList: FunctionComponent<Props> = ({
 
 type Props1 = {
   label?: string;
+  uri?: string;
   description?: string;
-  sendInquiry?: ()=> void;
-  iconPress?: ()=> void;
-  whatsAppPress?: ()=> void;
-  containerPress?: ()=> void;
+  iconCondition?: string;
+  sendInquiry?: () => void;
+  iconPress?: () => void;
+  whatsAppPress?: () => void;
+  containerPress?: () => void;
 };
 
-const ProductContainer: FunctionComponent<Props1> = ({label, description, whatsAppPress, iconPress, sendInquiry, containerPress}) => {
+const ProductContainer: FunctionComponent<Props1> = ({
+  uri,
+  label,
+  description,
+  iconCondition,
+  whatsAppPress,
+  iconPress,
+  sendInquiry,
+  containerPress,
+}) => {
   return (
-    <TouchableOpacity style={styles.inquiryColumContainer} onPress={containerPress}>
+    <TouchableOpacity
+      style={styles.inquiryColumContainer}
+      onPress={containerPress}>
       <Avatar
         containerStyle={{
           width: '100%',
@@ -112,27 +136,38 @@ const ProductContainer: FunctionComponent<Props1> = ({label, description, whatsA
         }}
         renderPlaceholderContent={<Loading />}
         imageProps={{
-          borderRadius: 5 ,
+          borderRadius: 5,
         }}
-
-        source={require('../assets/image/feeds.png')}
+        source={
+          uri
+            ? {
+                uri: ApiConstants.baseProductImageUrl + uri?.split(',')[0],
+              }
+            : require('../assets/image/nofound.jpg')
+        }
       />
       <View style={padding(10)}>
         <HighLightLabel
           hightLightLabel={label}
-          style={{  
-            alignSelf:"flex-start"
+          style={{
+            alignSelf: 'flex-start',
           }}
         />
         <AppSize height={4} />
-        {description && <Label
-          name={description ?? ''}
-          style={styles.discription}
-          numberOfLines={2}
-        />}
+        {description && (
+          <Label
+            name={description ?? ''}
+            style={styles.discription}
+            numberOfLines={2}
+          />
+        )}
         <AppSize height={15} />
         <View style={commonStyles.row}>
-          <AppButton text="send Inquiry" style={{flex: 2}} onPress={sendInquiry} />
+          <AppButton
+            text="send Inquiry"
+            style={{flex: 2}}
+            onPress={sendInquiry}
+          />
           <View
             style={{
               flex: 2,
@@ -141,7 +176,7 @@ const ProductContainer: FunctionComponent<Props1> = ({label, description, whatsA
               alignItems: 'flex-start',
               paddingLeft: 20,
             }}>
-            <Icon name="bookmark-outline" type="ionicon" onPress={iconPress}/>
+            <Icon name={iconCondition === 'Yes' ? "bookmark" : "bookmark-outline"} type="ionicon" onPress={iconPress} color={ColorConstants.primaryColor}/>
           </View>
           <View
             style={{
@@ -164,7 +199,82 @@ const ProductContainer: FunctionComponent<Props1> = ({label, description, whatsA
   );
 };
 
-export {OrderList, ProductContainer};
+type Props3 = {
+  uri?: string;
+  iconType?: string;
+  icon?: string;
+  label?: string;
+  description?: string;
+  date?: string;
+  onPress?: () => void;
+  navigation?: any;
+};
+
+const FeedList: FunctionComponent<Props3> = ({
+  uri,
+  label,
+  description,
+  date,
+  onPress
+}) => {
+
+  return (
+    <TouchableOpacity style={styles.inquiryContainer} onPress={onPress}>
+      <Avatar
+        containerStyle={{
+          width: 150,
+          height: 150,
+          borderRadius: 5,
+          padding: 10,
+        }}
+        renderPlaceholderContent={<Loading />}
+        
+        source={
+          uri
+            ? {
+                uri: ApiConstants.baseNewsMainImageUrl + uri,
+              }
+            : require('../assets/image/nofound.jpg')
+        }
+      />
+      <View
+        style={{
+          flex: 1,
+          paddingRight: 10,
+        }}>
+        <HighLightLabel
+          hightLightLabel={label}
+          style={{
+            width: '100%',
+            alignSelf: 'flex-start',
+          }}
+          labelStyle={{
+            fontSize: 17,
+            textAlign: 'left',
+          }}
+        />
+        <AppSize height={4} />
+        {description && (
+          <Label
+            name={description ?? ''}
+            style={styles.discription}
+            numberOfLines={4}
+          />
+        )}
+        <AppSize height={5} />
+        {date && (
+          <Label
+            name={date ?? ''}
+            style={styles.discription}
+            numberOfLines={1}
+          />
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export {OrderList, ProductContainer, FeedList};
 
 const styles = StyleSheet.create({
   inquiryContainer: {
@@ -172,6 +282,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: ColorConstants.primaryWhite,
     margin: 10,
+    height: 150,
     shadowColor: ColorConstants.primaryBlack,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.4,

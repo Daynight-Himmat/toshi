@@ -2,9 +2,9 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
-import OrderList from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
 import {orderResult} from '../../../model/order_result';
+import { OrderList } from '../../../components/order_list_container';
 
 type Props = {
   navigation: any;
@@ -37,7 +37,7 @@ const OutDateOrder: FunctionComponent<Props> = ({navigation}) => {
     <View style={styles.viewContainer}>
       {getOutDate ? (
         <ScrollView>
-          {getOutDate.map((_data: any, index: React.Key | null | undefined) => (
+          {getOutDate.map((_data: orderResult, index: React.Key | null | undefined) => (
             <OrderList
               key={index}
               label1="Inquiry No: "
@@ -48,7 +48,7 @@ const OutDateOrder: FunctionComponent<Props> = ({navigation}) => {
               start2={_data.inquiry_date}
               start3={_data.SalesInvoices ?? 'Not Found'}
               start4={_data.SalesInvoices ?? 'Not Found'}
-              uri={''}
+              uri={_data.product_img}
               isSpecific
               inquiry_stage={_data.inquiry_stage}
             />
