@@ -1,18 +1,18 @@
 import React, {FunctionComponent, useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import ColorConstants from '../../constants/color_constants';
-import {FeedList} from '../../components/order_list_container';
-import Apis from '../../apis/api_functions';
-import {FeedsResult} from '../../model/newFeeds';
-import {Loading, NoData} from '../../components/no_data_found';
+import ColorConstants from '../../../constants/color_constants';
+import {FeedList} from '../../../components/order_list_container';
+import Apis from '../../../apis/api_functions';
+import {FeedsResult} from '../../../model/newFeeds';
+import {Loading, NoData} from '../../../components/no_data_found';
 import { Avatar, Icon } from '@rneui/themed';
 import { color } from '@rneui/base';
-import AppButton from '../../components/app_button';
-import { HighLightLabel, Label, ProductDetailTable } from '../../components/label';
-import AppSize from '../../components/size';
-import { marginBottom, commonStyles, alignSelf } from '../../components/style';
-import { ApiConstants } from '../../constants/api_constants';
-import toastMessage from '../../components/toast_message';
+import AppButton from '../../../components/app_button';
+import { HighLightLabel, Label, ProductDetailTable } from '../../../components/label';
+import AppSize from '../../../components/size';
+import { marginBottom, commonStyles, alignSelf } from '../../../components/style';
+import { ApiConstants } from '../../../constants/api_constants';
+import toastMessage from '../../../components/toast_message';
 import { useToast } from 'react-native-toast-notifications';
 
 type Props = {

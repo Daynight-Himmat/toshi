@@ -5,6 +5,11 @@ abstract class ColorsCondtion {
     d === 'inactive'
       ? ColorConstants.textHintColor
       : ColorConstants.primaryColor;
+
+      static backgroundColor = (d: any) =>
+      d === 'No'
+        ? ColorConstants.primaryWhite
+        : ColorConstants.primaryColor;
 }
 
 export default ColorsCondtion;

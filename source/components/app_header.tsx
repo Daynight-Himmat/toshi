@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   headerStyles: {
     width: width,
     backgroundColor: ColorConstants.primaryColor,
+    justifyContent: 'space-between',
   },
   backButton: {
     marginLeft: 0,
@@ -104,6 +105,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 17,
     fontWeight: '600',
+    width: '100%', 
+    justifyContent: 'center',
+    alignSelf: 'center',
     color: ColorConstants.primaryWhite, 
     fontFamily: FontConstants.ragular,
   },

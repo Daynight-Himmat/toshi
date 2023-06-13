@@ -2,10 +2,10 @@ import ResetPass from '../screens/auth/create_pass';
 import ForgetPass from '../screens/auth/forget_pass';
 import SignIn from '../screens/auth/sign_in';
 import SignUp from '../screens/auth/sign_up';
-import AboutUs from '../screens/home/about';
+import AboutUs from '../screens/home/menu/about';
 import DashBoard from '../screens/home/dashboard';
-import Feeds from '../screens/home/feeds';
-import InquiryMessage from '../screens/home/inquiry_message';
+import Feeds from '../screens/home/feed/feeds';
+import InquiryMessage from '../screens/home/message/inquiry_message';
 import ProductPreference from '../screens/home/menu/product_preference';
 import UsagePreference from '../screens/home/menu/usage_preference';
 import MyProfile from '../screens/home/my_profile';
@@ -15,15 +15,15 @@ import CompleteOrder from '../screens/home/order/complete';
 import LostOrder from '../screens/home/order/lost';
 import InquiryOrderStatus from '../screens/home/order/order';
 import ListOfProduct from '../screens/home/product/product_list';
-import SaveNewsFeeds from '../screens/home/save_news_feeds';
-import SaveProduct from '../screens/home/save_product';
+import SaveNewsFeeds from '../screens/home/menu/save_news_feeds';
+import SaveProduct from '../screens/home/menu/save_product';
 import SplashSreen from '../screens/onboarding/splash';
 import WelCome from '../screens/onboarding/welcome';
 import ProductPage from '../screens/home/product/product_page';
 import ProductDetails from '../screens/home/product/product_details';
 import OrderStatusDetails from '../screens/home/order/order_status_details';
-import InquiryPreView from '../screens/home/product/inquiry_preview';
-import FeedsPreview from '../screens/home/feeds_preview';
+import InquiryPreView from '../screens/home/message/inquiry_preview';
+import FeedsPreview from '../screens/home/feed/feeds_preview';
 
 const screens = [
   {
@@ -73,12 +73,14 @@ const screens = [
     title: "Inquiry Message"
   },
   {
-    name: 'ProductPreference',
+    name: 'Product Preference',
     component: ProductPreference,
+    headerShown: false,
   },
   {
-    name: 'UsagePreference',
+    name: 'Usage Preference',
     component: UsagePreference,
+    headerShown: false,
   },
   {
     name: 'About Us',
@@ -98,6 +100,7 @@ const screens = [
   {
     name: 'List Of Product',
     component: ListOfProduct,
+    headerShown: false,
   },
   {
     name: 'Inquiry & Order Status',

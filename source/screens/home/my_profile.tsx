@@ -27,13 +27,13 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'Product Preference',
       icon: 'location-outline',
       iconType: 'ionicon',
-      onPress: ()=> navigation.navigate('ProductPreference'),
+      onPress: ()=> navigation.navigate('Product Preference'),
     },
     {
       name: 'Usage Preference',
       icon: 'location-outline',
       iconType: 'ionicon',
-      onPress: ()=> navigation.navigate('UsagePreference'),
+      onPress: ()=> navigation.navigate('Usage Preference'),
     },
     {
       name: 'Saved Product',

@@ -1,17 +1,17 @@
 import React, {FunctionComponent, useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import ColorConstants from '../../constants/color_constants';
-import {FeedList} from '../../components/order_list_container';
-import Apis from '../../apis/api_functions';
-import {FeedsResult} from '../../model/newFeeds';
-import {Loading, NoData} from '../../components/no_data_found';
+import ColorConstants from '../../../constants/color_constants';
+import {FeedList} from '../../../components/order_list_container';
+import Apis from '../../../apis/api_functions';
+import {FeedsResult} from '../../../model/newFeeds';
+import {Loading, NoData} from '../../../components/no_data_found';
 import { useIsFocused } from "@react-navigation/native";
 
 type Props = {
   navigation: any;
 };
 
-const Feeds: FunctionComponent<Props> = ({navigation}) => {
+const SaveNewsFeeds: FunctionComponent<Props> = ({navigation}) => {
   const [getFeeds, setFeeds] = useState<FeedsResult[]>([]);
   const [isLoading, setLoading] = useState(false);
   const isFocused = useIsFocused();
@@ -19,7 +19,7 @@ const Feeds: FunctionComponent<Props> = ({navigation}) => {
   const getFeedsData = useCallback( async () => {
     try {
       setLoading(true);
-      Apis.getFeeds().then(response => {
+      Apis.getSaveFeedList().then(response => {
         if (response?.status === 200) {
           setLoading(false);
           setFeeds(response.data?.result);
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Feeds;
+export default SaveNewsFeeds;

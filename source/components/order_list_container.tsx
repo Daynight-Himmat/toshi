@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import ColorConstants from '../constants/color_constants';
 import {CommonTwoText, HighLightLabel, Label} from './label';
@@ -15,6 +16,7 @@ import {Avatar, Icon} from '@rneui/themed';
 import AppButton from './app_button';
 import {Loading} from './no_data_found';
 import {ApiConstants} from '../constants/api_constants';
+import ColorsCondtion from './color_condition';
 
 type Props = {
   uri?: string;
@@ -149,8 +151,13 @@ const ProductContainer: FunctionComponent<Props1> = ({
       <View style={padding(10)}>
         <HighLightLabel
           hightLightLabel={label}
+          labelStyle={{
+            paddingRight: 20,
+            textAlign: 'left',
+          }}
           style={{
             alignSelf: 'flex-start',
+            width: '100%',
           }}
         />
         <AppSize height={4} />
@@ -176,7 +183,12 @@ const ProductContainer: FunctionComponent<Props1> = ({
               alignItems: 'flex-start',
               paddingLeft: 20,
             }}>
-            <Icon name={iconCondition === 'Yes' ? "bookmark" : "bookmark-outline"} type="ionicon" onPress={iconPress} color={ColorConstants.primaryColor}/>
+            <Icon
+              name={iconCondition === 'Yes' ? 'bookmark' : 'bookmark-outline'}
+              type="ionicon"
+              onPress={iconPress}
+              color={ColorConstants.primaryColor}
+            />
           </View>
           <View
             style={{
@@ -215,9 +227,8 @@ const FeedList: FunctionComponent<Props3> = ({
   label,
   description,
   date,
-  onPress
+  onPress,
 }) => {
-
   return (
     <TouchableOpacity style={styles.inquiryContainer} onPress={onPress}>
       <Avatar
@@ -228,7 +239,6 @@ const FeedList: FunctionComponent<Props3> = ({
           padding: 10,
         }}
         renderPlaceholderContent={<Loading />}
-        
         source={
           uri
             ? {
@@ -274,7 +284,74 @@ const FeedList: FunctionComponent<Props3> = ({
   );
 };
 
-export {OrderList, ProductContainer, FeedList};
+type Props4 = {
+  label?: string;
+  is_preference_saved: string;
+  onPress?: () => void;
+};
+
+const PraferenceContainer: FunctionComponent<Props4> = ({label, onPress, is_preference_saved}) => {
+
+  return (
+    <View style={praferenceStyles({}).praferenceContainer}>
+      <TouchableOpacity style={praferenceStyles({d: is_preference_saved }).checkClick} onPress={onPress}>
+        <Icon name="check" color={ColorConstants.primaryWhite} />
+      </TouchableOpacity>
+      <HighLightLabel hightLightLabel={label} />
+    </View>
+  );
+};
+
+export {OrderList, ProductContainer, FeedList, PraferenceContainer};
+
+interface StyleSheetType {
+  praferenceContainer: ViewStyle;
+  checkClick: ViewStyle;
+}
+
+interface StylesProps {
+  d?: string;
+}
+
+type StylesFunctionProps = (props: StylesProps) => StyleSheetType;
+
+const praferenceStyles: StylesFunctionProps = ({d}) => StyleSheet.create<StyleSheetType>({
+  praferenceContainer: {
+    marginTop: 30,
+    elevation: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: ColorConstants.primaryWhite,
+    margin: 10,
+    height: 60,
+    width: '90%',
+    shadowColor: ColorConstants.primaryBlack,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    borderRadius: 5,
+  },
+  checkClick: {
+    right: -30,
+    top: -30,
+    position: 'absolute',
+    elevation: 100,
+    borderRadius: 100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: ColorsCondtion.backgroundColor(d), 
+    margin: 10,
+    height: 40,
+    width: 40,
+    borderColor: ColorConstants.textGrey,
+    borderWidth: 0.5,
+    shadowColor: ColorConstants.primaryBlack,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+  },
+});
 
 const styles = StyleSheet.create({
   inquiryContainer: {

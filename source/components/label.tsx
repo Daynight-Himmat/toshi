@@ -43,7 +43,7 @@ const HighLightLabel: FunctionComponent<Props1> = ({
 }) => {
   return (
     <View  style={[styles.introText, {...style}]}>
-      <Text ellipsizeMode='head' style={[styles.label, {...labelStyle}]}>{hightLightLabel}</Text>
+      <Text ellipsizeMode='head' numberOfLines={2} style={[styles.label, {...labelStyle}]}>{hightLightLabel}</Text>
     </View>
   );
 };

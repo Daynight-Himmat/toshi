@@ -4,9 +4,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {commonStyles} from '../../components/style';
-import { HighLightLabel, Label } from '../../components/label';
-import ColorConstants from '../../constants/color_constants';
+import {commonStyles} from '../../../components/style';
+import { HighLightLabel, Label } from '../../../components/label';
+import ColorConstants from '../../../constants/color_constants';
 
 type Props = {
   navigation: any;
