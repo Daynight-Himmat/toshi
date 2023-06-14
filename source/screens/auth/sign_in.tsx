@@ -48,6 +48,15 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
       await Apis.logInApi(email,password).then(response => {
         if(response?.status === 200){
           setLoading(false);
+          AsyncStorage.setItem('first_name', response.data.result.name.first_name);
+          AsyncStorage.setItem('last_name', response.data.result.name.last_name);
+          AsyncStorage.setItem('email', response.data.result.name.email);
+          AsyncStorage.setItem('phone', response.data.result.name.mobile_no);
+          AsyncStorage.setItem('whatsapp_no', response.data.result.name.whatsapp_no);
+          AsyncStorage.setItem('profile_photo', response.data.result.name.profile_photo);
+          AsyncStorage.setItem('business_card', response.data.result.name.business_card);
+          AsyncStorage.setItem('back_business_card', response.data.result.name.back_business_card);
+          AsyncStorage.setItem('profile_photo_url', response.data.result.name.profile_photo_url);
           AsyncStorage.setItem('token', response.data.result.token);
           AsyncStorage.setItem('id', response.data.result.name?.id.toString());
           toastMessage(toast, response.data?.message);

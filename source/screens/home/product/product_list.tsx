@@ -4,26 +4,18 @@ import FontConstants from '../../../constants/font_constants';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Apis from '../../../apis/api_functions';
 import ProductPage from './product_page';
-import {
-  ScrollView,
-  StyleSheet,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import {Loading} from '../../../components/no_data_found';
 import {Product} from '../../../model/product_preference';
 import {AppHeader} from '../../../components/app_header';
-import {Button} from 'react-native-paper';
+import {Button, FAB} from 'react-native-paper';
 import {Icon} from '@rneui/base';
-import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
+import {ActionSheetRef} from 'react-native-actions-sheet';
 import MyProfileList from '../../../components/MyProfileList';
-import {Label} from '../../../components/label';
 import BottomSheet from '../../../components/bottom_sheet';
 import {Keyboard} from 'react-native';
-import { commonStyles } from '../../../components/style';
-import { useIsFocused } from '@react-navigation/native';
+import {commonStyles} from '../../../components/style';
+import {useIsFocused} from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -59,7 +51,7 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
       iconType: 'ionicon',
       onPress: () => {
         actionSheetRef.current?.hide();
-        navigation.navigate('Product Preference')
+        navigation.navigate('Product Preference');
       },
     },
     {
@@ -68,7 +60,7 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
       iconType: 'ionicon',
       onPress: () => {
         actionSheetRef.current?.hide();
-        navigation.navigate('Usage Preference')
+        navigation.navigate('Usage Preference');
       },
     },
   ];
@@ -139,6 +131,13 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
       ) : (
         <Loading />
       )}
+      <FAB
+        color={ColorConstants.primaryWhite}
+        size="medium"
+        icon={'filter'}
+        style={styles.fab}
+        onPress={()=> navigation.navigate('Filter Page')}
+      />
       <BottomSheet
         backButton={() => actionSheetRef.current?.hide()}
         refer={actionSheetRef}
@@ -193,6 +192,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: ColorConstants.primaryColor,
   },
+  fab: {
+    borderRadius: 100,
+    position: 'absolute',
+    bottom: 40,
+    right: 30,
+    backgroundColor: ColorConstants.primaryColor,
+  }
 });
 
 export default ListOfProduct;

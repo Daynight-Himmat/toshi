@@ -322,6 +322,41 @@ abstract class Apis {
       console.log(error);
     }
   };
+
+  static getEditProfile = async (data: any) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.editProfile),
+        data: data,
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getFilter = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await axios({
+        method: 'get',
+        url: BaseUrl(ApiConstants.getFilterData),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 export default Apis;

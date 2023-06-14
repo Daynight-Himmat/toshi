@@ -53,8 +53,6 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
     getImages();
   }, []);
 
-  console.log(getImage);
-
   return (
     <View style={styles.viewContainer}>
       <AppHeader text={data?.inquiry_no} navigate={() => navigation.goBack()} />

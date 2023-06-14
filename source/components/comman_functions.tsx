@@ -1,4 +1,6 @@
 import {CommonActions} from '@react-navigation/native';
+import { Linking } from 'react-native';
+import ImageCropPicker from 'react-native-image-crop-picker';
 
 class CommanFunctions {
   static routing = (
@@ -16,6 +18,24 @@ class CommanFunctions {
 
   static validateEmail = (validEmail: string) =>
     this.emailRegex.test(validEmail);
+
+  static imagePicker = () => ImageCropPicker.openPicker({
+    width: 300,
+    height: 400,
+    mediaType: 'photo',
+    cropping: false,
+    multiple: false,
+  });  
+
+  static openLink = (url: string) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " ,url);
+      }
+    });
+  }; 
 }
 
 export default CommanFunctions;

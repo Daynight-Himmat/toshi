@@ -60,7 +60,6 @@ const FeedsPreview: FunctionComponent<Props> = ({navigation, route}) => {
 
   useEffect(() => {
     getFeedsData();
-    console.log(data?.is_news_feed_saved);
   }, []);
 
   return (

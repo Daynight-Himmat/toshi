@@ -16,10 +16,10 @@ import Feed from '../assets/qtile_image/newspaper.svg';
 import Setting from '../assets/qtile_image/setting.svg';
 
 type Props = {
-  data: any;
-  navigation: any;
-  widget: any;
-  index: number;
+  data?: any;
+  navigation?: any;
+  widget?: any;
+  index?: number;
 };
 
 const DSContainer: FunctionComponent<Props> = ({navigation, data, index}) => {

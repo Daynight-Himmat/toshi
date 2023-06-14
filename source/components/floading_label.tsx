@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0,
     borderBottomColor: ColorConstants.primaryBlack,
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   labelstyles: {
     fontSize: 17,

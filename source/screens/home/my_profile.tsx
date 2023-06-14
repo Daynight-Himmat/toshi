@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -16,12 +16,18 @@ import DSContainer from '../../components/dashboard_container';
 import MyProfileList from '../../components/MyProfileList';
 import { AuthHeader } from '../../components/app_header';
 import CommanFunctions from '../../components/comman_functions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ApiConstants } from '../../constants/api_constants';
 
 type Props = {
   navigation: any;
 };
 
 const MyProfile: FunctionComponent<Props> = ({navigation}) => {
+
+  const [getProfileImage, setProfileImage] = useState<string>('');
+  const [getProfileName, setProfileName] = useState<string>('');
+
   const dashValue = [
     {
       name: 'Product Preference',
@@ -51,7 +57,7 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'Help & Support',
       icon: 'help-circle-outline',
       iconType: 'ionicon',
-      onPress: ()=> {},
+      onPress: ()=> CommanFunctions.openLink("https://toshibbaimpex.com/privacy-policy.php"),
     },
     {
       name: 'About',
@@ -63,7 +69,7 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
       name: 'Account Deletion',
       icon: 'trash-outline',
       iconType: 'ionicon',
-      onPress: ()=> {},
+      onPress: ()=> CommanFunctions.openLink("http://app.toshibbaimpex.com/account.php"),
     },
     {
       name: 'Logout',
@@ -73,9 +79,35 @@ const MyProfile: FunctionComponent<Props> = ({navigation}) => {
     },
   ];
 
+  const getProfileUrl = async () => {
+    const firstName = await AsyncStorage.getItem('first_name');
+    const lastName = await AsyncStorage.getItem('last_name');
+    const profile_photo_url = await AsyncStorage.getItem('profile_photo_url');
+    const profile_photo = await AsyncStorage.getItem('profile_photo');
+    const fullName = firstName! + " "  + lastName!;
+    setProfileImage(profile_photo ?? '');
+    setProfileName( fullName ?? '');
+  
+  }
+
+  useEffect(()=>{
+    getProfileUrl()
+  },[]);
+
   return (
     <View style={commonStyles.container}>
-      <AuthHeader navigation={navigation} show={true}  showtitle={true} showAction={true} showLabel={true} title='My Profile'/>
+      <AuthHeader 
+        navigation={navigation} 
+        show={true}  
+        showtitle={true} 
+        showAction={true} 
+        showLabel={true} 
+        label={getProfileName}
+        title='My Profile'
+        
+        url={ApiConstants.baseProfileImageUrl+getProfileImage}
+        onPress={()=>{navigation.navigate('Edit Profile')}}
+        />
      <ScrollView contentContainerStyle={{
       marginTop: 10
      }}>

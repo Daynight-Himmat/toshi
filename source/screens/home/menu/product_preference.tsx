@@ -82,10 +82,8 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
       setCheckedItems(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
       );
-      console.log('.......', checkedItems);
     } else {
       setCheckedItems(prevItems => [...prevItems, item]);
-      console.log('.......', checkedItems);
     }
   };
 
@@ -96,10 +94,8 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
       setCheckedItems(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id === item.id),
       );
-      console.log('.......', checkedItems.map(data => data.id));
     } else {
       setCheckedItems(prevItems => [...prevItems, item]);
-      console.log('.......', checkedItems.map(data => data.id));
     }
   };
 

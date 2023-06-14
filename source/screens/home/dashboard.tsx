@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -13,12 +13,18 @@ import {HighLightLabel, Label} from '../../components/label';
 import AppSize from '../../components/size';
 import DSContainer from '../../components/dashboard_container';
 import {ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ApiConstants } from '../../constants/api_constants';
 
 type Props = {
   navigation: any;
 };
 
 const DashBoard: FunctionComponent<Props> = ({navigation}) => {
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [profileImage, setProfileImage] = useState<string>('');
+  
   const dashValue = [
     {
       name: 'Inquiry & Order Status',
@@ -38,6 +44,26 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
     },
   ];
 
+  const getProfileUrl = async () => {
+    try{
+      
+        const userId = await AsyncStorage.getItem('id');
+        const firstName = await AsyncStorage.getItem('first_name');
+        const lastName = await AsyncStorage.getItem('last_name');
+        const profile_photo = await AsyncStorage.getItem('profile_photo');
+        setFirstName(firstName ?? '');
+        setLastName(lastName ?? '');
+        setProfileImage(ApiConstants.baseProfileImageUrl+profile_photo ?? '');
+    }
+   catch(error){
+    console.log(error);
+   }
+  }
+
+  useEffect(()=>{
+    getProfileUrl();
+  },[]);
+
   return (
     <View style={commonStyles.container}>
       <Appbar.Header
@@ -56,13 +82,13 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
             <Avatar
               size={45}
               rounded
-              source={require('../../assets/image/profile.png')}
+              source={profileImage ? {uri : profileImage} :require('../../assets/image/profile.png')}
             />
           </View>
         }></Appbar.Header>
       <View style={styles.viewContainer}>
         <HighLightLabel
-          hightLightLabel="Hello, Live!"
+          hightLightLabel={`Hello ${firstName}`}
           labelStyle={undefined}
           style={alignSelf('flex-start')}
         />

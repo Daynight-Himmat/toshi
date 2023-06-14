@@ -18,8 +18,6 @@ const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
 
   const data = route?.params?.data;
   const toast = useToast();
-
-  console.log(data?.preference_id);
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
 

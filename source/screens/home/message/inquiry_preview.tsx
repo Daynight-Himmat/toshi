@@ -64,8 +64,6 @@ import { ProductDetails } from '../../../model/inquiry_message';
             divider: false,
           },
       ]; 
-
-    console.log(data?.description);
   
     return (
       <View style={styles.viewContainer}>

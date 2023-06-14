@@ -17,6 +17,8 @@ import AppButton from './app_button';
 import {Loading} from './no_data_found';
 import {ApiConstants} from '../constants/api_constants';
 import ColorsCondtion from './color_condition';
+import FontConstants from '../constants/font_constants';
+import { CheckBox } from '@rneui/base';
 
 type Props = {
   uri?: string;
@@ -302,7 +304,33 @@ const PraferenceContainer: FunctionComponent<Props4> = ({label, onPress, is_pref
   );
 };
 
-export {OrderList, ProductContainer, FeedList, PraferenceContainer};
+
+type Props5 = {
+  item?: any;
+  isChecked?: any
+  onPress?: () => void;
+};
+
+const FilterList: FunctionComponent<Props5> = ({item, onPress, isChecked}) => {
+
+  return (
+    <View >
+     { item?.map((data: { code: any; }, index: any) => <TouchableOpacity onPress={onPress} key={index}>
+      <CheckBox
+        onPress={onPress}
+        checked={isChecked}
+        uncheckedColor={ColorConstants.primaryColor}
+        title={data.code}
+        fontFamily={FontConstants.ragular}
+        size={15}
+        checkedColor={ColorConstants.primaryColor}
+      />
+    </TouchableOpacity>)}
+    </View>
+  );
+};
+
+export {OrderList, ProductContainer, FeedList, PraferenceContainer, FilterList};
 
 interface StyleSheetType {
   praferenceContainer: ViewStyle;

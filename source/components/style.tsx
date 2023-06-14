@@ -4,6 +4,7 @@ import ColorConstants from '../constants/color_constants';
 
 type Style = {
   container: ViewStyle;
+  viewContainer: ViewStyle;
   flexWithMidCenter: ViewStyle;
   titleStyle: ViewStyle;
   fill: ViewStyle;
@@ -76,6 +77,11 @@ export const commonStyles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     backgroundColor: ColorConstants.primaryWhite,
+  },
+  viewContainer: {
+    flex: 1,
+    paddingHorizontal: 10,
+    backgroundColor: ColorConstants.primaryWhite
   },
   flexWithMidCenter: {
     flex: 1,

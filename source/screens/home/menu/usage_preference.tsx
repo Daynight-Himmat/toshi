@@ -82,10 +82,8 @@ const UsagePreference: FunctionComponent<Props> = ({navigation}) => {
       setCheckedItems(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
       );
-      console.log('.......', checkedItems);
     } else {
       setCheckedItems(prevItems => [...prevItems, item]);
-      console.log('.......', checkedItems);
     }
   };
 
@@ -96,10 +94,8 @@ const UsagePreference: FunctionComponent<Props> = ({navigation}) => {
       setCheckedItems(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id === item.id),
       );
-      console.log('.......', checkedItems);
     } else {
       setCheckedItems(prevItems => [...prevItems, item],);
-      console.log('.......', checkedItems);
     }
   };
 

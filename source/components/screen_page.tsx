@@ -24,6 +24,8 @@ import ProductDetails from '../screens/home/product/product_details';
 import OrderStatusDetails from '../screens/home/order/order_status_details';
 import InquiryPreView from '../screens/home/message/inquiry_preview';
 import FeedsPreview from '../screens/home/feed/feeds_preview';
+import EditProfile from '../screens/home/edit_profile';
+import FilterPage from '../screens/home/filter/filter';
 
 const screens = [
   {
@@ -148,6 +150,16 @@ const screens = [
     name: 'Feed Preview',
     component: FeedsPreview,
     headerShown: true,
+  },
+  {
+    name: 'Edit Profile',
+    component: EditProfile,
+    headerShown: false,
+  },
+  {
+    name: 'Filter Page',
+    component: FilterPage,
+    headerShown: false,
   },
   
 ];

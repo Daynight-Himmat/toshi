@@ -7,10 +7,7 @@ import React, {
 import {
   ScrollView,
   StyleSheet,
-  TextStyle,
-  TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
@@ -20,9 +17,7 @@ import {ResulPro} from '../../../model/product';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {useIsFocused} from '@react-navigation/native';
-import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
-import MyProfileList from '../../../components/MyProfileList';
-import { AppHeader } from '../../../components/app_header';
+import {ActionSheetRef} from 'react-native-actions-sheet';
 
 type Props = {
   navigation: any;
@@ -33,7 +28,6 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   const data = route?.params?.data;
   const toast = useToast();
   const isFocused = useIsFocused();
-  console.log(data?.preference_id);
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
 
