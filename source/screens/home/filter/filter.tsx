@@ -27,12 +27,15 @@ import {
   ProductUsage,
 } from '../../../model/filter_response';
 import {FilterList} from '../../../components/order_list_container';
+import toastMessage from '../../../components/toast_message';
+import { useToast } from 'react-native-toast-notifications';
 
 type Props = {
   navigation: any;
 };
 
 const FilterPage: FunctionComponent<Props> = ({navigation}) => {
+  const toast = useToast();
   const [isLoading, setLoading] = useState(false);
   const [isChecked, setCheck] = useState(false);
   const [isCollapsed, setCollapsed] = useState<number[]>([]);
@@ -44,7 +47,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
   const [getMixingPossibility, setMixingPossibility] = useState<
     MixingPosibility[]
   >([]);
-  const [getSearchCategories, setSearchCategories] = useState<ProductCategory[]>([]);
+  const [getSearchCategories, setSearchCategories] = useState<
+    ProductCategory[]
+  >([]);
   const [getSearchColours, setSearchColours] = useState<ProductColor[]>([]);
   const [getSearchFinish, setSearchFinish] = useState<ProductFinish[]>([]);
   const [getSearchUsage, setSearchUsage] = useState<ProductUsage[]>([]);
@@ -53,7 +58,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     MixingPosibility[]
   >([]);
 
-  const [getCheckedCategories, setCheckedCategories] = useState<ProductCategory[]>([]);
+  const [getCheckedCategories, setCheckedCategories] = useState<
+    ProductCategory[]
+  >([]);
   const [getCheckedColours, setCheckedColours] = useState<ProductColor[]>([]);
   const [getCheckedFinish, setCheckedFinish] = useState<ProductFinish[]>([]);
   const [getCheckedUsage, setCheckedUsage] = useState<ProductUsage[]>([]);
@@ -92,9 +99,21 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     getFilterData();
   }, []);
 
+  const handleReset = () => {
+    setCheckedCategories([]);
+    setCheckedColours([]);
+    setCheckedFinish([]);
+    setCheckedUsage([]);
+    setCheckedTypes([]);
+    setCheckedMixingPossibility([]);
+    toastMessage(toast, 'Filter Clear');
+  };
+
   const handleProductCategory = (item: ProductCategory) => {
     if (
-      getCheckedCategories.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedCategories.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedCategories(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -106,7 +125,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
 
   const handleProductColor = (item: ProductColor) => {
     if (
-      getCheckedColours.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedColours.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedColours(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -118,7 +139,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
 
   const handleProductFinish = (item: ProductFinish) => {
     if (
-      getCheckedFinish.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedFinish.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedFinish(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -130,7 +153,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
 
   const handleProductUsage = (item: ProductUsage) => {
     if (
-      getCheckedUsage.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedUsage.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedUsage(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -142,7 +167,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
 
   const handleProductType = (item: ProductType) => {
     if (
-      getCheckedTypes.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedTypes.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedTypes(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -154,7 +181,9 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
 
   const handleMixingPosibility = (item: MixingPosibility) => {
     if (
-      getCheckedMixingPossibility.some((checkedItem: {id: any}) => checkedItem.id === item.id)
+      getCheckedMixingPossibility.some(
+        (checkedItem: {id: any}) => checkedItem.id === item.id,
+      )
     ) {
       setCheckedMixingPossibility(prevItems =>
         prevItems?.filter((prevItem: {id: any}) => prevItem.id !== item.id),
@@ -164,16 +193,12 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     }
   };
 
-
-  
   const handleCategories = (text: string) => {
     if (text === '') {
       setSearchCategories(getCategories);
     } else {
-      const filtered = getCategories.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getCategories.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchCategories(filtered);
     }
@@ -183,10 +208,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     if (text === '') {
       setSearchColours(getColours);
     } else {
-      const filtered = getColours.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getColours.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchColours(filtered);
     }
@@ -196,10 +219,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     if (text === '') {
       setSearchFinish(getFinish);
     } else {
-      const filtered = getFinish.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getFinish.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchFinish(filtered);
     }
@@ -209,10 +230,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     if (text === '') {
       setSearchUsage(getUsage);
     } else {
-      const filtered = getUsage.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getUsage.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchUsage(filtered);
     }
@@ -222,10 +241,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     if (text === '') {
       setSearchTypes(getTypes);
     } else {
-      const filtered = getTypes.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getTypes.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchTypes(filtered);
     }
@@ -235,10 +252,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     if (text === '') {
       setSearchMixingPossibility(getMixingPossibility);
     } else {
-      const filtered = getMixingPossibility.filter((item: { code: string;}) => {
-        return (
-          item.code?.toLowerCase().includes(text.toLowerCase())
-        );
+      const filtered = getMixingPossibility.filter((item: {code: string}) => {
+        return item.code?.toLowerCase().includes(text.toLowerCase());
       });
       setSearchMixingPossibility(filtered);
     }
@@ -253,13 +268,18 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       type: 'material',
       onChangeText: (value: string) => handleCategories(value),
       data: (
-        <FilterList
-          item={getSearchCategories}
-          isChecked={getCheckedCategories.some(
-            checkedItem =>  getSearchCategories.map(data=> data.id === checkedItem.id)
-          ) ? true : false}
-          onPress={() => getSearchCategories.map(data=> handleProductCategory(data))}
-        />
+        <View>
+          {getSearchCategories?.map((data: ProductCategory, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedCategories.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleProductCategory(data)}
+            />
+          ))}
+        </View>
       ),
     },
     {
@@ -269,7 +289,20 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       icon: 'dot-fill',
       type: 'octicon',
       onChangeText: (value: string) => handleColors(value),
-      data: <FilterList item={getSearchColours} />,
+      data: (
+        <View>
+          {getSearchColours?.map((data: ProductColor, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedColours.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleProductColor(data)}
+            />
+          ))}
+        </View>
+      ),
     },
     {
       key: 2,
@@ -278,7 +311,20 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       icon: 'ios-flag-outline',
       type: 'ionicon',
       onChangeText: (value: string) => handleFinish(value),
-      data: <FilterList item={getSearchFinish} />,
+      data: (
+        <View>
+          {getSearchFinish?.map((data: ProductFinish, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedFinish.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleProductFinish(data)}
+            />
+          ))}
+        </View>
+      ),
     },
     {
       key: 3,
@@ -287,7 +333,20 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       icon: 'data-usage',
       type: 'mateiralicon',
       onChangeText: (value: string) => handleUsage(value),
-      data: <FilterList item={getSearchUsage} />,
+      data: (
+        <View>
+          {getSearchUsage?.map((data: ProductUsage, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedUsage.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleProductUsage(data)}
+            />
+          ))}
+        </View>
+      ),
     },
     {
       key: 4,
@@ -296,7 +355,20 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       icon: 'sports-baseball',
       type: 'mateiralicon',
       onChangeText: (value: string) => handleType(value),
-      data: <FilterList item={getSearchTypes} />,
+      data: (
+        <View>
+          {getSearchTypes?.map((data: ProductType, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedTypes.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleProductType(data)}
+            />
+          ))}
+        </View>
+      ),
     },
     {
       key: 5,
@@ -304,15 +376,23 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       content: 'Lorem ipsum...',
       icon: 'shuffle',
       type: 'feather',
-      onChangeText: (value: string) =>
-        handleMixing(value),
-      data: <FilterList item={getSearchMixingPossibility} />,
+      onChangeText: (value: string) => handleMixing(value),
+      data: (
+        <View>
+          {getSearchMixingPossibility?.map((data: MixingPosibility, index: any) => (
+            <FilterList
+              key={index}
+              isChecked={getCheckedMixingPossibility.some(
+                checkedItem => checkedItem.id === data.id,
+              )}
+              title={data.code}
+              onPress={() => handleMixingPosibility(data)}
+            />
+          ))}
+        </View>
+      ),
     },
   ];
-
-  const state = {
-    activeSections: [],
-  };
 
   const _renderSectionTitle = (section: any) => {
     return (
@@ -321,8 +401,6 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       </View>
     );
   };
-
-  console.log(isCollapsed);
 
   const _renderHeader = (section: any) => {
     return (
@@ -400,7 +478,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'flex-end',
             }}
-            onPress={() => {}}>
+            onPress={() => handleReset()}>
             Reset All
           </Button>
         }
@@ -419,7 +497,26 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
         {isLoading && <Loading />}
       </View>
       <View style={{margin: 20}}>
-        <AppButton text="Apply" onPress={() => {}} />
+        <AppButton text="Apply" onPress={() => {
+
+          navigation.navigate('Filter Product Page', {
+            data: {
+              productCategories: getCheckedCategories.map(data=> data.id),
+              productColors: getCheckedColours.map(data=> data.id),
+              productFinish: getCheckedFinish.map(data=> data.id),
+              productUsage: getCheckedUsage.map(data=> data.id),
+              productType: getCheckedTypes.map(data=> data.id),
+              productMixingPossibility: getCheckedMixingPossibility.map(data=> data.id)
+            }
+          });
+
+          console.log(getCheckedCategories.map(data=> data.id));
+          console.log(getCheckedColours.map(data=> data.id));
+          console.log(getCheckedFinish.map(data=> data.id));
+          console.log(getCheckedUsage.map(data=> data.id));
+          console.log(getCheckedTypes.map(data=> data.id));
+          console.log(getCheckedMixingPossibility.map(data=> data.id));
+        }} />
       </View>
     </View>
   );

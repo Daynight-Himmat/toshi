@@ -306,26 +306,26 @@ const PraferenceContainer: FunctionComponent<Props4> = ({label, onPress, is_pref
 
 
 type Props5 = {
-  item?: any;
+  title?: string;
   isChecked?: any
   onPress?: () => void;
 };
 
-const FilterList: FunctionComponent<Props5> = ({item, onPress, isChecked}) => {
+const FilterList: FunctionComponent<Props5> = ({title, onPress, isChecked}) => {
 
   return (
     <View >
-     { item?.map((data: { code: any; }, index: any) => <TouchableOpacity onPress={onPress} key={index}>
+     <TouchableOpacity onPress={onPress}>
       <CheckBox
         onPress={onPress}
         checked={isChecked}
         uncheckedColor={ColorConstants.primaryColor}
-        title={data.code}
+        title={title}
         fontFamily={FontConstants.ragular}
         size={15}
         checkedColor={ColorConstants.primaryColor}
       />
-    </TouchableOpacity>)}
+    </TouchableOpacity>
     </View>
   );
 };

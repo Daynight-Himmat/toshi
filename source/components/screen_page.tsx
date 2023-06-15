@@ -26,6 +26,9 @@ import InquiryPreView from '../screens/home/message/inquiry_preview';
 import FeedsPreview from '../screens/home/feed/feeds_preview';
 import EditProfile from '../screens/home/edit_profile';
 import FilterPage from '../screens/home/filter/filter';
+import FilterProductPage from '../screens/home/filter/filter_product';
+import SendInquiry from '../screens/home/product/send_inquirey_page';
+import SendInquiryPreview from '../screens/home/product/send_inquiry_show';
 
 const screens = [
   {
@@ -161,6 +164,18 @@ const screens = [
     component: FilterPage,
     headerShown: false,
   },
+  {
+    name: 'Filter Product Page',
+    component: FilterProductPage,
+  },
+  {
+    name: 'Send Inquiry Page',
+    component: SendInquiry
+  },
+  {
+    name: 'Send Inquiry Preview',
+    component: SendInquiryPreview
+  }
   
 ];
 

@@ -1,15 +1,5 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
 import {Loading, NoData} from '../../../components/no_data_found';
@@ -25,45 +15,35 @@ type Props = {
   route: any;
 };
 
-const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
+const FilterProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   const data = route?.params?.data;
   const toast = useToast();
   const isFocused = useIsFocused();
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
 
-  const actionSheetRef = useRef<ActionSheetRef>(null);
-  const dashValue = [
-    {
-      name: 'Product Preference',
-      icon: 'location-outline',
-      iconType: 'ionicon',
-      onPress: () => navigation.navigate('Product Preference'),
-    },
-    {
-      name: 'Usage Preference',
-      icon: 'location-outline',
-      iconType: 'ionicon',
-      onPress: () => navigation.navigate('Usage Preference'),
-    },
-  ];
-
-  const getProducts = useCallback(async () => {
+  const getProducts = async () => {
     try {
       setLoading(true);
-      await Apis.getProductBYPrefernce(data?.preference_id ?? '').then(
-        response => {
-          if (response?.status === 200) {
-            setLoading(false);
-            setProductData(response?.data?.result?.resulPro);
-          }
-        },
-      );
+      await Apis.getFilterProducts(
+        data.productCategories,
+        data.productFinish,
+        data.productUsage,
+        data.productType,
+        data.productMixingPossibility,
+        data.productColors,
+      ).then(response => {
+        if (response?.status === 200) {
+          setLoading(false);
+          setProductData(response?.data?.result?.resulPro);
+          toastMessage(toast, response?.data?.message);
+        }
+      });
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
-  },[]);
+  };
 
   const getSave = async (id: any) => {
     try {
@@ -71,7 +51,6 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
       Apis.getSaveProduct(id).then(response => {
         if (response?.status === 200) {
           setLoading(false);
-          getProducts();
           toastMessage(toast, response.data.message);
         }
       });
@@ -81,10 +60,10 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     }
   };
 
-
   useEffect(() => {
     getProducts();
   }, [isFocused]);
+
   return (
     <View style={styles.viewContainer}>
       {getProductData ? (
@@ -103,11 +82,6 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
                     data: _data.id,
                   });
                 }}
-                sendInquiry={function (): void {
-                  return navigation.navigate('Send Inquiry Page', {
-                    data: _data,
-                  });
-                }}
               />
             ))}
         </ScrollView>
@@ -118,8 +92,6 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   viewContainer: {
@@ -137,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductPage;
+export default FilterProductPage;

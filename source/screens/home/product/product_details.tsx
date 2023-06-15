@@ -10,10 +10,9 @@ import {
   ImageSourcePropType,
   ScrollView,
   StyleSheet,
-  Text,
   View,
+  Dimensions,
 } from 'react-native';
-import PagerView from 'react-native-pager-view';
 import {Avatar} from '@rneui/base';
 import {Loading} from '../../../components/no_data_found';
 import {
@@ -32,9 +31,12 @@ import AppButton from '../../../components/app_button';
 import AppSize from '../../../components/size';
 import Apis from '../../../apis/api_functions';
 import {ProductResult} from '../../../model/product_details';
-import {Divider} from 'react-native-paper';
-import {ImageSlider} from 'react-native-image-slider-banner';
 import {ApiConstants} from '../../../constants/api_constants';
+import toastMessage from '../../../components/toast_message';
+import {useToast} from 'react-native-toast-notifications';
+import {ImageSlider} from 'react-native-image-slider-banner';
+
+const {width} = Dimensions.get('screen');
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -49,25 +51,53 @@ type Props = {
 
 const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
   const data = route?.params?.data;
+  const toast = useToast();
   const [getImage, setImage] = useState<img[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [getProduct, setProductDetails] = useState<ProductResult>();
 
-  const getProductDetails = useCallback(() => {
+  const getProductDetails = () => {
     setLoading(true);
     Apis.getProductDetails(data).then(response => {
       if (response?.status === 200) {
-        setLoading(false);
         setProductDetails(response?.data.result);
-        const value = response?.data.result.upload_img.split(', ').map((data: string) => ApiConstants.baseProductImageUrl + data);
+        const value = response?.data.result.upload_img
+          .split(', ')
+          .map((data: string) => ApiConstants.baseProductImageUrl + data);
+          
         value.map((item: ImageSourcePropType, index: any) => {
           const val2 = {img: item as ImageSourcePropType};
-          getImage.push(val2);
-          setImage([...getImage]);
+          if (getImage.some(data => data.img === val2.img)) {
+            setImage([...new  Set(getImage)]);
+
+          } else {
+            setImage(prevItems => [...prevItems, val2]);
+          }
         });
+        setLoading(false);
       }
     });
-  },[]);
+  };
+
+
+  console.log(getImage);
+  console.log(getImage.length);
+
+  const getSave = async () => {
+    try {
+      setLoading(true);
+      Apis.getSaveProduct(data).then(response => {
+        if (response?.status === 200) {
+          setLoading(false);
+          getProductDetails();
+          toastMessage(toast, response.data.message);
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   const productDetails = [
     {
@@ -106,112 +136,123 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
       data: getProduct?.mixing_possibility,
       divider: false,
     },
-  ]; 
+  ];
 
   useEffect(() => {
     getProductDetails();
   }, []);
-
   return (
-    <View style={styles.viewContainer}>
-      <View style={styles.pagerView}>
-      {getImage ? (
-        <ImageSlider
-          data={getImage}
-          autoPlay={true}
-          closeIconColor="#fff"
-          caroselImageStyle={{
-            resizeMode: 'cover',
-          }}
-          activeIndicatorStyle={{
-            backgroundColor: ColorConstants.primaryColor,
-          }}
-        />
-      ) : (
-        <Avatar
-          containerStyle={{
-            width: 150,
-            height: 150,
-            borderRadius: 5,
-            padding: 10,
-          }}
-          renderPlaceholderContent={<Loading />}
-          imageProps={{
-            borderRadius: 5,
-          }}
-          source={require('../../../assets/image/nofound.jpg')}
-        />
-      )}
-      </View>
-
-      <View
-        style={styles.productContainer}>
-        <ScrollView contentContainerStyle={marginBottom(50)}>
-          <View style={commonStyles.rowWithCenterAndSB}>
-            <HighLightLabel
-              hightLightLabel={
-                getProduct?.product_name + ` (${getProduct?.product_code})`
-              }
-              style={alignSelf('flex-start')}
+    
+    productDetails && (
+      <View style={styles.viewContainer}>
+        <View style={styles.pagerView}>
+          {getImage ? (
+            <ImageSlider
+              
+              data={getImage}
+              autoPlay={true}
+              closeIconColor="#fff"
+              caroselImageStyle={{
+                resizeMode: 'cover',
+              }}
+              activeIndicatorStyle={{
+                backgroundColor: ColorConstants.primaryColor,
+              }}
             />
+          ) : (
+            <Avatar
+              containerStyle={styles.pagerView}
+              renderPlaceholderContent={<Loading />}
+              imageProps={{
+                borderRadius: 5,
+              }}
+              source={require('../../../assets/image/nofound.jpg')}
+            />
+          )}
+        </View>
+
+        <View style={styles.productContainer}>
+          <ScrollView contentContainerStyle={marginBottom(50)}>
+            <View style={commonStyles.rowWithCenterAndSB}>
+              <HighLightLabel
+                hightLightLabel={
+                  getProduct?.product_name + ` (${getProduct?.product_code})`
+                }
+                labelStyle={{
+                  textAlign: 'left',
+                }}
+                style={{
+                  alignSelf: 'flex-start',
+                  width: '80%',
+                }}
+              />
+              <View
+                style={{
+                  backgroundColor: ColorConstants.primaryWhite,
+                  paddingRight: 20,
+                }}>
+                <Icon
+                  onPress={() => getSave()}
+                  name={
+                    getProduct?.is_product_saved === 'Yes'
+                      ? 'bookmark'
+                      : 'bookmark-outline'
+                  }
+                  type="ionicon"
+                  color={ColorConstants.primaryColor}
+                />
+              </View>
+            </View>
+            <AppSize height={15} />
+            <View style={commonStyles.rowWithCenterAndSB}>
+              <Label
+                name={'Readly Availablity' + getProduct?.readily_available_qty}
+                style={color(ColorConstants.primaryColor)}
+              />
+              <View
+                style={{
+                  marginTop: -10,
+                  paddingRight: 20,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignContent: 'center',
+                }}>
+                <Icon
+                  name="logo-whatsapp"
+                  type="ionicon"
+                  color={ColorConstants.whatsAppGreen}
+                />
+              </View>
+            </View>
+            <AppSize height={20} />
             <View
               style={{
-                backgroundColor: ColorConstants.primaryWhite,
-
-                paddingRight: 20,
+                borderColor: ColorConstants.textHintColor,
+                borderWidth: 2,
+                paddingVertical: 10,
+                marginBottom: 10,
               }}>
-              <Icon
-                name="bookmark"
-                type="ionicon"
-                color={ColorConstants.primaryColor}
-              />
+              {productDetails.map((data, index) => (
+                <ProductDetailTable
+                  key={index}
+                  label={data.label}
+                  type={data.type}
+                  data={data.data}
+                  divider={data.divider}
+                />
+              ))}
             </View>
-          </View>
-          <AppSize height={15} />
-          <View style={commonStyles.rowWithCenterAndSB}>
-            <Label
-              name={'Readly Availablity' + getProduct?.readily_available_qty}
-              style={color(ColorConstants.primaryColor)}
-            />
-            <View
-              style={{
-                marginTop: -10,
-                paddingRight: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignContent: 'center',
-              }}>
-              <Icon
-                name="logo-whatsapp"
-                type="ionicon"
-                color={ColorConstants.whatsAppGreen}
-              />
-            </View>
-          </View>
-          <AppSize height={20} />
-          <View
-            style={{
-              borderColor: ColorConstants.textHintColor,
-              borderWidth: 2,
-              paddingVertical: 10,
-              marginBottom: 10,
-            }}>
-            {productDetails.map((data, index) => (
-              <ProductDetailTable
-                key={index}
-                label={data.label}
-                type={data.type}
-                data={data.data}
-                divider={data.divider}
-              />
-            ))}
-          </View>
-          <AppButton text="Send Inquiry" />
-          <AppSize height={40} />
-        </ScrollView>
-        {isLoading && <Loading />}
+            <AppButton text="Send Inquiry"  onPress={function (): void {
+                  return navigation.navigate('Send Inquiry Page', {
+                    data: getProduct,
+                  });
+                }}/>
+            <AppSize height={40} />
+          </ScrollView>
+          {isLoading && <Loading />}
+        </View>
       </View>
-    </View>
+    )
   );
 };
 
@@ -231,6 +272,7 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     height: 300,
+    width: '100%',
   },
   textStyles: {
     textAlign: 'justify',
