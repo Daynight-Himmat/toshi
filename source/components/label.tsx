@@ -190,10 +190,10 @@ const styles = StyleSheet.create({
   label_text: {
     fontSize: 14,
     color: ColorConstants.primaryBlack,
-    fontFamily: FontConstants.medium,
+    fontFamily: FontConstants.ragular,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    fontWeight: '500',
+    fontWeight: '400',
   },
   introTextView: {
     width: '90%',

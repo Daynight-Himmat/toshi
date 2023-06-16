@@ -70,7 +70,6 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    paddingHorizontal: 10,
     backgroundColor: ColorConstants.primaryWhite,
   },
   textStyles: {

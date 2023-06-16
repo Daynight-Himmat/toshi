@@ -19,6 +19,7 @@ import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {useIsFocused} from '@react-navigation/native';
 import {ActionSheetRef} from 'react-native-actions-sheet';
+import { backgroundColor } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -87,7 +88,8 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   }, [isFocused]);
   return (
     <View style={styles.viewContainer}>
-      {getProductData ? (
+     <View style={backgroundColor(ColorConstants.primaryWhite)}>
+     {getProductData ? (
         <ScrollView>
           {getProductData &&
             getProductData.map((_data, _index) => (
@@ -117,6 +119,7 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
       ) : (
         <NoData />
       )}
+     </View>
       {isLoading && <Loading />}
     </View>
   );

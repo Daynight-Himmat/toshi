@@ -56,8 +56,8 @@ const OrderList: FunctionComponent<Props> = ({
     <TouchableOpacity style={styles.inquiryContainer} onPress={onPress}>
       <Avatar
         containerStyle={{
-          width: 150,
-          height: 150,
+          width: 120,
+          height: 120,
           borderRadius: 5,
         }}
         imageProps={{
@@ -74,7 +74,7 @@ const OrderList: FunctionComponent<Props> = ({
       <View
         style={{
           flex: 1,
-          padding: 10,
+          padding: 5,
         }}>
         <CommonTwoText
           label={label1}
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: ColorConstants.primaryWhite,
     margin: 10,
-    height: 150,
+    flex:1,
     shadowColor: ColorConstants.primaryBlack,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.4,
