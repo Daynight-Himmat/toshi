@@ -509,13 +509,6 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
               productMixingPossibility: getCheckedMixingPossibility.map(data=> data.id)
             }
           });
-
-          console.log(getCheckedCategories.map(data=> data.id));
-          console.log(getCheckedColours.map(data=> data.id));
-          console.log(getCheckedFinish.map(data=> data.id));
-          console.log(getCheckedUsage.map(data=> data.id));
-          console.log(getCheckedTypes.map(data=> data.id));
-          console.log(getCheckedMixingPossibility.map(data=> data.id));
         }} />
       </View>
     </View>

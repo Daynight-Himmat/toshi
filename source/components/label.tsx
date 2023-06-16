@@ -138,8 +138,8 @@ const ProductDetailTable: FunctionComponent<Props6> = ({label, type, data, divid
               fontSize: 16,
               fontWeight: '600'
             }}/>
-          {data?.map((item: any, index: number) => (
-            <Label name={`${index + 1}. ` + `${item}`} style={{
+          {data && data?.map((item: any, index: number) => (
+            <Label key={index} name={`${index + 1}. ` + `${item}`} style={{
               fontFamily: FontConstants.bold,
               fontSize: 16,
               fontWeight: '600'

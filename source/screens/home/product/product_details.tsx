@@ -35,6 +35,7 @@ import {ApiConstants} from '../../../constants/api_constants';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {ImageSlider} from 'react-native-image-slider-banner';
+import WhatsApp from '../../../components/whats_app';
 
 const {width} = Dimensions.get('screen');
 
@@ -64,12 +65,11 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
         const value = response?.data.result.upload_img
           .split(', ')
           .map((data: string) => ApiConstants.baseProductImageUrl + data);
-          
+
         value.map((item: ImageSourcePropType, index: any) => {
           const val2 = {img: item as ImageSourcePropType};
           if (getImage.some(data => data.img === val2.img)) {
-            setImage([...new  Set(getImage)]);
-
+            setImage([...new Set(getImage)]);
           } else {
             setImage(prevItems => [...prevItems, val2]);
           }
@@ -78,10 +78,6 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
       }
     });
   };
-
-
-  console.log(getImage);
-  console.log(getImage.length);
 
   const getSave = async () => {
     try {
@@ -142,13 +138,11 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
     getProductDetails();
   }, []);
   return (
-    
     productDetails && (
       <View style={styles.viewContainer}>
         <View style={styles.pagerView}>
           {getImage ? (
             <ImageSlider
-              
               data={getImage}
               autoPlay={true}
               closeIconColor="#fff"
@@ -209,20 +203,7 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
                 name={'Readly Availablity' + getProduct?.readily_available_qty}
                 style={color(ColorConstants.primaryColor)}
               />
-              <View
-                style={{
-                  marginTop: -10,
-                  paddingRight: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignContent: 'center',
-                }}>
-                <Icon
-                  name="logo-whatsapp"
-                  type="ionicon"
-                  color={ColorConstants.whatsAppGreen}
-                />
-              </View>
+              <WhatsApp />
             </View>
             <AppSize height={20} />
             <View
@@ -242,11 +223,17 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
                 />
               ))}
             </View>
-            <AppButton text="Send Inquiry"  onPress={function (): void {
-                  return navigation.navigate('Send Inquiry Page', {
-                    data: getProduct,
-                  });
-                }}/>
+            <AppButton
+              text="Send Inquiry"
+              onPress={function (): void {
+                return navigation.navigate('Send Inquiry Page', {
+                  data: {
+                    product_id: getProduct?.id,
+                    product_name: getProduct?.product_name,
+                  },
+                });
+              }}
+            />
             <AppSize height={40} />
           </ScrollView>
           {isLoading && <Loading />}

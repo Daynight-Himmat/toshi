@@ -72,6 +72,14 @@ const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
                 data: _data.id
               });
             }}
+            sendInquiry={function (): void {
+              return navigation.navigate('Send Inquiry Page', {
+                data: {
+                  product_id: _data?.id,
+                  product_name: _data?.product_name,
+                }
+              });
+            }}
           />
         ))}
       </ScrollView> : <NoData />}

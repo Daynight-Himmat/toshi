@@ -105,7 +105,10 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
                 }}
                 sendInquiry={function (): void {
                   return navigation.navigate('Send Inquiry Page', {
-                    data: _data,
+                    data: {
+                      product_id: _data?.id,
+                      product_name: _data?.product_name,
+                    }
                   });
                 }}
               />

@@ -51,6 +51,7 @@ const SendInquiry: FunctionComponent<Props> = ({navigation, route}) => {
             onChangeText={text => setInquiry(text)}
             placeholder={`Write a Inquiry Description for ${data.product_name}`}
             multiline
+            value={inquiry}
             numberOfLines={50}
             style={{
               height: height / 2,
@@ -64,7 +65,11 @@ const SendInquiry: FunctionComponent<Props> = ({navigation, route}) => {
           onPress={() => {
             if (inquiry) {
               return navigation.navigate('Send Inquiry Preview', {
-                data: data,
+                data: {
+                  product_id: data.product_id,
+                  product_name: data.project_name,
+                  inquiry_message: inquiry,
+                },
               });
             } else {
               toastMessage(toast, 'Please input the Inquiry Description');

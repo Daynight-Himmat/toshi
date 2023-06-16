@@ -19,6 +19,7 @@ import {ApiConstants} from '../constants/api_constants';
 import ColorsCondtion from './color_condition';
 import FontConstants from '../constants/font_constants';
 import { CheckBox } from '@rneui/base';
+import WhatsApp from './whats_app';
 
 type Props = {
   uri?: string;
@@ -192,21 +193,7 @@ const ProductContainer: FunctionComponent<Props1> = ({
               color={ColorConstants.primaryColor}
             />
           </View>
-          <View
-            style={{
-              flex: 2,
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'flex-end',
-              paddingRight: 20,
-            }}>
-            <Icon
-              name="logo-whatsapp"
-              type="ionicon"
-              color={ColorConstants.whatsAppGreen}
-              onPress={whatsAppPress}
-            />
-          </View>
+          <WhatsApp />
         </View>
       </View>
     </TouchableOpacity>
