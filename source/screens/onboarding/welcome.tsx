@@ -43,10 +43,7 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
         const ios_version = respone?.data?.version?.ios_version.toString();
         const android_version = respone?.data?.version?.android_version;
         const buildNumber = DeviceInfo.getBuildNumber();
-        console.log(respone?.data?.version);
-        console.log(buildNumber);
         if (Platform.OS === 'ios') {
-          console.log(Platform.OS);
           if (buildNumber < '1') {
             setModalVisible(true);
           } else {
@@ -56,7 +53,6 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
             }, 1000);
           }
         }else{
-          console.log(Platform.OS);
           if (buildNumber < '1') {
             setModalVisible(true);
           } else {
