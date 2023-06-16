@@ -6,8 +6,6 @@ import axiosInstance from './interceptor';
 abstract class Apis {
   static logInApi = async (username: string, password: string) => {
     try {
-      console.log(username, password);
-
       const response = await axios({
         method: 'post',
         url: BaseUrl(ApiConstants.login),
@@ -17,6 +15,102 @@ abstract class Apis {
         data: {
           email: username,
           password: password,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static forgetPass = async (username?: string) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.forgotPassword),
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          email: username,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static signUp = async (
+    name?: string,
+    companyName?: string,
+    email?: string,
+    mobile?: string,
+    country?: string,
+    message?: string,
+  ) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.createAccount),
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          name: name,
+          message: message,
+          company_name: companyName,
+          email: email,
+          phone_no: mobile,
+          country: country,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static createPassword = async (
+    password: string,
+    confirm_password: string,
+  ) => {
+    try {
+      const id = await AsyncStorage.getItem('id');
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.createPassword),
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          user_id: id,
+          new_password: password,
+          confirm_password: confirm_password,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static changePassword = async (
+    password: string,
+    confirm_password: string,
+  ) => {
+    try {
+      const id = await AsyncStorage.getItem('id');
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.changePassword),
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          // user_id: id,
+          new_password: password,
+          confirm_password: confirm_password,
         },
       });
       return response;
@@ -399,6 +493,63 @@ abstract class Apis {
           type_id: type_id,
           mixing_posibility_id: mixing_posibility_id,
           color_id: color_id,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static sendInquiry = async (
+    contact_name_id: any,
+    company_acc_name_id: any,
+    rng_inquiry_name: any,
+    email: any,
+    mobile_no: any,
+    description: any,
+    product_interested_in_id: any,
+    inquiry_from: any,
+    source_type: any,
+  ) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.filterProduct),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          contact_name_id: contact_name_id,
+          company_acc_name_id: company_acc_name_id,
+          rng_inquiry_name: rng_inquiry_name,
+          email: email,
+          mobile_no: mobile_no,
+          description: description,
+          product_interested_in_id: product_interested_in_id,
+          inquiry_from: inquiry_from,
+          source_type: source_type,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static getFourceToUpdate = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      const response = await axios({
+        method: 'post',
+        url: BaseUrl(ApiConstants.getVersionController),
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       });
       return response;

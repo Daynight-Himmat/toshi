@@ -1,13 +1,21 @@
 import React, {FunctionComponent, SetStateAction, useState} from 'react';
 import {View} from 'react-native';
 import {AuthHeader} from '../../components/app_header';
-import {alignSelf, commonStyles, paddingHorizontal} from '../../components/style';
+import {
+  alignSelf,
+  commonStyles,
+  paddingHorizontal,
+} from '../../components/style';
 import AppButton from '../../components/app_button';
 import AppSize from '../../components/size';
 import {HighLightLabel, Label} from '../../components/label';
 
 import ColorConstants from '../../constants/color_constants';
 import TextField from '../../components/floading_label';
+import toastMessage from '../../components/toast_message';
+import {useToast} from 'react-native-toast-notifications';
+import Apis from '../../apis/api_functions';
+import { Loading } from '../../components/no_data_found';
 
 type Props = {
   navigation: any;
@@ -15,6 +23,29 @@ type Props = {
 
 const ForgetPass: FunctionComponent<Props> = ({navigation}) => {
   const [email, setEmail] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
+
+  const getCreateAccount = async () => {
+    try {
+      if (!email) {
+        toastMessage(toast, 'Please Enter the Email-Address');
+      } else {
+        setLoading(true);
+        await Apis.forgetPass(email).then(response => {
+          if (response?.status === 200) {
+            setLoading(false);
+            toastMessage(toast, response?.data?.message);
+            navigation.navigate('Create-Pass');
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  
   return (
     <View style={commonStyles.container}>
       <AuthHeader navigation={navigation} show={true} />
@@ -37,12 +68,10 @@ const ForgetPass: FunctionComponent<Props> = ({navigation}) => {
           onChangeText={(text: SetStateAction<string>) => setEmail(text)}
         />
         <AppSize height={20} width={undefined} />
-        <AppButton
-          text={'Send'}
-          onPress={() => navigation.navigate('Create-Pass')}
-        />
+        <AppButton text={'Send'} onPress={() => getCreateAccount()} />
         <AppSize height={20} width={undefined} />
       </View>
+      {isLoading && <Loading/>}
     </View>
   );
 };

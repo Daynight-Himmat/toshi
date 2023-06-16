@@ -6,16 +6,46 @@ import AppButton from '../../components/app_button';
 import {HighLightLabel} from '../../components/label';
 import AppSize from '../../components/size';
 import TextField from '../../components/floading_label';
+import toastMessage from '../../components/toast_message';
+import { useToast } from 'react-native-toast-notifications';
+import Apis from '../../apis/api_functions';
 
 type Props = {
   navigation: any;
 };
 
 const ResetPass: FunctionComponent<Props> = ({navigation}) => {
+  const toast = useToast();
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
   const [passVisible, setPasswordVisible] = useState(false);
   const [conPassVisible, setConPasswordVisible] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const getCreatePass = async () => {
+    try {
+      if (!password) {
+        toastMessage(toast, 'Please Enter the Password');
+      } else if (!conPassword) {
+        toastMessage(toast, 'Please Enter the Confirm-Password');
+      } else if (password !== conPassword) {
+        toastMessage(toast, 'Password not match');
+      }else {
+        setLoading(true);
+        await Apis.createPassword(password, conPassword).then(response => {
+          if (response?.status === 200) {
+            setLoading(false);
+            console.log(response?.data);
+            toastMessage(toast, response?.data?.message);
+            // navigation.navigate('SignIn');
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <View style={commonStyles.container}>
@@ -44,7 +74,7 @@ const ResetPass: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={20} width={undefined} />
         <AppButton
           text={'Update'}
-          onPress={undefined}
+          onPress={()=> getCreatePass()}
         />
         <AppSize height={20} width={undefined} />
       </View>

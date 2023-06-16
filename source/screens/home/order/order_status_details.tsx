@@ -1,23 +1,17 @@
 import React, {FunctionComponent, useCallback, useEffect, useState} from 'react';
 import {
-  Alert,
   ImageSourcePropType,
-  SliderBase,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import {Loading} from '../../../components/no_data_found';
-import Apis from '../../../apis/api_functions';
 import {orderResult} from '../../../model/order_result';
 import {AppHeader} from '../../../components/app_header';
 import {Label, LabelAndTitle} from '../../../components/label';
-import {padding} from '../../../components/style';
+import {color, padding} from '../../../components/style';
 import {Avatar, Icon} from '@rneui/themed';
-import FastImage from 'react-native-fast-image';
-import {BaseUrl} from '../../../constants/api_constants';
 import {ApiConstants} from '../../../constants/api_constants';
 import {ImageSlider} from 'react-native-image-slider-banner';
 import AppSize from '../../../components/size';
@@ -44,8 +38,11 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
   const getImages = useCallback (() => {
     value.map((item, index) => {
       const val2 = {img: item as ImageSourcePropType};
-      getImage.push(val2);
-      setImage([...getImage]);
+      if (getImage.some(data => data.img === val2.img)) {
+        setImage([...new Set(getImage)]);
+      } else {
+        setImage(prevItems => [...prevItems, val2]);
+      }
     });
   },[]);
 
@@ -81,7 +78,25 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
         source={require('../../../assets/image/nofound.jpg')}/>}
 
         <AppSize height={10} />
+        <View style={{
+          paddingVertical: 10,
+          flexDirection: 'row',
+          justifyContent:'space-between',
+          alignContent: 'center',
+          alignItems: 'center'
+        }}>
         <LabelAndTitle label={'Inquiry No'} title={data?.inquiry_no} />
+        <View style={{
+          padding: 10,
+          borderRadius: 5,
+          justifyContent: 'center',
+          backgroundColor: ColorConstants.primaryColor,
+          alignContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Label name={data.inquiry_stage} style={color(ColorConstants.primaryWhite)}/>
+        </View>
+        </View>
         <LabelAndTitle label={'Inquiry Name'} title={data?.product_name} />
         <LabelAndTitle
           label={'Inquiry Description'}

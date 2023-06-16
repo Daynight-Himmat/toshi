@@ -80,6 +80,7 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
             <Menu height={40} width={40} />
             </TouchableOpacity>
             <Avatar
+              onPress={()=> navigation.navigate('MyProfile')}
               size={45}
               rounded
               source={profileImage ? {uri : profileImage} :require('../../assets/image/profile.png')}
