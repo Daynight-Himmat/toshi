@@ -5,6 +5,7 @@ import {OrderList} from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
 import Apis from '../../../apis/api_functions';
 import {orderResult} from '../../../model/order_result';
+import { commonStyles } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -33,23 +34,25 @@ const InquiryOrder: FunctionComponent<Props> = ({navigation}) => {
     getInquiryOrder();
   }, []);
   return (
-    <View style={styles.viewContainer}>
+    <View style={commonStyles.viewContainer}>
       {getInquiry ? (
         <ScrollView>
-          {getInquiry.map((_data: orderResult, index: React.Key | null | undefined) => (
-            <OrderList
-              key={index}
-              label1="Inquiry No: "
-              label2="Inquiry Date: "
-              label3="Sales Invoice: "
-              label4="Sales Invoice Account: "
-              start1={_data.inquiry_no}
-              start2={_data.inquiry_date}
-              start3={_data.SalesInvoices ?? 'Not Found'}
-              start4={_data.SalesInvoices ?? 'Not Found'}
-              uri={_data.product_img}
-            />
-          ))}
+          {getInquiry.map(
+            (_data: orderResult, index: React.Key | null | undefined) => (
+              <OrderList
+                key={index}
+                label1="Inquiry No: "
+                label2="Inquiry Date: "
+                label3="Sales Invoice: "
+                label4="Sales Invoice Account: "
+                start1={_data.inquiry_no}
+                start2={_data.inquiry_date}
+                start3={_data.SalesInvoices ?? 'Not Found'}
+                start4={_data.SalesInvoices ?? 'Not Found'}
+                uri={_data.product_img}
+              />
+            ),
+          )}
         </ScrollView>
       ) : (
         <NoData />
@@ -59,32 +62,4 @@ const InquiryOrder: FunctionComponent<Props> = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite,
-  },
-  inquiryContainer: {
-    elevation: 100,
-    flexDirection: 'row',
-    backgroundColor: ColorConstants.primaryWhite,
-    margin: 10,
-    shadowColor: ColorConstants.primaryBlack,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    borderRadius: 5,
-  },
-  textStyles: {
-    textAlign: 'justify',
-    paddingHorizontal: 10,
-  },
-  highLight: {
-    alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor,
-  },
-});
-
 export default InquiryOrder;

@@ -118,6 +118,10 @@ export const alignContent = (alignContent: any): ViewStyle => {
   return {alignContent};
 };
 
+export const textAlign = (textAlign: any): TextStyle => {
+  return {textAlign};
+};
+
 export const commonStyles = StyleSheet.create<Style>({
   container: {
     flex: 1,

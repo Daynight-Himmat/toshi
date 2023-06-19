@@ -6,6 +6,7 @@ import {OrderList} from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
 import {orderResult} from '../../../model/order_result';
 import TimeCondition from '../../../components/date_constants';
+import { commonStyles } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -35,7 +36,7 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={commonStyles.viewContainer}>
       {getLostResult ? (
         <ScrollView>
           {getLostResult.map(
@@ -69,20 +70,5 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    backgroundColor: ColorConstants.primaryWhite,
-  },
-  textStyles: {
-    textAlign: 'justify',
-    paddingHorizontal: 10,
-  },
-  highLight: {
-    alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor,
-  },
-});
 
 export default LostOrder;

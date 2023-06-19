@@ -5,8 +5,6 @@ import {
   StyleSheet,
   Modal,
   Alert,
-  Text,
-  Pressable,
   BackHandler,
   Platform,
 } from 'react-native';
@@ -15,7 +13,6 @@ import {HighLightLabel, Label} from '../../components/label';
 import FontConstants from '../../constants/font_constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CommanFunctions from '../../components/comman_functions';
-import {marginBottom} from '../../components/style';
 import RowButton from '../../components/row_button';
 import AppSize from '../../components/size';
 import Apis from '../../apis/api_functions';
@@ -39,7 +36,6 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
   const getLastUpdateTime = async () => {
     await Apis.getFourceToUpdate().then(respone => {
       if (respone?.status === 200) {
-        
         const ios_version = respone?.data?.version?.ios_version.toString();
         const android_version = respone?.data?.version?.android_version;
         const buildNumber = DeviceInfo.getBuildNumber();
@@ -52,7 +48,7 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
               getRoute();
             }, 1000);
           }
-        }else{
+        } else {
           if (buildNumber < '1') {
             setModalVisible(true);
           } else {
@@ -70,7 +66,7 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
     //this.props.navigation.goBack(null);
     BackHandler.exitApp();
     return true;
-}
+  };
 
   useEffect(() => {
     getLastUpdateTime();
@@ -93,7 +89,7 @@ const WelCome: FunctionComponent<Props> = ({navigation}) => {
             <RowButton
               text1="Cancel"
               text2="Update"
-              onback={()=> {}}
+              onback={() => {}}
               onPress={() => {}}
             />
           </View>

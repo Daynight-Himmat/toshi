@@ -2,7 +2,6 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import {ScrollView, StyleSheet, View, TextInput} from 'react-native';
@@ -14,7 +13,8 @@ import {ResulPro} from '../../../model/product';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {useIsFocused} from '@react-navigation/native';
-import {ActionSheetRef} from 'react-native-actions-sheet';
+import {Icon} from '@rneui/base';
+import {commonStyles} from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -28,22 +28,6 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
   const [getSearchData, setSearchData] = useState<ResulPro[]>([]);
-
-  const actionSheetRef = useRef<ActionSheetRef>(null);
-  const dashValue = [
-    {
-      name: 'Product Preference',
-      icon: 'location-outline',
-      iconType: 'ionicon',
-      onPress: () => navigation.navigate('Product Preference'),
-    },
-    {
-      name: 'Usage Preference',
-      icon: 'location-outline',
-      iconType: 'ionicon',
-      onPress: () => navigation.navigate('Usage Preference'),
-    },
-  ];
 
   const getProducts = useCallback(async () => {
     try {
@@ -96,12 +80,20 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
 
   return (
     <View style={styles.viewContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Search here"
-        placeholderTextColor={ColorConstants.primaryBlack}
-        onChangeText={text => handleCategories(text)}
-      />
+      <View style={styles.textInput}>
+        <TextInput
+          style={commonStyles.fill}
+          placeholder="Search here"
+          placeholderTextColor={ColorConstants.primaryBlack}
+          onChangeText={text => handleCategories(text)}
+        />
+        <Icon
+          name={'search'}
+          type="ionicon"
+          size={17}
+          color={ColorConstants.textGrey}
+        />
+      </View>
       {getSearchData ? (
         <ScrollView>
           {getSearchData &&
@@ -152,6 +144,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     margin: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    alignItems: 'center',
     backgroundColor: ColorConstants.textInputBackGround,
     borderColor: ColorConstants.textInputBackGround,
     borderWidth: 1,

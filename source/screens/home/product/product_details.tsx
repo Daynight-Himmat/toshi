@@ -25,6 +25,7 @@ import {
   color,
   commonStyles,
   marginBottom,
+  textAlign,
 } from '../../../components/style';
 import {Icon} from '@rneui/themed';
 import AppButton from '../../../components/app_button';
@@ -172,19 +173,10 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
                 hightLightLabel={
                   getProduct?.product_name + ` (${getProduct?.product_code})`
                 }
-                labelStyle={{
-                  textAlign: 'left',
-                }}
-                style={{
-                  alignSelf: 'flex-start',
-                  width: '80%',
-                }}
+                labelStyle={textAlign('left')}
+                style={styles.lebalStyles}
               />
-              <View
-                style={{
-                  backgroundColor: ColorConstants.primaryWhite,
-                  paddingRight: 20,
-                }}>
+              <View style={styles.bookmark}>
                 <Icon
                   onPress={() => getSave()}
                   name={
@@ -206,13 +198,7 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
               <WhatsApp />
             </View>
             <AppSize height={20} />
-            <View
-              style={{
-                borderColor: ColorConstants.textHintColor,
-                borderWidth: 2,
-                paddingVertical: 10,
-                marginBottom: 10,
-              }}>
+            <View style={styles.product}>
               {productDetails.map((item: any, index: any) => (
                 <ProductDetailTable
                   key={index}
@@ -268,6 +254,20 @@ const styles = StyleSheet.create({
   highLight: {
     alignSelf: 'flex-start',
     color: ColorConstants.primaryColor,
+  },
+  lebalStyles: {
+    alignSelf: 'flex-start',
+    width: '80%',
+  },
+  bookmark: {
+    backgroundColor: ColorConstants.primaryWhite,
+    paddingRight: 20,
+  },
+  product: {
+    borderColor: ColorConstants.textHintColor,
+    borderWidth: 2,
+    paddingVertical: 10,
+    marginBottom: 10,
   },
 });
 

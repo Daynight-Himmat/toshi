@@ -6,6 +6,7 @@ import {Loading, NoData} from '../../../components/no_data_found';
 import {orderResult} from '../../../model/order_result';
 import {OrderList} from '../../../components/order_list_container';
 import TimeCondition from '../../../components/date_constants';
+import { commonStyles } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -35,7 +36,7 @@ const CompletedOrder: FunctionComponent<Props> = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={commonStyles.viewContainer}>
       {getCompleteResult ? (
         <ScrollView>
           {getCompleteResult.map(
@@ -68,21 +69,4 @@ const CompletedOrder: FunctionComponent<Props> = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite,
-  },
-  textStyles: {
-    textAlign: 'justify',
-    paddingHorizontal: 10,
-  },
-  highLight: {
-    alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor,
-  },
-});
-
 export default CompletedOrder;

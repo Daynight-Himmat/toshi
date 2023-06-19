@@ -1,9 +1,15 @@
-import React, {FunctionComponent, useCallback, useEffect, useState} from 'react';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import {
   ImageSourcePropType,
   StyleSheet,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import {Loading} from '../../../components/no_data_found';
@@ -27,7 +33,6 @@ type Props = {
 
 const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
   const data = route.params.data as orderResult;
-  const [getInquiry, setInquiry] = useState<orderResult[]>([]);
   const [getImage, setImage] = useState<img[]>([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -35,8 +40,8 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
     .split(', ')
     .map(data => ApiConstants.baseProductImageUrl + data);
 
-  const getImages = useCallback (() => {
-    value.map((item, index) => {
+  const getImages = useCallback(() => {
+    value.map((item, _index) => {
       const val2 = {img: item as ImageSourcePropType};
       if (getImage.some(data => data.img === val2.img)) {
         setImage([...new Set(getImage)]);
@@ -44,7 +49,7 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
         setImage(prevItems => [...prevItems, val2]);
       }
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
     getImages();
@@ -54,79 +59,65 @@ const OrderStatusDetails: FunctionComponent<Props> = ({navigation, route}) => {
     <View style={styles.viewContainer}>
       <AppHeader text={data?.inquiry_no} navigate={() => navigation.goBack()} />
       <View style={padding(10)}>
-      {getImage ? <ImageSlider
-          data={getImage}
-          autoPlay={true}
-          closeIconColor="#fff"
-          caroselImageStyle={{
-            resizeMode: 'cover',
-          }}
-          activeIndicatorStyle={{
-            backgroundColor: ColorConstants.primaryColor,
-          }}
-        />: <Avatar
-        containerStyle={{
-          width: 150,
-          height: 150,
-          borderRadius: 5,
-          padding: 10
-        }}
-        renderPlaceholderContent={<Loading />}
-        imageProps={{
-          borderRadius: 5 ,
-        }}
-        source={require('../../../assets/image/nofound.jpg')}/>}
+        {getImage ? (
+          <ImageSlider
+            data={getImage}
+            autoPlay={true}
+            closeIconColor="#fff"
+            caroselImageStyle={{
+              resizeMode: 'cover',
+            }}
+            activeIndicatorStyle={{
+              backgroundColor: ColorConstants.primaryColor,
+            }}
+          />
+        ) : (
+          <Avatar
+            containerStyle={styles.avatarStyles}
+            renderPlaceholderContent={<Loading />}
+            imageProps={{
+              borderRadius: 5,
+            }}
+            source={require('../../../assets/image/nofound.jpg')}
+          />
+        )}
 
-        <AppSize height={10} />
-        <View style={{
-          paddingVertical: 10,
-          flexDirection: 'row',
-          justifyContent:'space-between',
-          alignContent: 'center',
-          alignItems: 'center'
-        }}>
-        <LabelAndTitle label={'Inquiry No'} title={data?.inquiry_no} />
-        <View style={{
-          padding: 10,
-          borderRadius: 5,
-          justifyContent: 'center',
-          backgroundColor: ColorConstants.primaryColor,
-          alignContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Label name={data.inquiry_stage} style={color(ColorConstants.primaryWhite)}/>
-        </View>
-        </View>
-        <LabelAndTitle label={'Inquiry Name'} title={data?.product_name} />
-        <LabelAndTitle
-          label={'Inquiry Description'}
-          title={data?.description}
-        />
-        <Label
-          name={'Product Name'}
-          style={{
-            paddingVertical: 10,
-            color: ColorConstants.textGrey,
-          }}
-        />
-        <TouchableOpacity
-          style={styles.productNameContainer}
-          onPress={function (): void {
-            return navigation.navigate('Product Details', {
-              data: data?.productID,
-            });
-          }}>
-          <Label name={data?.product_name} />
-          <Icon name="info" size={17} color={ColorConstants.primaryColor} />
-        </TouchableOpacity>
-        <LabelAndTitle
-          label={'Uploaded Document'}
-          title={data?.documents ?? 'No Document Found'}
-        />
-        <LabelAndTitle
-          label={'Sales Invoice Details'}
-          title={data?.SalesInvoices ?? 'No Sales Invoic Found'}
-        />
+        <ScrollView>
+          <AppSize height={10} />
+          <View style={styles.inquiryNO}>
+            <LabelAndTitle label={'Inquiry No'} title={data?.inquiry_no} />
+            <View style={styles.inquiryStage}>
+              <Label
+                name={data.inquiry_stage}
+                style={color(ColorConstants.primaryWhite)}
+              />
+            </View>
+          </View>
+          <LabelAndTitle label={'Inquiry Name'} title={data?.product_name} />
+          <LabelAndTitle
+            label={'Inquiry Description'}
+            title={data?.description}
+          />
+          <Label name={'Product Name'} style={styles.productName} />
+          <TouchableOpacity
+            style={styles.productNameContainer}
+            onPress={function (): void {
+              return navigation.navigate('Product Details', {
+                data: data?.productID,
+              });
+            }}>
+            <Label name={data?.product_name} />
+            <Icon name="info" size={17} color={ColorConstants.primaryColor} />
+          </TouchableOpacity>
+          <LabelAndTitle
+            label={'Uploaded Document'}
+            title={data?.documents ?? 'No Document Found'}
+          />
+          <LabelAndTitle
+            label={'Sales Invoice Details'}
+            title={data?.SalesInvoices ?? 'No Sales Invoic Found'}
+          />
+        </ScrollView>
       </View>
       {isLoading && <Loading />}
     </View>
@@ -169,6 +160,31 @@ const styles = StyleSheet.create({
   },
   indicator: {
     color: ColorConstants.primaryBlack,
+  },
+  productName: {
+    paddingVertical: 10,
+    color: ColorConstants.textGrey,
+  },
+  inquiryStage: {
+    padding: 10,
+    borderRadius: 5,
+    justifyContent: 'center',
+    backgroundColor: ColorConstants.primaryColor,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  inquiryNO: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  avatarStyles: {
+    width: 150,
+    height: 150,
+    borderRadius: 5,
+    padding: 10,
   },
 });
 

@@ -1,22 +1,19 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import ColorConstants from '../../../constants/color_constants';
+import {ScrollView, View} from 'react-native';
 import Apis from '../../../apis/api_functions';
 import {Loading, NoData} from '../../../components/no_data_found';
 import {ProductContainer} from '../../../components/order_list_container';
 import {ResulPro} from '../../../model/product';
-import toast from 'react-native-toast-notifications/lib/typescript/toast';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
-import { commonStyles } from '../../../components/style';
+import {commonStyles} from '../../../components/style';
 
 type Props = {
   navigation: any;
   route: any;
 };
 
-const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
-  const data = route?.params?.data;
+const SaveProduct: FunctionComponent<Props> = ({navigation}) => {
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
@@ -91,6 +88,5 @@ const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
     </View>
   );
 };
-
 
 export default SaveProduct;

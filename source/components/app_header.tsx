@@ -1,10 +1,8 @@
 import React, {FunctionComponent} from 'react';
-import {StyleSheet, Dimensions, View, Image} from 'react-native';
+import {StyleSheet, Dimensions, View} from 'react-native';
 import ColorConstants from '../constants/color_constants';
 import {Appbar, Button} from 'react-native-paper';
 import FontConstants from '../constants/font_constants';
-import {Icon} from '@rneui/base';
-import ColorsCondtion from './color_condition';
 import {Label} from './label';
 import AppSize from './size';
 import {Avatar} from '@rneui/themed';
@@ -13,11 +11,19 @@ const {height, width} = Dimensions.get('screen');
 
 type Props = {
   text?: string;
+  buttonText?: string;
   navigate?: any;
-  action?: any;
+  action?: boolean;
+  onPress?: () => void;
 };
 
-const AppHeader: FunctionComponent<Props> = ({text, navigate, action}) => {
+const AppHeader: FunctionComponent<Props> = ({
+  text,
+  buttonText,
+  navigate,
+  action,
+  onPress,
+}) => {
   return (
     <Appbar.Header style={styles.headerStyles}>
       <Appbar.BackAction
@@ -30,7 +36,16 @@ const AppHeader: FunctionComponent<Props> = ({text, navigate, action}) => {
         color={ColorConstants.primaryWhite}
         titleStyle={styles.headerText}
       />
-      {action}
+      {action && (
+        <Button
+          mode="text"
+          labelStyle={styles.buttonLabel}
+          textColor={ColorConstants.primaryWhite}
+          style={styles.buttonStyles}
+          onPress={onPress}>
+          {buttonText}
+        </Button>
+      )}
     </Appbar.Header>
   );
 };
@@ -178,6 +193,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: ColorConstants.primaryColor,
+  },
+  buttonLabel: {fontWeight: '600', fontFamily: FontConstants.medium},
+  buttonStyles: {
+    width: 200,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 });
 

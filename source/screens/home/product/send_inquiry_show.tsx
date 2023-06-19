@@ -1,7 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import ColorConstants from '../../../constants/color_constants';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {commonStyles} from '../../../components/style';
 import {ProductDetailTable} from '../../../components/label';
 import AppButton from '../../../components/app_button';
@@ -10,14 +9,12 @@ import Apis from '../../../apis/api_functions';
 import {Loading} from '../../../components/no_data_found';
 import AppSize from '../../../components/size';
 
-const Tab = createMaterialTopTabNavigator();
-
 type Props = {
   navigation: any;
   route: any;
 };
 
-const SendInquiryPreview: FunctionComponent<Props> = ({navigation, route}) => {
+const SendInquiryPreview: FunctionComponent<Props> = ({route}) => {
   const data = route?.params?.data;
   const [isLoading, setLoading] = useState(false);
   const [getProduct, setProductDetails] = useState<ProductResult>();
@@ -91,20 +88,14 @@ const SendInquiryPreview: FunctionComponent<Props> = ({navigation, route}) => {
     <View style={commonStyles.viewContainer}>
       <ScrollView>
         <AppSize height={20} />
-        <View
-          style={{
-            borderColor: ColorConstants.textHintColor,
-            borderWidth: 2,
-            paddingVertical: 10,
-            marginBottom: 10,
-          }}>
-          {productDetails.map((data, index) => (
+        <View style={styles.container}>
+          {productDetails.map((item: any, index: any) => (
             <ProductDetailTable
               key={index}
-              label={data.label}
-              type={data.type}
-              data={data.data}
-              divider={data.divider}
+              label={item.label}
+              type={item.type}
+              data={item.data}
+              divider={item.divider}
             />
           ))}
         </View>
@@ -115,5 +106,14 @@ const SendInquiryPreview: FunctionComponent<Props> = ({navigation, route}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderColor: ColorConstants.textHintColor,
+    borderWidth: 2,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+});
 
 export default SendInquiryPreview;

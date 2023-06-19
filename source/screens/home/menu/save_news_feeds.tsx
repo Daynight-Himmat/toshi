@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import {FeedList} from '../../../components/order_list_container';
 import Apis from '../../../apis/api_functions';

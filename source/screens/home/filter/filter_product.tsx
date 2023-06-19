@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
@@ -8,7 +8,7 @@ import {ResulPro} from '../../../model/product';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {useIsFocused} from '@react-navigation/native';
-import {ActionSheetRef} from 'react-native-actions-sheet';
+import { commonStyles } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -62,10 +62,10 @@ const FilterProductPage: FunctionComponent<Props> = ({navigation, route}) => {
 
   useEffect(() => {
     getProducts();
-  }, [isFocused]);
+  }, [getProducts, isFocused]);
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={commonStyles.viewContainer}>
       {getProductData ? (
         <ScrollView>
           {getProductData &&
@@ -100,21 +100,5 @@ const FilterProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite,
-  },
-  textStyles: {
-    textAlign: 'justify',
-    paddingHorizontal: 10,
-  },
-  highLight: {
-    alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor,
-  },
-});
 
 export default FilterProductPage;

@@ -41,12 +41,11 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
 
   const getProfileUrl = async () => {
     try {
-      const userId = await AsyncStorage.getItem('id');
-      const firstName = await AsyncStorage.getItem('first_name');
-      const lastName = await AsyncStorage.getItem('last_name');
+      const first = await AsyncStorage.getItem('first_name');
+      const last = await AsyncStorage.getItem('last_name');
       const profile_photo = await AsyncStorage.getItem('profile_photo');
-      setFirstName(firstName ?? '');
-      setLastName(lastName ?? '');
+      setFirstName(first ?? '');
+      setLastName(last ?? '');
       setProfileImage(ApiConstants.baseProfileImageUrl + profile_photo ?? '');
     } catch (error) {
       console.log(error);
@@ -88,8 +87,7 @@ const DashBoard: FunctionComponent<Props> = ({navigation}) => {
         <Label name="Welcome back." margin={0} />
         <AppSize height={20} />
       </View>
-      <ScrollView
-        style={styles.viewContainer}>
+      <ScrollView style={styles.viewContainer}>
         {dashValue.map((data, index) => (
           <DSContainer
             index={index}

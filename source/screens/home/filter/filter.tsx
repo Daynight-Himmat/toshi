@@ -1,4 +1,9 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +11,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {commonStyles, justifyContent} from '../../../components/style';
+import {
+  commonStyles,
+  justifyContent,
+  margin,
+  textAlign,
+} from '../../../components/style';
 import ColorConstants from '../../../constants/color_constants';
 import AppButton from '../../../components/app_button';
 import {AppHeader} from '../../../components/app_header';
@@ -69,7 +79,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     MixingPosibility[]
   >([]);
 
-  const getFilterData = async () => {
+  const getFilterData = useCallback(async () => {
     try {
       setLoading(true);
       await Apis.getFilter().then(response => {
@@ -93,7 +103,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getFilterData();
@@ -396,14 +406,6 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     },
   ];
 
-  const _renderSectionTitle = (section: any) => {
-    return (
-      <View>
-        <Text>{section.content}</Text>
-      </View>
-    );
-  };
-
   const _renderHeader = (section: any) => {
     return (
       <View style={styles.listContainer}>
@@ -416,9 +418,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
         <HighLightLabel
           hightLightLabel={section.title}
           style={commonStyles.fill}
-          labelStyle={{
-            textAlign: 'left',
-          }}
+          labelStyle={textAlign('left')}
         />
         <Icon
           name={'chevron-down'}
@@ -434,13 +434,8 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
     return (
       <View style={styles.listContainer}>
         <View style={commonStyles.fill}>
-          <View
-            style={{
-              borderBottomColor: ColorConstants.primaryColor,
-              borderBottomWidth: 2,
-              height: 50,
-            }}>
-            <View style={{flexDirection: 'row', padding: 10}}>
+          <View style={styles.searchContainer}>
+            <View style={styles.flexs}>
               <Icon
                 name="search"
                 type={'ionicon'}
@@ -450,10 +445,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
               <TextInput
                 placeholder="search here"
                 placeholderTextColor={ColorConstants.textGrey}
-                style={{
-                  flex: 1,
-                  paddingHorizontal: 10,
-                }}
+                style={styles.textSearch}
                 onChangeText={section.onChangeText}
               />
             </View>
@@ -469,23 +461,10 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       <AppHeader
         navigate={() => navigation.goBack()}
         text={'Filter Page'}
-        action={
-          <Button
-            mode="text"
-            labelStyle={{fontWeight: '600', fontFamily: FontConstants.medium}}
-            textColor={ColorConstants.primaryWhite}
-            style={{
-              width: 200,
-              alignSelf: 'center',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-            }}
-            onPress={() => handleReset()}>
-            Reset All
-          </Button>
-        }
+        onPress={() => handleReset()}
+        buttonText="Reset All"
       />
-      <View style={{flex: 1}}>
+      <View style={commonStyles.fill}>
         <ScrollView>
           <Accordion
             underlayColor={ColorConstants.primaryWhite}
@@ -498,7 +477,7 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
         </ScrollView>
         {isLoading && <Loading />}
       </View>
-      <View style={{margin: 20}}>
+      <View style={margin(10)}>
         <AppButton
           text="Apply"
           onPress={() => {
@@ -559,6 +538,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 4,
     borderRadius: 5,
+  },
+  searchContainer: {
+    borderBottomColor: ColorConstants.primaryColor,
+    borderBottomWidth: 2,
+    height: 50,
+  },
+  flexs: {
+    flexDirection: 'row',
+    padding: 0,
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  textSearch: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
 });
 

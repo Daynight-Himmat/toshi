@@ -1,8 +1,7 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {commonStyles, margin} from '../../../components/style';
 import AppButton from '../../../components/app_button';
-import {useIsFocused} from '@react-navigation/native';
 import Apis from '../../../apis/api_functions';
 import {ProductPreferenceList} from '../../../model/preferences';
 import {Loading, NoData} from '../../../components/no_data_found';
@@ -10,17 +9,10 @@ import {PraferenceContainer} from '../../../components/order_list_container';
 import toastMessage from '../../../components/toast_message';
 import {useToast} from 'react-native-toast-notifications';
 import {AppHeader} from '../../../components/app_header';
-import {Appbar, Button} from 'react-native-paper';
-import ColorConstants from '../../../constants/color_constants';
-import FontConstants from '../../../constants/font_constants';
 
 type Props = {
   navigation: any;
 };
-
-interface check {
-  id: any;
-}
 
 const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
   const [getProductPraference, setProductPraference] = useState<
@@ -28,8 +20,6 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
   >([]);
   const [isLoading, setLoading] = useState(false);
   const [checkedItems, setCheckedItems] = useState<ProductPreferenceList[]>([]);
-  const [items, setItems] = useState<check[]>([]);
-  const isFocused = useIsFocused();
   const toast = useToast();
 
   const getProductPraferences = async () => {
@@ -107,22 +97,10 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
     <View style={commonStyles.container}>
       <AppHeader
         navigate={() => navigation.goBack()}
+        buttonText="Select All"
         text={'Product Praference'}
-        action={
-          <Button
-            mode="text"
-            labelStyle={{fontWeight: '600', fontFamily: FontConstants.medium}}
-            textColor={ColorConstants.primaryWhite}
-            style={{
-              width: 200,
-              alignSelf: 'center',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-            }}
-            onPress={() => getProductPraference.map(data => selectAll(data))}>
-            Select All
-          </Button>
-        }
+        action
+        onPress={() => getProductPraference.map(data => selectAll(data))}
       />
       <View style={commonStyles.fill}>
         {getProductPraference ? (
@@ -155,7 +133,7 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
             if (checkedItems.length > 0) {
               getSavePreference(
                 'product',
-                checkedItems.map((data, index) => data.id),
+                checkedItems.map(data => data.id),
               );
             } else {
               toastMessage(toast, 'Please select Product Preference');
@@ -166,12 +144,5 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-});
 
 export default ProductPreference;

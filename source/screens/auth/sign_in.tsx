@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   alignSelf,
@@ -20,7 +20,7 @@ import CommanFunctions from '../../components/comman_functions';
 import Apis from '../../apis/api_functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Loading} from '../../components/no_data_found';
-import { ScrollView } from 'react-native';
+import {ScrollView} from 'react-native';
 
 type Props = {
   navigation: any;
@@ -28,12 +28,9 @@ type Props = {
 
 const SignIn: FunctionComponent<Props> = ({navigation}) => {
   const [isChecked, setChecked] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const [show, setShow] = useState(false);
   const toast = useToast();
 
   const getLogIn = async () => {
@@ -49,6 +46,13 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
         await Apis.logInApi(email, password).then(response => {
           if (response?.status === 200) {
             setLoading(false);
+            if (isChecked) {
+              AsyncStorage.setItem('remember', 'yes');
+              AsyncStorage.setItem('email', email);
+              AsyncStorage.setItem('password', password);
+            } else {
+              AsyncStorage.setItem('remember', 'no');
+            }
             AsyncStorage.setItem(
               'first_name',
               response.data.result.name.first_name,
@@ -94,6 +98,22 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
       }
     }
   };
+
+  const remember = async () => {
+    const rememberValue = await AsyncStorage.getItem('remember');
+    const emailValue = await AsyncStorage.getItem('email');
+    const passwordValue = await AsyncStorage.getItem('password');
+    if (rememberValue === 'yes') {
+      setEmail(emailValue ?? '');
+      setPassword(passwordValue ?? '');
+      setChecked(true);
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    remember();
+  }, []);
 
   return (
     <View style={commonStyles.container}>

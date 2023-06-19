@@ -149,7 +149,6 @@ const styles: StylesFunctionProps = ({d}) =>
   StyleSheet.create<StyleSheetType>({
     flex_container: {
       height: '80%',
-      
       justifyContent: 'center',
     },
     header: {
