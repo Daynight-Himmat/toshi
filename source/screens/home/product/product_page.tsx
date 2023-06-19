@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     borderColor: ColorConstants.textInputBackGround,
     borderWidth: 1,
     borderRadius: 5,
-    color: ColorConstants.primaryBlack
+    color: ColorConstants.primaryBlack,
   },
 });
 

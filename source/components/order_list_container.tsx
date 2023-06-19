@@ -1,6 +1,5 @@
 import React, {FunctionComponent} from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,7 +10,7 @@ import ColorConstants from '../constants/color_constants';
 import {CommonTwoText, HighLightLabel, Label} from './label';
 import RowButton from './row_button';
 import AppSize from './size';
-import {alignItems, alignSelf, color, commonStyles, padding} from './style';
+import {color, commonStyles, padding} from './style';
 import {Avatar, Icon} from '@rneui/themed';
 import AppButton from './app_button';
 import {Loading} from './no_data_found';
@@ -20,7 +19,6 @@ import ColorsCondtion from './color_condition';
 import FontConstants from '../constants/font_constants';
 import {CheckBox} from '@rneui/base';
 import WhatsApp from './whats_app';
-import CommanFunctions from './comman_functions';
 import TimeCondition from './date_constants';
 
 type Props = {
