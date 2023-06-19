@@ -17,7 +17,11 @@ const BottomSheet: FunctionComponent<Props> = ({
   buttonButton,
 }) => {
   return (
-    <ActionSheet closable backgroundInteractionEnabled  ref={refer} useBottomSafeAreaPadding={true}>
+    <ActionSheet
+      closable
+      backgroundInteractionEnabled
+      ref={refer}
+      useBottomSafeAreaPadding={true}>
       <TouchableOpacity onPress={backButton} style={styles.backButton} />
       <ScrollView contentContainerStyle={styles.container}>{widget}</ScrollView>
       {buttonButton}

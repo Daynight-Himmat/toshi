@@ -1,9 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {color} from './style';
 import ColorConstants from '../constants/color_constants';
 import {HighLightLabel} from './label';
@@ -58,12 +54,8 @@ const DSContainer: FunctionComponent<Props> = ({navigation, data, index}) => {
   };
 
   return (
-    <TouchableOpacity
-        onPress={()=> getRoute()}
-      style={styles.container}>
-      <View style={styles.icon}>
-        {getWidget()}
-      </View>
+    <TouchableOpacity onPress={() => getRoute()} style={styles.container}>
+      <View style={styles.icon}>{getWidget()}</View>
       <AppSize width={20} />
       <HighLightLabel
         hightLightLabel={data.name}
@@ -75,24 +67,23 @@ const DSContainer: FunctionComponent<Props> = ({navigation, data, index}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        height: 130,
-        paddingVertical: 10,
-        backgroundColor: ColorConstants.primaryColor,
-        marginVertical: 10,
-        justifyContent: 'flex-start',
-        alignContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        paddingHorizontal: 20,
-        flexDirection: 'row',
-      },
-      icon: {
-        borderRadius: 100,
-        backgroundColor: ColorConstants.primaryWhite,
-        padding: 15
-
-      },
+  container: {
+    height: 120,
+    paddingVertical: 10,
+    backgroundColor: ColorConstants.primaryColor,
+    marginVertical: 10,
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+  },
+  icon: {
+    borderRadius: 100,
+    backgroundColor: ColorConstants.primaryWhite,
+    padding: 15,
+  },
 });
 
 export default DSContainer;

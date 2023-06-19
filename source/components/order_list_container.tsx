@@ -18,8 +18,10 @@ import {Loading} from './no_data_found';
 import {ApiConstants} from '../constants/api_constants';
 import ColorsCondtion from './color_condition';
 import FontConstants from '../constants/font_constants';
-import { CheckBox } from '@rneui/base';
+import {CheckBox} from '@rneui/base';
 import WhatsApp from './whats_app';
+import CommanFunctions from './comman_functions';
+import TimeCondition from './date_constants';
 
 type Props = {
   uri?: string;
@@ -55,11 +57,7 @@ const OrderList: FunctionComponent<Props> = ({
   return (
     <TouchableOpacity style={styles.inquiryContainer} onPress={onPress}>
       <Avatar
-        containerStyle={{
-          width: 150,
-          height: 150,
-          borderRadius: 5,
-        }}
+        containerStyle={styles.imageContainer}
         imageProps={{
           borderRadius: 5,
         }}
@@ -71,24 +69,28 @@ const OrderList: FunctionComponent<Props> = ({
             : require('../assets/image/nofound.jpg')
         }
       />
-      <View
-        style={{
-          flex: 1,
-          padding: 10,
-        }}>
+      <View style={styles.labelsText}>
         <CommonTwoText
           label={label1}
           start={start1}
-          startStyle={color(ColorConstants.primaryColor)}
+          startStyle={{color: ColorConstants.primaryColor, fontSize: 12}}
         />
-        <CommonTwoText label={label2} start={start2} />
-        <CommonTwoText label={label3} start={start3} />
+        <CommonTwoText
+          label={label2}
+          start={start2}
+          startStyle={{color: ColorConstants.primaryBlack, fontSize: 12}}
+        />
+        <CommonTwoText
+          label={label3}
+          start={start3}
+          startStyle={{color: ColorConstants.primaryBlack, fontSize: 12}}
+        />
         <CommonTwoText
           label={label4}
           start={start4}
-          startStyle={color(ColorConstants.primaryColor)}
+          startStyle={{color: ColorConstants.primaryColor, fontSize: 12}}
         />
-        <AppSize height={10} />
+        <AppSize height={5} />
         {isSpecific && (
           <View style={styles.specification}>
             <View style={styles.specific_container}>
@@ -101,7 +103,12 @@ const OrderList: FunctionComponent<Props> = ({
           </View>
         )}
         {isComplete && (
-          <RowButton text1="Download" text2="Send Email" onPress={() => {}} />
+          <RowButton
+            text1="Download"
+            text2="Send Email"
+            textStyle={{fontSize: 12}}
+            onPress={() => {}}
+          />
         )}
       </View>
     </TouchableOpacity>
@@ -124,7 +131,6 @@ const ProductContainer: FunctionComponent<Props1> = ({
   label,
   description,
   iconCondition,
-  whatsAppPress,
   iconPress,
   sendInquiry,
   containerPress,
@@ -221,12 +227,7 @@ const FeedList: FunctionComponent<Props3> = ({
   return (
     <TouchableOpacity style={styles.inquiryContainer} onPress={onPress}>
       <Avatar
-        containerStyle={{
-          width: 150,
-          height: 150,
-          borderRadius: 5,
-          padding: 10,
-        }}
+        containerStyle={styles.feedContainer}
         renderPlaceholderContent={<Loading />}
         source={
           uri
@@ -248,11 +249,11 @@ const FeedList: FunctionComponent<Props3> = ({
             alignSelf: 'flex-start',
           }}
           labelStyle={{
-            fontSize: 17,
+            fontSize: 14,
+            fontFamily: FontConstants.ragular,
             textAlign: 'left',
           }}
         />
-        <AppSize height={4} />
         {description && (
           <Label
             name={description ?? ''}
@@ -263,7 +264,7 @@ const FeedList: FunctionComponent<Props3> = ({
         <AppSize height={5} />
         {date && (
           <Label
-            name={date ?? ''}
+            name={TimeCondition.fullDate(date).slice(0, 12)}
             style={styles.discription}
             numberOfLines={1}
           />
@@ -279,11 +280,16 @@ type Props4 = {
   onPress?: () => void;
 };
 
-const PraferenceContainer: FunctionComponent<Props4> = ({label, onPress, is_preference_saved}) => {
-
+const PraferenceContainer: FunctionComponent<Props4> = ({
+  label,
+  onPress,
+  is_preference_saved,
+}) => {
   return (
     <View style={praferenceStyles({}).praferenceContainer}>
-      <TouchableOpacity style={praferenceStyles({d: is_preference_saved }).checkClick} onPress={onPress}>
+      <TouchableOpacity
+        style={praferenceStyles({d: is_preference_saved}).checkClick}
+        onPress={onPress}>
         <Icon name="check" color={ColorConstants.primaryWhite} />
       </TouchableOpacity>
       <HighLightLabel hightLightLabel={label} />
@@ -291,28 +297,26 @@ const PraferenceContainer: FunctionComponent<Props4> = ({label, onPress, is_pref
   );
 };
 
-
 type Props5 = {
   title?: string;
-  isChecked?: any
+  isChecked?: any;
   onPress?: () => void;
 };
 
 const FilterList: FunctionComponent<Props5> = ({title, onPress, isChecked}) => {
-
   return (
-    <View >
-     <TouchableOpacity onPress={onPress}>
-      <CheckBox
-        onPress={onPress}
-        checked={isChecked}
-        uncheckedColor={ColorConstants.primaryColor}
-        title={title}
-        fontFamily={FontConstants.ragular}
-        size={15}
-        checkedColor={ColorConstants.primaryColor}
-      />
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={onPress}>
+        <CheckBox
+          onPress={onPress}
+          checked={isChecked}
+          uncheckedColor={ColorConstants.primaryColor}
+          title={title}
+          fontFamily={FontConstants.ragular}
+          size={15}
+          checkedColor={ColorConstants.primaryColor}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -330,56 +334,63 @@ interface StylesProps {
 
 type StylesFunctionProps = (props: StylesProps) => StyleSheetType;
 
-const praferenceStyles: StylesFunctionProps = ({d}) => StyleSheet.create<StyleSheetType>({
-  praferenceContainer: {
-    marginTop: 30,
-    elevation: 100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: ColorConstants.primaryWhite,
-    margin: 10,
-    height: 60,
-    width: '90%',
-    shadowColor: ColorConstants.primaryBlack,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    borderRadius: 5,
-  },
-  checkClick: {
-    right: -30,
-    top: -30,
-    position: 'absolute',
-    elevation: 100,
-    borderRadius: 100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: ColorsCondtion.backgroundColor(d), 
-    margin: 10,
-    height: 40,
-    width: 40,
-    borderColor: ColorConstants.textGrey,
-    borderWidth: 0.5,
-    shadowColor: ColorConstants.primaryBlack,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-  },
-});
+const praferenceStyles: StylesFunctionProps = ({d}) =>
+  StyleSheet.create<StyleSheetType>({
+    praferenceContainer: {
+      marginTop: 15,
+      elevation: 10,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      backgroundColor: ColorConstants.primaryWhite,
+      margin: 10,
+      height: 60,
+      width: '90%',
+      shadowColor: ColorConstants.primaryBlack,
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.4,
+      shadowRadius: 1,
+      borderRadius: 5,
+    },
+    checkClick: {
+      right: -20,
+      top: -20,
+      position: 'absolute',
+      elevation: 100,
+      borderRadius: 100,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: ColorsCondtion.backgroundColor(d),
+      margin: 10,
+      height: 30,
+      width: 30,
+      borderColor: ColorConstants.textGrey,
+      borderWidth: 0.5,
+      shadowColor: ColorConstants.primaryBlack,
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.4,
+      shadowRadius: 4,
+    },
+  });
 
 const styles = StyleSheet.create({
   inquiryContainer: {
     elevation: 100,
     flexDirection: 'row',
     backgroundColor: ColorConstants.primaryWhite,
-    margin: 10,
-    height: 150,
+    margin: 4,
+    flex: 1,
     shadowColor: ColorConstants.primaryBlack,
     shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
     borderRadius: 5,
+  },
+  imageContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 5,
+    padding: 5,
   },
   inquiryColumContainer: {
     elevation: 100,
@@ -392,14 +403,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   specification: {
-    width: '100%',
+    flex: 1,
     paddingRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   specific_container: {
-    height: 40,
     borderRadius: 5,
     backgroundColor: ColorConstants.primaryColor,
     justifyContent: 'center',
@@ -412,5 +422,17 @@ const styles = StyleSheet.create({
   },
   discription: {
     color: ColorConstants.textHintColor,
+  },
+  labelsText: {
+    flex: 1,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    justifyContent: 'center',
+  },
+  feedContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 5,
+    padding: 10,
   },
 });

@@ -4,7 +4,8 @@ import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
 import {OrderList} from '../../../components/order_list_container';
 import {Loading, NoData} from '../../../components/no_data_found';
-import { orderResult } from '../../../model/order_result';
+import {orderResult} from '../../../model/order_result';
+import TimeCondition from '../../../components/date_constants';
 
 type Props = {
   navigation: any;
@@ -46,13 +47,15 @@ const LostOrder: FunctionComponent<Props> = ({navigation}) => {
                 label3="Sales Invoice: "
                 label4="Sales Invoice Account: "
                 start1={_data.inquiry_no}
-                start2={_data.inquiry_date}
+                start2={TimeCondition.fullDate(_data?.inquiry_date).slice(0, 12,)}
                 start3={_data.SalesInvoices ?? 'Not Found'}
                 start4={_data.SalesInvoices ?? 'Not Found'}
                 uri={_data.product_img}
-                onPress={()=> navigation.navigate('Order Status Details', {
-                  data: _data
-                })}
+                onPress={() =>
+                  navigation.navigate('Order Status Details', {
+                    data: _data,
+                  })
+                }
                 isSpecific
                 inquiry_stage={_data.inquiry_stage}
               />

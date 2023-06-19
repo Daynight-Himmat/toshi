@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import ColorConstants from '../constants/color_constants';
 import FontConstants from '../constants/font_constants';
 import {Divider} from 'react-native-paper';
-import { color, commonStyles } from './style';
+import {color, commonStyles} from './style';
 import AppSize from './size';
 
 type Props = {
@@ -42,8 +42,13 @@ const HighLightLabel: FunctionComponent<Props1> = ({
   labelStyle,
 }) => {
   return (
-    <View  style={[styles.introText, {...style}]}>
-      <Text ellipsizeMode='head' numberOfLines={2} style={[styles.label, {...labelStyle}]}>{hightLightLabel}</Text>
+    <View style={[styles.introText, {...style}]}>
+      <Text
+        ellipsizeMode="head"
+        numberOfLines={2}
+        style={[styles.label, {...labelStyle}]}>
+        {hightLightLabel}
+      </Text>
     </View>
   );
 };
@@ -80,10 +85,10 @@ type Props4 = {
 const TwoText: FunctionComponent<Props4> = ({label, start}) => {
   return (
     <View style={styles.two}>
-      <View style={{flex: 1}}>
+      <View style={{flex:1}}>
         <Label name={label} style={styles.twoLabel} />
       </View>
-      <View style={{flex: 2}}>
+      <View style={{flex:2}}>
         <Label name={': ' + start} />
       </View>
     </View>
@@ -100,11 +105,10 @@ const CommonTwoText: FunctionComponent<Props5> = ({
   label,
   start,
   startStyle,
-  
 }) => {
   return (
     <View style={{flexDirection: 'row', paddingVertical: 2}}>
-      <Label name={label} />
+      <Label name={label} style={{fontSize: 12}} />
       <Label name={start} style={startStyle} />
     </View>
   );
@@ -117,62 +121,79 @@ type Props6 = {
   divider?: boolean;
 };
 
-const ProductDetailTable: FunctionComponent<Props6> = ({label, type, data, divider}) => {
+const ProductDetailTable: FunctionComponent<Props6> = ({
+  label,
+  type,
+  data,
+  divider,
+}) => {
   return (
     <View>
-      <View style={{
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-      }}>
-        {type === 'data' ? <View style={commonStyles.row}>
-        <Label name={label + ' : ' + data} style={{
-          fontFamily: FontConstants.bold,
-          fontSize: 16,
-          fontWeight: '600'
-        }}/>
-        
-          </View> : 
-          (
-            <View><Label name={label + ' : '} style={{
-              fontFamily: FontConstants.bold,
-              fontSize: 16,
-              fontWeight: '600'
-            }}/>
-          {data && data?.map((item: any, index: number) => (
-            <Label key={index} name={`${index + 1}. ` + `${item}`} style={{
-              fontFamily: FontConstants.bold,
-              fontSize: 16,
-              fontWeight: '600'
-            }} />
-          ))}
+      <View
+        style={{
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}>
+        {type === 'data' ? (
+          <View style={commonStyles.row}>
+            <Label
+              name={label + ' : ' + data}
+              style={{
+                fontFamily: FontConstants.bold,
+                fontSize: 16,
+                fontWeight: '600',
+              }}
+            />
+          </View>
+        ) : (
+          <View>
+            <Label
+              name={label + ' : '}
+              style={{
+                fontFamily: FontConstants.bold,
+                fontSize: 16,
+                fontWeight: '600',
+              }}
+            />
+            {data?.map((item: any, index: any) => (
+              <Label
+                key={index}
+                name={`${index + 1}. ` + `${item}`}
+                style={{
+                  fontFamily: FontConstants.bold,
+                  fontSize: 16,
+                  fontWeight: '600',
+                }}
+              />
+            ))}
           </View>
         )}
       </View>
-      {divider && <Divider
-        style={{
-          backgroundColor: ColorConstants.primaryBlack,
-          height: 2,
-        }}
-      />}
+      {divider && (
+        <Divider
+          style={{
+            backgroundColor: ColorConstants.primaryBlack,
+            height: 2,
+          }}
+        />
+      )}
     </View>
   );
 };
-
 
 type Props7 = {
   label?: string;
   title?: string;
-}
+};
 const LabelAndTitle: FunctionComponent<Props7> = ({label, title}) => {
   return (
     <View>
-     <Label name={label} style={color(ColorConstants.textGrey)}/>
-     <Label name={title} margin={10}/>
-     <AppSize height={10}/>
+      <Label name={label} style={color(ColorConstants.textGrey)} />
+      <Label name={title} margin={10} />
+      <AppSize height={10} />
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   label: {
@@ -211,7 +232,6 @@ const styles = StyleSheet.create({
     fontFamily: FontConstants.ragular,
     color: ColorConstants.primaryBlack,
     textAlign: 'center',
-    
   },
   lightText1: {
     fontSize: 12,
@@ -222,8 +242,8 @@ const styles = StyleSheet.create({
   two: {
     flexDirection: 'row',
     width: '100%',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
   },
   twoLabel: {
     fontFamily: FontConstants.bold,

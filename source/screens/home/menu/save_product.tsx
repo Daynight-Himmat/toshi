@@ -7,7 +7,8 @@ import {ProductContainer} from '../../../components/order_list_container';
 import {ResulPro} from '../../../model/product';
 import toast from 'react-native-toast-notifications/lib/typescript/toast';
 import toastMessage from '../../../components/toast_message';
-import { useToast } from 'react-native-toast-notifications';
+import {useToast} from 'react-native-toast-notifications';
+import { commonStyles } from '../../../components/style';
 
 type Props = {
   navigation: any;
@@ -15,7 +16,6 @@ type Props = {
 };
 
 const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
-
   const data = route?.params?.data;
   const toast = useToast();
   const [isLoading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
       Apis.getSaveProduct(id).then(response => {
         if (response?.status === 200) {
           setLoading(false);
-          toastMessage(toast,response.data.message);
+          toastMessage(toast, response.data.message);
           getProducts();
         }
       });
@@ -52,57 +52,45 @@ const SaveProduct: FunctionComponent<Props> = ({navigation, route}) => {
     }
   };
 
-
   useEffect(() => {
     getProducts();
   }, []);
   return (
-    <View style={styles.viewContainer}>
-      {getProductData ? <ScrollView>
-        {getProductData && getProductData.map((_data, _index) => (
-          <ProductContainer
-            key={_index}
-            uri={_data.upload_img}
-            iconCondition={_data.is_product_saved}
-            label={_data?.product_name + ` (${_data?.product_code})`}
-            description={_data.description}
-            iconPress={()=> getSave(_data.id)}
-            containerPress={function (): void {
-              return navigation.navigate('Product Details', {
-                data: _data.id
-              });
-            }}
-            sendInquiry={function (): void {
-              return navigation.navigate('Send Inquiry Page', {
-                data: {
-                  product_id: _data?.id,
-                  product_name: _data?.product_name,
-                }
-              });
-            }}
-          />
-        ))}
-      </ScrollView> : <NoData />}
+    <View style={commonStyles.fill}>
+      {getProductData ? (
+        <ScrollView>
+          {getProductData &&
+            getProductData.map((_data, _index) => (
+              <ProductContainer
+                key={_index}
+                uri={_data.upload_img}
+                iconCondition={_data.is_product_saved}
+                label={_data?.product_name + ` (${_data?.product_code})`}
+                description={_data.description}
+                iconPress={() => getSave(_data.id)}
+                containerPress={function (): void {
+                  return navigation.navigate('Product Details', {
+                    data: _data.id,
+                  });
+                }}
+                sendInquiry={function (): void {
+                  return navigation.navigate('Send Inquiry Page', {
+                    data: {
+                      product_id: _data?.id,
+                      product_name: _data?.product_name,
+                    },
+                  });
+                }}
+              />
+            ))}
+        </ScrollView>
+      ) : (
+        <NoData />
+      )}
       {isLoading && <Loading />}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite,
-  },
-  textStyles: {
-    textAlign: 'justify',
-    paddingHorizontal: 10,
-  },
-  highLight: {
-    alignSelf: 'flex-start',
-    color: ColorConstants.primaryColor,
-  },
-});
 
 export default SaveProduct;
-

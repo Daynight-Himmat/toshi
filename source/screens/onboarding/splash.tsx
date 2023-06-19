@@ -6,7 +6,7 @@ import {
   ImageStyle,
   Text,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Image} from 'react-native';
@@ -16,7 +16,7 @@ import FontConstants from '../../constants/font_constants';
 import CommanFunctions from '../../components/comman_functions';
 import ColorsCondtion from '../../components/color_condition';
 import {commonStyles} from '../../components/style';
-import { Appbar } from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 
 const {height, width} = Dimensions.get('window');
 
@@ -57,7 +57,11 @@ const SplashSreen: FunctionComponent<Props> = ({navigation}) => {
     return (
       <View style={styles({}).flex_container}>
         <View style={styles({}).textContainer}>
-          <HighLightLabel hightLightLabel={item.title} style={undefined} labelStyle={undefined} />
+          <HighLightLabel
+            hightLightLabel={item.title}
+            style={undefined}
+            labelStyle={undefined}
+          />
         </View>
         <Image
           source={item?.image}
@@ -86,19 +90,22 @@ const SplashSreen: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <View style={commonStyles.container}>
-      <Appbar.Header  style={{backgroundColor: ColorConstants.primaryWhite,}} children={
-        <View style={styles({}).header}>
-        <Image
-          source={require('../../assets/image/qualtilepng.png')}
-          style={styles({}).imgBg1}
-          resizeMode="contain"
-        />
-        <TouchableOpacity onPress={() => routing()}>
-          <Text style={styles({}).headerText}>Skip</Text>
-        </TouchableOpacity>
-      </View>
-      }/>
-     <AppIntroSlider
+      <Appbar.Header
+        style={{backgroundColor: ColorConstants.primaryWhite}}
+        children={
+          <View style={styles({}).header}>
+            <Image
+              source={require('../../assets/image/qualtilepng.png')}
+              style={styles({}).imgBg1}
+              resizeMode="contain"
+            />
+            <TouchableOpacity onPress={() => routing()}>
+              <Text style={styles({}).headerText}>Skip</Text>
+            </TouchableOpacity>
+          </View>
+        }
+      />
+      <AppIntroSlider
         data={slides}
         showPrevButton={false}
         showDoneButton={true}
@@ -141,9 +148,9 @@ type StylesFunctionProps = (props: StylesProps) => StyleSheetType;
 const styles: StylesFunctionProps = ({d}) =>
   StyleSheet.create<StyleSheetType>({
     flex_container: {
-      backgroundColor: ColorConstants.primaryWhite,
-      justifyContent: 'center'
+      height: '80%',
       
+      justifyContent: 'center',
     },
     header: {
       padding: 10,
@@ -156,11 +163,11 @@ const styles: StylesFunctionProps = ({d}) =>
     dotStyle: {
       backgroundColor: ColorsCondtion.dotColors(d),
       width: d === 'active' ? 50 : 10,
-      marginBottom: '50%',
+      marginBottom: '40%',
     },
     imgBg: {
-      height: 300,
-      width: 300,
+      height: '50%',
+      width: '50%',
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',

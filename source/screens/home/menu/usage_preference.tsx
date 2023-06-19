@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
-import {commonStyles} from '../../../components/style';
+import {commonStyles, margin} from '../../../components/style';
 import AppButton from '../../../components/app_button';
 import {useIsFocused} from '@react-navigation/native';
 import Apis from '../../../apis/api_functions';
@@ -120,7 +120,7 @@ const UsagePreference: FunctionComponent<Props> = ({navigation}) => {
             >Select All</Button>
         }
       />
-      <View style={{flex: 1}}>
+      <View style={commonStyles.fill}>
         {getProductPraference ? (
           <ScrollView>
             {getProductPraference &&
@@ -144,7 +144,7 @@ const UsagePreference: FunctionComponent<Props> = ({navigation}) => {
         )}
         {isLoading && <Loading />}
       </View>
-      <View style={{margin: 20}}>
+      <View style={margin(10)}>
         <AppButton
           text="Apply"
           onPress={() => {

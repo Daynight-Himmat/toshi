@@ -28,7 +28,7 @@ import {
 } from '../../../model/filter_response';
 import {FilterList} from '../../../components/order_list_container';
 import toastMessage from '../../../components/toast_message';
-import { useToast } from 'react-native-toast-notifications';
+import {useToast} from 'react-native-toast-notifications';
 
 type Props = {
   navigation: any;
@@ -379,16 +379,18 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       onChangeText: (value: string) => handleMixing(value),
       data: (
         <View>
-          {getSearchMixingPossibility?.map((data: MixingPosibility, index: any) => (
-            <FilterList
-              key={index}
-              isChecked={getCheckedMixingPossibility.some(
-                checkedItem => checkedItem.id === data.id,
-              )}
-              title={data.code}
-              onPress={() => handleMixingPosibility(data)}
-            />
-          ))}
+          {getSearchMixingPossibility?.map(
+            (data: MixingPosibility, index: any) => (
+              <FilterList
+                key={index}
+                isChecked={getCheckedMixingPossibility.some(
+                  checkedItem => checkedItem.id === data.id,
+                )}
+                title={data.code}
+                onPress={() => handleMixingPosibility(data)}
+              />
+            ),
+          )}
         </View>
       ),
     },
@@ -497,19 +499,23 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
         {isLoading && <Loading />}
       </View>
       <View style={{margin: 20}}>
-        <AppButton text="Apply" onPress={() => {
-
-          navigation.navigate('Filter Product Page', {
-            data: {
-              productCategories: getCheckedCategories.map(data=> data.id),
-              productColors: getCheckedColours.map(data=> data.id),
-              productFinish: getCheckedFinish.map(data=> data.id),
-              productUsage: getCheckedUsage.map(data=> data.id),
-              productType: getCheckedTypes.map(data=> data.id),
-              productMixingPossibility: getCheckedMixingPossibility.map(data=> data.id)
-            }
-          });
-        }} />
+        <AppButton
+          text="Apply"
+          onPress={() => {
+            navigation.navigate('Filter Product Page', {
+              data: {
+                productCategories: getCheckedCategories.map(data => data.id),
+                productColors: getCheckedColours.map(data => data.id),
+                productFinish: getCheckedFinish.map(data => data.id),
+                productUsage: getCheckedUsage.map(data => data.id),
+                productType: getCheckedTypes.map(data => data.id),
+                productMixingPossibility: getCheckedMixingPossibility.map(
+                  data => data.id,
+                ),
+              },
+            });
+          }}
+        />
       </View>
     </View>
   );

@@ -5,11 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, TextInput} from 'react-native';
 import ColorConstants from '../../../constants/color_constants';
 import Apis from '../../../apis/api_functions';
 import {Loading, NoData} from '../../../components/no_data_found';
@@ -31,6 +27,7 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   const isFocused = useIsFocused();
   const [isLoading, setLoading] = useState(false);
   const [getProductData, setProductData] = useState<ResulPro[]>([]);
+  const [getSearchData, setSearchData] = useState<ResulPro[]>([]);
 
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const dashValue = [
@@ -56,6 +53,7 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
           if (response?.status === 200) {
             setLoading(false);
             setProductData(response?.data?.result?.resulPro);
+            setSearchData(response?.data?.result?.resulPro);
           }
         },
       );
@@ -63,7 +61,7 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
       setLoading(false);
       console.log(error);
     }
-  },[]);
+  }, []);
 
   const getSave = async (id: any) => {
     try {
@@ -81,16 +79,33 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     }
   };
 
+  const handleCategories = (text: string) => {
+    if (text === '') {
+      setSearchData(getProductData);
+    } else {
+      const filtered = getProductData.filter((item: {product_name: string}) => {
+        return item.product_name?.toLowerCase().includes(text.toLowerCase());
+      });
+      setSearchData(filtered);
+    }
+  };
 
   useEffect(() => {
     getProducts();
-  }, [isFocused]);
+  }, [getProducts, isFocused]);
+
   return (
     <View style={styles.viewContainer}>
-      {getProductData ? (
+      <TextInput
+        style={styles.textInput}
+        placeholder="Search here"
+        placeholderTextColor={ColorConstants.primaryBlack}
+        onChangeText={text => handleCategories(text)}
+      />
+      {getSearchData ? (
         <ScrollView>
-          {getProductData &&
-            getProductData.map((_data, _index) => (
+          {getSearchData &&
+            getSearchData.map((_data, _index) => (
               <ProductContainer
                 key={_index}
                 uri={_data.upload_img}
@@ -108,7 +123,7 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
                     data: {
                       product_id: _data?.id,
                       product_name: _data?.product_name,
-                    }
+                    },
                   });
                 }}
               />
@@ -122,12 +137,9 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
   );
 };
 
-
-
 const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    paddingHorizontal: 10,
     backgroundColor: ColorConstants.primaryWhite,
   },
   textStyles: {
@@ -137,6 +149,14 @@ const styles = StyleSheet.create({
   highLight: {
     alignSelf: 'flex-start',
     color: ColorConstants.primaryColor,
+  },
+  textInput: {
+    margin: 10,
+    backgroundColor: ColorConstants.textInputBackGround,
+    borderColor: ColorConstants.textInputBackGround,
+    borderWidth: 1,
+    borderRadius: 5,
+    color: ColorConstants.primaryBlack
   },
 });
 

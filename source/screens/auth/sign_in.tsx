@@ -1,10 +1,10 @@
 import React, {FunctionComponent, useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {alignSelf, commonStyles, paddingHorizontal} from '../../components/style';
+  alignSelf,
+  commonStyles,
+  paddingHorizontal,
+} from '../../components/style';
 import {AuthHeader} from '../../components/app_header';
 import {HighLightLabel, Label} from '../../components/label';
 import ColorConstants from '../../constants/color_constants';
@@ -19,7 +19,8 @@ import toastMessage from '../../components/toast_message';
 import CommanFunctions from '../../components/comman_functions';
 import Apis from '../../apis/api_functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Loading } from '../../components/no_data_found';
+import {Loading} from '../../components/no_data_found';
+import { ScrollView } from 'react-native';
 
 type Props = {
   navigation: any;
@@ -43,38 +44,61 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
     } else if (!password) {
       toastMessage(toast, 'Please Enter the Password');
     } else {
-    try {
-      setLoading(true);
-      await Apis.logInApi(email,password).then(response => {
-        if(response?.status === 200){
-          setLoading(false);
-          AsyncStorage.setItem('first_name', response.data.result.name.first_name);
-          AsyncStorage.setItem('last_name', response.data.result.name.last_name);
-          AsyncStorage.setItem('email', response.data.result.name.email);
-          AsyncStorage.setItem('phone', response.data.result.name.mobile_no);
-          AsyncStorage.setItem('whatsapp_no', response.data.result.name.whatsapp_no);
-          AsyncStorage.setItem('profile_photo', response.data.result.name.profile_photo);
-          AsyncStorage.setItem('business_card', response.data.result.name.business_card);
-          AsyncStorage.setItem('back_business_card', response.data.result.name.back_business_card);
-          AsyncStorage.setItem('profile_photo_url', response.data.result.name.profile_photo_url);
-          AsyncStorage.setItem('token', response.data.result.token);
-          AsyncStorage.setItem('id', response.data.result.name?.id.toString());
-          toastMessage(toast, response.data?.message);
-          CommanFunctions.routing(navigation, 'DashBoard');
-        }
-      });
-  
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+      try {
+        setLoading(true);
+        await Apis.logInApi(email, password).then(response => {
+          if (response?.status === 200) {
+            setLoading(false);
+            AsyncStorage.setItem(
+              'first_name',
+              response.data.result.name.first_name,
+            );
+            AsyncStorage.setItem(
+              'last_name',
+              response.data.result.name.last_name,
+            );
+            AsyncStorage.setItem('email', response.data.result.name.email);
+            AsyncStorage.setItem('phone', response.data.result.name.mobile_no);
+            AsyncStorage.setItem(
+              'whatsapp_no',
+              response.data.result.name.whatsapp_no,
+            );
+            AsyncStorage.setItem(
+              'profile_photo',
+              response.data.result.name.profile_photo,
+            );
+            AsyncStorage.setItem(
+              'business_card',
+              response.data.result.name.business_card,
+            );
+            AsyncStorage.setItem(
+              'back_business_card',
+              response.data.result.name.back_business_card,
+            );
+            AsyncStorage.setItem(
+              'profile_photo_url',
+              response.data.result.name.profile_photo_url,
+            );
+            AsyncStorage.setItem('token', response.data.result.token);
+            AsyncStorage.setItem(
+              'id',
+              response.data.result.name?.id.toString(),
+            );
+            toastMessage(toast, response.data?.message);
+            CommanFunctions.routing(navigation, 'DashBoard');
+          }
+        });
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
   };
 
   return (
     <View style={commonStyles.container}>
       <AuthHeader navigation={navigation} show={false} />
-      <View style={paddingHorizontal(10)}>
+      <ScrollView style={paddingHorizontal(10)}>
         <AppSize height={20} width={undefined} />
         <HighLightLabel
           hightLightLabel="Welcome"
@@ -117,10 +141,7 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
           />
         </View>
         <AppSize height={20} width={undefined} />
-        <AppButton
-          text={'Login'}
-          onPress={() => getLogIn()}
-        />
+        <AppButton text={'Login'} onPress={() => getLogIn()} />
         <AppSize height={20} width={undefined} />
         <TexTButton
           onPressText="Create an Account"
@@ -128,7 +149,7 @@ const SignIn: FunctionComponent<Props> = ({navigation}) => {
           align={undefined}
           callBack={() => navigation.navigate('SignUp')}
         />
-      </View>
+      </ScrollView>
       {isLoading && <Loading />}
     </View>
   );

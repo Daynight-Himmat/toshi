@@ -14,6 +14,7 @@ abstract class ColorConstants {
   static textGrey = '#878787';
   static textHintColor = '#383838';
   static iq_submit = '#383838';
+  static textInputBackGround = '#ebebeb';
 
   static tab_bar_default_item_color = '#383838';
   static tab_bar_selected_item_color = '#0f97bf';

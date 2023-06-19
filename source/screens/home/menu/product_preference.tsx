@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
-import {commonStyles} from '../../../components/style';
+import {commonStyles, margin} from '../../../components/style';
 import AppButton from '../../../components/app_button';
 import {useIsFocused} from '@react-navigation/native';
 import Apis from '../../../apis/api_functions';
@@ -99,7 +99,6 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
     }
   };
 
-
   useEffect(() => {
     getProductPraferences();
   }, []);
@@ -111,15 +110,21 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
         text={'Product Praference'}
         action={
           <Button
-            mode='text'
+            mode="text"
             labelStyle={{fontWeight: '600', fontFamily: FontConstants.medium}}
             textColor={ColorConstants.primaryWhite}
-            style={{ width: 200, alignSelf: 'center', justifyContent: 'center',  alignItems: 'flex-end'}}
-            onPress={()=> getProductPraference.map(data=> selectAll(data))}
-            >Select All</Button>
+            style={{
+              width: 200,
+              alignSelf: 'center',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+            }}
+            onPress={() => getProductPraference.map(data => selectAll(data))}>
+            Select All
+          </Button>
         }
       />
-      <View style={{flex: 1}}>
+      <View style={commonStyles.fill}>
         {getProductPraference ? (
           <ScrollView>
             {getProductPraference &&
@@ -143,7 +148,7 @@ const ProductPreference: FunctionComponent<Props> = ({navigation}) => {
         )}
         {isLoading && <Loading />}
       </View>
-      <View style={{margin: 20}}>
+      <View style={margin(10)}>
         <AppButton
           text="Apply"
           onPress={() => {

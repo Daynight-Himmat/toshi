@@ -213,13 +213,13 @@ const ProductDetails: FunctionComponent<Props> = ({navigation, route}) => {
                 paddingVertical: 10,
                 marginBottom: 10,
               }}>
-              {productDetails.map((data, index) => (
+              {productDetails.map((item: any, index: any) => (
                 <ProductDetailTable
                   key={index}
-                  label={data.label}
-                  type={data.type}
-                  data={data.data}
-                  divider={data.divider}
+                  label={item.label}
+                  type={item.type}
+                  data={item.data}
+                  divider={item.divider}
                 />
               ))}
             </View>

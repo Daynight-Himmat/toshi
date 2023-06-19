@@ -8,7 +8,7 @@ import {StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import {Loading} from '../../../components/no_data_found';
 import {Product} from '../../../model/product_preference';
 import {AppHeader} from '../../../components/app_header';
-import {Button, FAB} from 'react-native-paper';
+import {Button, FAB, IconButton} from 'react-native-paper';
 import {Icon} from '@rneui/base';
 import {ActionSheetRef} from 'react-native-actions-sheet';
 import MyProfileList from '../../../components/MyProfileList';
@@ -16,6 +16,7 @@ import BottomSheet from '../../../components/bottom_sheet';
 import {Keyboard} from 'react-native';
 import {commonStyles} from '../../../components/style';
 import {useIsFocused} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -70,31 +71,20 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
   }, [isFocused]);
 
   return (
-    <View style={commonStyles.fill}>
+    <SafeAreaView style={commonStyles.fill}>
       <AppHeader
         navigate={() => navigation.goBack()}
         text={'Product Praference'}
         action={
-          <Button
-            mode="text"
-            labelStyle={{fontWeight: '600', fontFamily: FontConstants.medium}}
-            textColor={ColorConstants.primaryWhite}
-            style={{
-              width: 200,
-              alignSelf: 'center',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-            }}
+          <IconButton
+            icon="dots-vertical"
+            iconColor={ColorConstants.primaryWhite}
+            size={20}
             onPress={() => {
               Keyboard.dismiss();
               actionSheetRef.current?.show();
-            }}>
-            <Icon
-              name="more-vertical"
-              type="feather"
-              color={ColorConstants.primaryWhite}
-            />
-          </Button>
+            }}
+          />
         }
       />
       {!isLoading ? (
@@ -136,7 +126,7 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
         size="medium"
         icon={'filter'}
         style={styles.fab}
-        onPress={()=> navigation.navigate('Filter Page')}
+        onPress={() => navigation.navigate('Filter Page')}
       />
       <BottomSheet
         backButton={() => actionSheetRef.current?.hide()}
@@ -151,7 +141,7 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
           />
         ))}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -198,7 +188,7 @@ const styles = StyleSheet.create({
     bottom: 40,
     right: 30,
     backgroundColor: ColorConstants.primaryColor,
-  }
+  },
 });
 
 export default ListOfProduct;

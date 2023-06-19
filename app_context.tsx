@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import SplashScreen from 'react-native-splash-screen';
 import screens from './source/components/screen_page';
 import ColorConstants from './source/constants/color_constants';
+import FontConstants from './source/constants/font_constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,9 @@ const AppContext: FunctionComponent = () => {
               headerTintColor: ColorConstants.primaryWhite,
               headerTitleStyle: {
                 color: ColorConstants.primaryWhite,
+                fontFamily: FontConstants.ragular,
+                fontSize: 17,
+                fontWeight: '500'
               },
               headerStyle: {
                 backgroundColor: ColorConstants.primaryColor,

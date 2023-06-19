@@ -1,5 +1,5 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import FontConstants from '../constants/font_constants';
+/* eslint-disable @typescript-eslint/no-shadow */
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import ColorConstants from '../constants/color_constants';
 
 type Style = {
@@ -26,52 +26,97 @@ type Style = {
   midCenter: ViewStyle;
 };
 
-export const padding = (padding: any): ViewStyle => {return {padding}}
+export const padding = (padding: any): ViewStyle => {
+  return {padding};
+};
 
-export const paddingHorizontal = (paddingHorizontal: any): ViewStyle => {return {paddingHorizontal}}
+export const paddingHorizontal = (paddingHorizontal: any): ViewStyle => {
+  return {paddingHorizontal};
+};
 
-export const paddingVertical = (paddingVertical: any): ViewStyle => {return {paddingVertical}}
+export const paddingVertical = (paddingVertical: any): ViewStyle => {
+  return {paddingVertical};
+};
 
-export const paddingRight = (paddingRight: any): ViewStyle => {return {paddingRight}}
+export const paddingRight = (paddingRight: any): ViewStyle => {
+  return {paddingRight};
+};
 
-export const paddingLeft = (paddingLeft: any): ViewStyle => {return {paddingLeft}}
+export const paddingLeft = (paddingLeft: any): ViewStyle => {
+  return {paddingLeft};
+};
 
-export const paddingTop = (paddingTop: any): ViewStyle => {return {paddingTop}}
+export const paddingTop = (paddingTop: any): ViewStyle => {
+  return {paddingTop};
+};
 
-export const paddingBottom = (paddingBottom: any): ViewStyle => {return {paddingBottom}}
+export const paddingBottom = (paddingBottom: any): ViewStyle => {
+  return {paddingBottom};
+};
 
-export const margin = (margin: any): ViewStyle => {return {margin}}
+export const margin = (margin: any): ViewStyle => {
+  return {margin};
+};
 
-export const marginHorizontal = (marginHorizontal: any): ViewStyle => {return {marginHorizontal}}
+export const marginHorizontal = (marginHorizontal: any): ViewStyle => {
+  return {marginHorizontal};
+};
 
-export const marginVertical = (marginVertical: any): ViewStyle => {return {marginVertical}}
+export const marginVertical = (marginVertical: any): ViewStyle => {
+  return {marginVertical};
+};
 
-export const marginRight = (marginRight: any): ViewStyle => {return {marginRight}}
+export const marginRight = (marginRight: any): ViewStyle => {
+  return {marginRight};
+};
 
-export const marginLeft = (marginLeft: any): ViewStyle => {return {marginLeft}}
+export const marginLeft = (marginLeft: any): ViewStyle => {
+  return {marginLeft};
+};
 
-export const marginTop = (marginTop: any): ViewStyle => {return {marginTop}}
+export const marginTop = (marginTop: any): ViewStyle => {
+  return {marginTop};
+};
 
-export const marginBottom = (marginBottom: any): ViewStyle => {return {marginBottom}}
+export const marginBottom = (marginBottom: any): ViewStyle => {
+  return {marginBottom};
+};
 
-export const backgroundColor = (backgroundColor: any): ViewStyle => {return {backgroundColor}}
+export const backgroundColor = (backgroundColor: any): ViewStyle => {
+  return {backgroundColor};
+};
 
-export const color = (color: any): TextStyle => {return {color}}
+export const color = (color: any): TextStyle => {
+  return {color};
+};
 
-export const fontSize = (fontSize: any): TextStyle => {return {fontSize}}
+export const fontSize = (fontSize: any): TextStyle => {
+  return {fontSize};
+};
 
-export const height = (height: any): ViewStyle => {return {height}}
+export const height = (height: any): ViewStyle => {
+  return {height};
+};
 
-export const width = (width: any): ViewStyle => {return {width}}
+export const width = (width: any): ViewStyle => {
+  return {width};
+};
 
-export const justifyContent = (justifyContent: any): ViewStyle => {return {justifyContent}}
+export const justifyContent = (justifyContent: any): ViewStyle => {
+  return {justifyContent};
+};
 
-export const alignItems = (alignItems: any): ViewStyle => {return {alignItems}}
+export const alignItems = (alignItems: any): ViewStyle => {
+  return {alignItems};
+};
 
-export const alignSelf = (alignSelf: any): ViewStyle => {return {alignSelf}}
+export const alignSelf = (alignSelf: any): ViewStyle => {
+  return {alignSelf};
+};
 
-export const alignContent = (alignContent: any): ViewStyle => {return {alignContent}}
-
+export const alignContent = (alignContent: any): ViewStyle => {
+  return {alignContent};
+};
 
 export const commonStyles = StyleSheet.create<Style>({
   container: {
@@ -81,7 +126,7 @@ export const commonStyles = StyleSheet.create<Style>({
   viewContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    backgroundColor: ColorConstants.primaryWhite
+    backgroundColor: ColorConstants.primaryWhite,
   },
   flexWithMidCenter: {
     flex: 1,
@@ -164,4 +209,3 @@ export const commonStyles = StyleSheet.create<Style>({
 function getStyle(arg0: number): any {
   throw new Error('Function not implemented.');
 }
-

@@ -5,9 +5,10 @@ import ColorConstants from '../../../constants/color_constants';
 import {TwoText} from '../../../components/label';
 import {AppHeader} from '../../../components/app_header';
 import Apis from '../../../apis/api_functions';
-import { Loading } from '../../../components/no_data_found';
+import {Loading} from '../../../components/no_data_found';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Message } from '../../../model/inquiry_message';
+import {Message} from '../../../model/inquiry_message';
+import TimeCondition from '../../../components/date_constants';
 
 type Props = {
   navigation: any;
@@ -18,49 +19,54 @@ const InquiryMessage: FunctionComponent<Props> = ({navigation}) => {
   const [message, setMessage] = useState<Message[]>([]);
 
   const messageList = async () => {
-    try{
+    try {
       setLoading(true);
-      await Apis.getInquiryMessage().then(
-        response => {
-          if(response?.status === 200){
-            setMessage(response?.data?.message);
-            setLoading(false);
-          }
+      await Apis.getInquiryMessage().then(response => {
+        if (response?.status === 200) {
+          setMessage(response?.data?.message);
+          setLoading(false);
         }
-      );
-    }
-    catch(error){
+      });
+    } catch (error) {
       setLoading(false);
       console.log(error);
-      
     }
-  }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     messageList();
   }, []);
 
   return (
     <View style={commonStyles.container}>
-      
       <ScrollView>
-      {message.map((data, index)=> 
-      <TouchableOpacity
-      key={index}
-      onPress={()=> navigation.navigate('Inquiry Preview', {
-        data: data.productDetails,
-        inquiry_message: data.inquiry_msg,
-      })}
-       style={styles.messageContainer}>
-         <TwoText label='Date' start={data?.inquiry_date}/>
-         <TwoText label='Product' start={data?.inquiry_for +' '+ data?.productDetails?.product_code}/>
-         <TwoText label='Inquiry Medium' start={data?.source_type}/>
-         <TwoText label='Inquiry From' start={data?.inquiry_source}/>
-         <TwoText label='Description' start={data?.inquiry_msg}/>
-       </TouchableOpacity>
-      
-      )}
-        
+        {message.map((data, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() =>
+              navigation.navigate('Inquiry Preview', {
+                data: data.productDetails,
+                inquiry_message: data.inquiry_msg,
+              })
+            }
+            style={styles.messageContainer}>
+            <TwoText
+              label="Date"
+              start={TimeCondition.fullDate(data?.inquiry_date)}
+            />
+            <TwoText
+              label="Product"
+              start={
+                data?.inquiry_for +
+                ' ' +
+                `(${data?.productDetails?.product_code})`
+              }
+            />
+            <TwoText label="Inquiry Medium" start={data?.source_type} />
+            <TwoText label="Inquiry From" start={data?.inquiry_source} />
+            <TwoText label="Description" start={data?.inquiry_msg} />
+          </TouchableOpacity>
+        ))}
       </ScrollView>
       {isLoading && <Loading />}
     </View>
@@ -81,8 +87,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 4,
     borderRadius: 5,
-    
-  }
+  },
 });
 
 export default InquiryMessage;

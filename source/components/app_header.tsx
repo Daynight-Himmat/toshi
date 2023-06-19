@@ -69,7 +69,7 @@ type Props3 = {
   title?: string;
   url?: string;
   label?: string;
-  onPress?: ()=> void;
+  onPress?: () => void;
   imagePress?: () => void;
 };
 
@@ -156,13 +156,12 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 17,
     fontWeight: '600',
-    width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
     color: ColorConstants.primaryWhite,
     fontFamily: FontConstants.ragular,
   },
-  imageSize: {height: 80, width: 80, borderRadius:100},
+  imageSize: {height: 80, width: 80, borderRadius: 100},
   icon: {
     height: 50,
     flexDirection: 'row',

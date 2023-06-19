@@ -84,7 +84,7 @@ abstract class Apis {
           Accept: 'application/json',
         },
         data: {
-          user_id: id,
+          user_id: 190,
           new_password: password,
           confirm_password: confirm_password,
         },

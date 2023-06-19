@@ -28,39 +28,38 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
   const toast = useToast();
 
   const getCreateAccount = async () => {
-   try{
-    if (!firstName) {
-      toastMessage(toast, 'Please Enter the name');
-    } else if (CommanFunctions.validateEmail(email) === false) {
-      toastMessage(toast, 'Please Enter Valid Email');
-    } else if (!company) {
-      toastMessage(toast, 'Please Enter the Company');
-    } else if (!phoneNumber) {
-      toastMessage(toast, 'Please Enter the Phone Number');
-    } else if (!country) {
-      toastMessage(toast, 'Please Enter Country Name');
-    } else if (!message) {
-      toastMessage(toast, 'Please Enter the Message');
-    } else{
-      setLoading(true);
-      await Apis.signUp(
-        firstName,
-        company,
-        email,
-        phoneNumber,
-        country,
-        message,
-      ).then(response => {
-        if (response?.status === 200) {
-          setLoading(false);
-          toastMessage(toast, response?.data?.message);
-        }
-      });
+    try {
+      if (!firstName) {
+        toastMessage(toast, 'Please Enter the name');
+      } else if (CommanFunctions.validateEmail(email) === false) {
+        toastMessage(toast, 'Please Enter Valid Email');
+      } else if (!company) {
+        toastMessage(toast, 'Please Enter the Company');
+      } else if (!phoneNumber) {
+        toastMessage(toast, 'Please Enter the Phone Number');
+      } else if (!country) {
+        toastMessage(toast, 'Please Enter Country Name');
+      } else if (!message) {
+        toastMessage(toast, 'Please Enter the Message');
+      } else {
+        setLoading(true);
+        await Apis.signUp(
+          firstName,
+          company,
+          email,
+          phoneNumber,
+          country,
+          message,
+        ).then(response => {
+          if (response?.status === 200) {
+            setLoading(false);
+            toastMessage(toast, response?.data?.message);
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-   }
-   catch(error){
-    console.log(error);
-   }
   };
 
   const signUpValue = [
@@ -101,8 +100,9 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
   return (
     <View style={commonStyles.container}>
       <ScrollView style={paddingHorizontal(10)}>
-        {signUpValue.map((data, index) => (
+        {signUpValue.map((data: any, index: any) => (
           <TextField
+            key={index}
             value={data.value}
             label={data.label}
             keyboardType={data.keyType}
@@ -113,7 +113,7 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
         <AppSize height={20} />
         <AppButton
           text={'Create an Account'}
-          onPress={()=> getCreateAccount()}
+          onPress={() => getCreateAccount()}
         />
         <AppSize height={20} />
         <TexTButton
@@ -127,13 +127,5 @@ const SignUp: FunctionComponent<Props> = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  highLightLabel: {
-    height: 48,
-    width: '100%',
-    justifyContent: 'center',
-    backgroundColor: ColorConstants.primaryColor,
-  },
-});
 
 export default SignUp;
