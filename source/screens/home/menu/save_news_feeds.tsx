@@ -38,7 +38,7 @@ const SaveNewsFeeds: FunctionComponent<Props> = ({navigation}) => {
 
   useEffect(() => {
     getFeedsData();
-  }, [getFeedsData, isFocused]);
+  }, [isFocused]);
 
   return (
     <View style={styles.viewContainer}>

@@ -82,7 +82,9 @@ const ProductPage: FunctionComponent<Props> = ({navigation, route}) => {
     <View style={styles.viewContainer}>
       <View style={styles.textInput}>
         <TextInput
-          style={commonStyles.fill}
+          style={{
+            color: ColorConstants.primaryBlack
+          }}
           placeholder="Search here"
           placeholderTextColor={ColorConstants.primaryBlack}
           onChangeText={text => handleCategories(text)}
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
   textInput: {
     margin: 10,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     alignItems: 'center',
     backgroundColor: ColorConstants.textInputBackGround,

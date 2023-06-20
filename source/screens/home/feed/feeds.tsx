@@ -39,7 +39,7 @@ const Feeds: FunctionComponent<Props> = ({navigation}) => {
 
   useEffect(() => {
     getFeedsData();
-  }, [getFeedsData, isFocused]);
+  }, [isFocused]);
 
   return (
     <View style={commonStyles.viewContainer}>

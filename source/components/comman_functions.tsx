@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from '@react-navigation/native';
 import { Linking, Platform } from 'react-native';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import toastMessage from './toast_message';
 
 class CommanFunctions {
   static routing = (
@@ -28,53 +29,22 @@ class CommanFunctions {
     multiple: false,
   });  
 
-  static openLink = (url: string) => {
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " ,url);
-      }
-    });
+  static openLink =  (url: string) => {
+         Linking.openURL(url);
   }; 
 
   static whatsApp = async () => {
     const whatsApp = await AsyncStorage.getItem('whatsapp_no');
     const message = '';
     const iosUrl = `https://wa.me/+91${whatsApp}/?text=${message}`;
+    // const androidUrl = `whatsapp://send?text=${message}&phone=91${whatsApp}`;
     const androidUrl = `https://api.whatsapp.com/send?phone=91${whatsApp}&text=${message}`;
     if(Platform.OS === 'ios'){
-      Linking.canOpenURL(iosUrl).then(supported => {
-        if (supported) {
-          Linking.openURL(iosUrl);
-        } else {
-          console.log("Don't know how to open URI: " ,iosUrl);
-        }
-      });
+      await await Linking.openURL(iosUrl);
     }else{
-    Linking.canOpenURL(androidUrl).then(supported => {
-      if (supported) {
-        Linking.openURL(androidUrl);
-      } else {
-        console.log("Don't know how to open URI: " ,androidUrl);
-      }
-    });}
+      await Linking.openURL(androidUrl);
+  }
   }; 
-
-  // String url() {
-    //   if (Platform.isIOS) {
-    //     return "https://wa.me/+91$phone/?text=${Uri.parse(message)}";
-    //   } else {
-    //     return "https://api.whatsapp.com/send?phone=91$phone&text=${Uri.parse(message)}";
-    //   }
-    // }
-    //
-    // if (await canLaunch(url())) {
-    //   await launch(url());
-    // } else {
-    //   print({"URL":"Could not launch ${url()}"});
-    //   throw 'Could not launch ${url()}';
-    // }
 }
 
 export default CommanFunctions;

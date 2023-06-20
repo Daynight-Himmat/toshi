@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {StyleSheet, Dimensions, View} from 'react-native';
 import ColorConstants from '../constants/color_constants';
-import {Appbar, Button} from 'react-native-paper';
+import {Appbar, Button, IconButton} from 'react-native-paper';
 import FontConstants from '../constants/font_constants';
 import {Label} from './label';
 import AppSize from './size';
@@ -14,6 +14,7 @@ type Props = {
   buttonText?: string;
   navigate?: any;
   action?: boolean;
+  isIcon?: boolean;
   onPress?: () => void;
 };
 
@@ -22,6 +23,7 @@ const AppHeader: FunctionComponent<Props> = ({
   buttonText,
   navigate,
   action,
+  isIcon,
   onPress,
 }) => {
   return (
@@ -37,7 +39,14 @@ const AppHeader: FunctionComponent<Props> = ({
         titleStyle={styles.headerText}
       />
       {action && (
-        <Button
+        isIcon ?  
+        <IconButton
+        icon="dots-vertical"
+        iconColor={ColorConstants.primaryWhite}
+        size={20}
+        onPress={onPress}
+      /> 
+       : <Button
           mode="text"
           labelStyle={styles.buttonLabel}
           textColor={ColorConstants.primaryWhite}
@@ -163,6 +172,7 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: ColorConstants.primaryColor,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   backButton: {
     marginLeft: 0,
@@ -171,8 +181,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 17,
     fontWeight: '600',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    justifyContent: 'flex-start',
     color: ColorConstants.primaryWhite,
     fontFamily: FontConstants.ragular,
   },

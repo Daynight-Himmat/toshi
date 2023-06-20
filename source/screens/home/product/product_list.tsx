@@ -75,17 +75,13 @@ const ListOfProduct: FunctionComponent<Props> = ({navigation}) => {
       <AppHeader
         navigate={() => navigation.goBack()}
         text={'Product Praference'}
-        action={
-          <IconButton
-            icon="dots-vertical"
-            iconColor={ColorConstants.primaryWhite}
-            size={20}
-            onPress={() => {
-              Keyboard.dismiss();
-              actionSheetRef.current?.show();
-            }}
-          />
-        }
+        action
+        isIcon
+        onPress={() => {
+          Keyboard.dismiss();
+          actionSheetRef.current?.show();
+        }}
+       
       />
       {!isLoading ? (
         <Tab.Navigator

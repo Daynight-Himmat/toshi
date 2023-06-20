@@ -284,14 +284,14 @@ const PraferenceContainer: FunctionComponent<Props4> = ({
   is_preference_saved,
 }) => {
   return (
-    <View style={praferenceStyles({}).praferenceContainer}>
+    <TouchableOpacity style={praferenceStyles({}).praferenceContainer} onPress={onPress}>
       <TouchableOpacity
         style={praferenceStyles({d: is_preference_saved}).checkClick}
         onPress={onPress}>
         <Icon name="check" color={ColorConstants.primaryWhite} />
       </TouchableOpacity>
       <HighLightLabel hightLightLabel={label} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -342,7 +342,7 @@ const praferenceStyles: StylesFunctionProps = ({d}) =>
       backgroundColor: ColorConstants.primaryWhite,
       margin: 10,
       height: 60,
-      width: '90%',
+      width: '95%',
       shadowColor: ColorConstants.primaryBlack,
       shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.4,

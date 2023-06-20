@@ -461,10 +461,11 @@ const FilterPage: FunctionComponent<Props> = ({navigation}) => {
       <AppHeader
         navigate={() => navigation.goBack()}
         text={'Filter Page'}
+        action
         onPress={() => handleReset()}
         buttonText="Reset All"
       />
-      <View style={commonStyles.fill}>
+      <View style={commonStyles.viewContainer}>
         <ScrollView>
           <Accordion
             underlayColor={ColorConstants.primaryWhite}
@@ -525,7 +526,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 10,
-    elevation: 100,
+    elevation: 10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -553,6 +554,7 @@ const styles = StyleSheet.create({
   textSearch: {
     flex: 1,
     justifyContent: 'center',
+    color: ColorConstants.primaryBlack,
     paddingHorizontal: 10,
   },
 });

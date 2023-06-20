@@ -62,7 +62,7 @@ const FilterProductPage: FunctionComponent<Props> = ({navigation, route}) => {
 
   useEffect(() => {
     getProducts();
-  }, [getProducts, isFocused]);
+  }, [isFocused]);
 
   return (
     <View style={commonStyles.viewContainer}>
